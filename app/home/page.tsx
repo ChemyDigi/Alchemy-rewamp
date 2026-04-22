@@ -2,6 +2,8 @@
 // import Hero from "@/components/Hero";
 // import Features from "@/components/Features";
 // import Footer from "@/components/Footer";
+import Services from "@/components/home/services";
+import LogoLoop from "@/components/home/logoloop";
 
 export default function Home() {
   return (
@@ -11,6 +13,8 @@ export default function Home() {
       <Hero />
       <Features />
       <Footer /> */}
+      <Services/>
+      <LogoLoop/>
     </main>
   );
 }
