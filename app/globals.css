@@ -6,9 +6,16 @@
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-bg: var(--background);
+  --color-fg: var(--foreground);
+
   --font-sans: var(--font-season-sans);
+
+  /* 🎨 Semantic color names */
+  --color-gray: #747474;
+  --color-gray-dark: #505050;
+  --color-gray-light: #949494;
+  --color-orange: #E3791D;
 }
 
 @media (prefers-color-scheme: dark) {
