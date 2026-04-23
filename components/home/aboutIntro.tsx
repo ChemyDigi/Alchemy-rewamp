@@ -13,7 +13,7 @@ export default function AboutIntro() {
 						<span className="text-orange">Transcendence.</span>
 					</p>
 
-					<h1 className="text-2xl font-bold uppercase leading-[1.05] tracking-tight text-black sm:text-2xl lg:text-5xl">
+					<h1 className="text-2xl font-bold uppercase leading-[1.12] tracking-normal text-black sm:text-2xl lg:text-5xl lg:leading-[1.08]">
 						Creative Design Agency, <br />Located In The Heart Of Colombo.
 					</h1>
 
