@@ -42,11 +42,10 @@ export default function Navbar() {
             h-[58px] rounded-[15px] font-semibold
             flex items-center justify-center
             transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]
-            ${
-              hovered
+            ${hovered
                 ? "w-[220px] opacity-0 pointer-events-none"
                 : "w-[120px] opacity-100 bg-black text-white"
-            }`}
+              }`}
           >
             Menu
           </button>
@@ -55,18 +54,35 @@ export default function Navbar() {
           <div
             className={`flex items-center gap-3
             transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]
-            ${
-              hovered
+            ${hovered
                 ? "scale-x-100 opacity-100"
                 : "scale-x-0 opacity-0 pointer-events-none"
-            }`}
+              }`}
           >
             {/* LOGO */}
-            <div className="h-[58px] w-[52px] rounded-[8px] bg-black flex items-center justify-center">
-              <span className={`${poppins.className} text-orange-500 text-[32px] font-[700]`}>
-                a
-              </span>
-            </div>
+            <Link href="/home">
+              <div className="group h-[50px] w-[50px] bg-black rounded-[14px] flex items-center justify-center overflow-hidden relative shrink-0 cursor-pointer">
+
+                {/* ORANGE (default) */}
+                <span
+                  className={`${poppins.className} absolute text-orange-500 text-[36px] font-[700]
+      transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]
+      translate-y-0 group-hover:-translate-y-[120%]`}
+                >
+                  a
+                </span>
+
+                {/* WHITE (hover) */}
+                <span
+                  className={`${poppins.className} absolute text-white text-[36px] font-[700]
+      transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]
+      translate-y-[120%] group-hover:translate-y-0`}
+                >
+                  a
+                </span>
+
+              </div>
+            </Link>
 
             {/* NAV */}
             <div className="relative h-[56px] flex items-center gap-2 bg-[#e9e9e9] px-2 rounded-[10px]">
@@ -88,11 +104,10 @@ export default function Navbar() {
                     href={navLinks[item]}
                     onMouseEnter={() => setActive(item)}
                     className={`relative z-10 px-5 py-[8px] rounded-full font-medium
-                    ${
-                      active === item
+                    ${active === item
                         ? "text-white"
                         : "text-black hover:text-white"
-                    }`}
+                      }`}
                   >
                     {item}
                   </Link>
