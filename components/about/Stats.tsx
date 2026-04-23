@@ -29,7 +29,7 @@ export default function AboutStats() {
               
               <h2
                 className="
-                  text-orange-500 
+                  text-orange 
                   text-[64px] sm:text-[90px] md:text-[110px] lg:text-[130px]
                   font-bold leading-none
                 "

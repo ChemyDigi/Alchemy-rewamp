@@ -3,16 +3,18 @@ import Footer from "@/components/Footer";
 import Hero from "../../components/about/hero";
 import Stats from "../../components/about/Stats";
 import Team from "../../components/about/Team";
-export default function Home() {
+import BackgroundCircles from "@/components/about/BackgroundCircles";
+export default function About() {
   return (
-    <main className="min-h-screen bg-white text-gray">
+    <main className="min-h-screen bg-white text-gray relative overflow-hidden">
 
-      {/* NAVBAR */}
+      {/* GLOBAL BACKGROUND */}
+      <BackgroundCircles />
+
       <Navbar />
       <Hero />
       <Stats />
       <Team />
-
       <Footer />
 
     </main>
