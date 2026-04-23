@@ -24,7 +24,7 @@ export default function LogoLoop() {
       {/* Heading */}
       <div className="px-4 md:px-10 mb-12">
         <h2 className="text-3xl md:text-5xl font-bold text-black">
-          JOIN THE <span className="text-orange-500">BEST</span>
+          JOIN THE <span className="text-orange">BEST</span>
         </h2>
         <p className="text-[#505050] mt-2">
           Trusted by leading partners across industries

@@ -50,7 +50,7 @@ export default function Services() {
       {/* Heading */}
       <div className="mb-12">
         <h2 className="text-3xl md:text-5xl font-bold text-black">
-          OUR <span className="text-orange-500">SERVICES</span>
+          OUR <span className="text-orange">SERVICES</span>
         </h2>
         <p className="text-[#505050] mt-2">We bring ideas to life</p>
       </div>
