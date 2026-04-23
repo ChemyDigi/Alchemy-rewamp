@@ -1,16 +1,44 @@
 "use client";
 
+import { motion, useInView, animate } from "framer-motion";
+import { useEffect, useRef } from "react";
+
+function Counter({ value }: { value: number }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true });
+
+  useEffect(() => {
+    if (!isInView || !ref.current) return;
+
+    const start = Math.floor(value * 0.66);
+
+    const controls = animate(start, value, {
+      duration: 1.2, // 👈 speed (lower = faster)
+      ease: "linear", // 👈 removes end lag completely
+      onUpdate(latest) {
+        if (ref.current) {
+          ref.current.textContent = Math.floor(latest).toString();
+        }
+      },
+    });
+
+    return () => controls.stop();
+  }, [isInView, value]);
+
+  return <span ref={ref}>{Math.floor(value * 0.66)}</span>;
+}
+
+/* ================= MAIN COMPONENT ================= */
 export default function AboutStats() {
   const stats = [
-    { num: "80", title: "GLOBAL", sub: "HAPPY CLIENTS" },
-    { num: "600", title: "PROJECTS", sub: "COMPLETED" },
-    { num: "20", title: "TEAM", sub: "MEMBERS" },
-    { num: "550", title: "DIGITAL", sub: "PRODUCTS" },
+    { num: 80, title: "GLOBAL", sub: "HAPPY CLIENTS" },
+    { num: 600, title: "PROJECTS", sub: "COMPLETED" },
+    { num: 20, title: "TEAM", sub: "MEMBERS" },
+    { num: 550, title: "DIGITAL", sub: "PRODUCTS" },
   ];
 
   return (
-    <section className="w-full min-h-screen flex items-center justify-center px-6 md:px-16 py-20">
-      
+    <section className="w-full flex items-center justify-center px-6 md:px-16 py-20">
       <div
         className="
           grid 
@@ -20,13 +48,11 @@ export default function AboutStats() {
           text-center
         "
       >
-        
         {stats.map((item, i) => (
           <div key={i}>
             
             {/* NUMBER + PLUS */}
             <div className="relative inline-block">
-              
               <h2
                 className="
                   text-orange 
@@ -34,7 +60,7 @@ export default function AboutStats() {
                   font-bold leading-none
                 "
               >
-                {item.num}
+                <Counter value={item.num} />
               </h2>
 
               <div
