@@ -103,7 +103,7 @@ export default function Navbar() {
                   <Link
                     href={navLinks[item]}
                     onMouseEnter={() => setActive(item)}
-                    className={`relative z-10 px-5 py-[8px] rounded-full font-medium
+                    className={`relative z-10 px-5 py-[8px] rounded-full font-medium transition-colors duration-300
                     ${active === item
                         ? "text-white"
                         : "text-black hover:text-white"

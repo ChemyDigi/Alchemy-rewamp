@@ -1,30 +1,25 @@
+import AboutIntro from "@/components/home/aboutIntro";
+
+// import Navbar from "@/components/Navbar";
+// import Hero from "@/components/Hero";
+// import Features from "@/components/Features";
+// import Footer from "@/components/Footer";
+import Hero from "@/components/home/hero";
+import Services from "@/components/home/services";
+import LogoLoop from "@/components/home/logoloop";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white text-gray">
-      
-      {/* NAVBAR */}
+    <main className="min-h-screen bg-bg text-gray">
+
       <Navbar />
-
-      {/* FAKE CONTENT */}
-      <section className="px-6 py-20 space-y-10">
-        <h1 className="text-6xl font-bold">Home Page</h1>
-
-        <p className="max-w-xl text-lg">
-          This is just placeholder content to test scrolling and navbar behavior.
-        </p>
-
-        {[...Array(20)].map((_, i) => (
-          <p key={i} className="max-w-xl text-gray-600">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </p>
-        ))}
-      </section>
-      <Footer/>
-
+      <Hero />
+      <AboutIntro />
+      <Services/>
+      <LogoLoop/>
+      <Footer />
     </main>
   );
 }
