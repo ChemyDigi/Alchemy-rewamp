@@ -8,7 +8,7 @@ function ScrollFillText({ text }: { text: string }) {
 
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start 85%", "end 15%"], // controls animation timing
+    offset: ["start 90%", "end 10%"], // smoother on mobile
   });
 
   const words = text.split(" ");
@@ -16,7 +16,16 @@ function ScrollFillText({ text }: { text: string }) {
   return (
     <p
       ref={ref}
-      className="mt-10 max-w-[900px] font-medium mx-auto text-left text-[18px] md:text-[38px] leading-[1.5] text-gray-400 translate-x-0 md:translate-x-32 lg:translate-x-50"
+      className="
+        mt-6 md:mt-10
+        max-w-full md:max-w-[900px]
+        font-medium
+        text-left
+        text-[16px] sm:text-[20px] md:text-[32px] lg:text-[38px]
+        leading-[1.6]
+        text-gray-400
+        translate-x-0 md:translate-x-16 lg:translate-x-32
+      "
     >
       {words.map((word, i) => {
         const start = i / words.length;
@@ -41,20 +50,30 @@ function ScrollFillText({ text }: { text: string }) {
 export default function AboutHero() {
   return (
     <section className="w-full min-h-screen flex items-center bg-white">
-      <div className="w-full px-6 md:px-16 lg:px-24">
+      <div className="w-full px-5 sm:px-8 md:px-16 lg:px-24">
         <div className="max-w-[1200px]">
 
           {/* TITLE */}
-          <h1 className="text-[72px] md:text-[200px] font-medium text-black leading-[0.95] tracking-tight">
-            About
-          </h1>
+          <h1
+  className="
+    text-[64px] sm:text-[90px] md:text-[140px] lg:text-[200px]
+    font-medium text-black leading-[0.95] tracking-tight
+    
+    text-center md:text-left
+    w-full
+    
+    mt-0 mb-6 md:mb-0
+  "
+>
+  About
+</h1>
 
           {/* SUB LABEL */}
-          <div className="mt-4">
-            <p className="text-[19px] text-orange-500 tracking-wide">
+          <div className="mt-3 md:mt-4">
+            <p className="text-[14px] sm:text-[16px] md:text-[19px] text-orange-500 tracking-wide">
               CREATIVE
             </p>
-            <p className="text-[19px] text-gray-500 tracking-wide">
+            <p className="text-[14px] sm:text-[16px] md:text-[19px] text-gray-500 tracking-wide">
               FORCE BUILT ON PURPOSE.
             </p>
           </div>
