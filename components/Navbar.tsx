@@ -22,7 +22,6 @@ export default function Navbar() {
 
   const pathname = usePathname();
 
-  // ✅ Reset menu on route change
   useEffect(() => {
     setOpen(false);
     setHovered(false);
@@ -37,7 +36,7 @@ export default function Navbar() {
           onMouseLeave={() => setHovered(false)}
           className="relative flex items-center gap-3"
         >
-          {/* MENU BUTTON (stretches left & right) */}
+          {/* MENU BUTTON */}
           <button
             className={`absolute left-1/2 -translate-x-1/2 
             h-[58px] rounded-[15px] font-semibold
@@ -56,7 +55,6 @@ export default function Navbar() {
           <div
             className={`flex items-center gap-3
             transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]
-            origin-center
             ${
               hovered
                 ? "scale-x-100 opacity-100"
@@ -65,9 +63,7 @@ export default function Navbar() {
           >
             {/* LOGO */}
             <div className="h-[58px] w-[52px] rounded-[8px] bg-black flex items-center justify-center">
-              <span
-                className={`${poppins.className} text-orange-500 text-[32px] font-[700]`}
-              >
+              <span className={`${poppins.className} text-orange-500 text-[32px] font-[700]`}>
                 a
               </span>
             </div>
@@ -76,7 +72,6 @@ export default function Navbar() {
             <div className="relative h-[56px] flex items-center gap-2 bg-[#e9e9e9] px-2 rounded-[10px]">
               {navItems.map((item) => (
                 <div key={item} className="relative flex items-center">
-                  {/* MOVING TAB */}
                   {active === item && (
                     <motion.div
                       layoutId="nav-pill"
@@ -85,7 +80,6 @@ export default function Navbar() {
                         type: "spring",
                         stiffness: 220,
                         damping: 26,
-                        mass: 1,
                       }}
                     />
                   )}
@@ -93,7 +87,7 @@ export default function Navbar() {
                   <Link
                     href={navLinks[item]}
                     onMouseEnter={() => setActive(item)}
-                    className={`relative z-10 px-5 py-[8px] rounded-full font-medium transition-colors duration-200
+                    className={`relative z-10 px-5 py-[8px] rounded-full font-medium
                     ${
                       active === item
                         ? "text-white"
@@ -111,7 +105,7 @@ export default function Navbar() {
 
       {/* ================= MOBILE ================= */}
       <div className="md:hidden fixed bottom-6 left-0 w-full flex justify-center z-50">
-        <div className="w-auto flex items-center gap-3">
+        <div className="w-[92%] max-w-sm">
 
           {/* BACKDROP */}
           <AnimatePresence>
@@ -120,7 +114,7 @@ export default function Navbar() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.5 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
+                transition={{ duration: 0.4 }}
                 className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
                 onClick={() => setOpen(false)}
               />
@@ -130,49 +124,52 @@ export default function Navbar() {
           {/* MENU CARD */}
           <AnimatePresence>
             {open && (
-              <motion.div
-                initial={{ scale: 0.85, opacity: 0, y: 20 }}
-                animate={{ scale: 1, opacity: 1, y: 0 }}
-                exit={{ scale: 0.9, opacity: 0, y: 10 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 140,
-                  damping: 22,
-                }}
-                style={{ originY: 1 }}
-                className="fixed bottom-[90px] left-1/2 -translate-x-1/2 w-[90%] max-w-sm bg-black rounded-[16px] py-12 z-50"
-              >
-                <div className="flex flex-col items-center gap-8">
-                  {navItems.map((item) => (
-                    <Link
-                      key={item}
-                      href={navLinks[item]}
-                      onClick={() => setOpen(false)}
-                      className="text-white text-[15px] tracking-wide"
-                    >
-                      {item.toUpperCase()}
-                    </Link>
-                  ))}
-                </div>
-              </motion.div>
+              <div className="fixed bottom-[90px] left-0 w-full flex justify-center z-50">
+                <motion.div
+                  initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                  animate={{ scale: 1, opacity: 1, y: 0 }}
+                  exit={{ scale: 0.95, opacity: 0, y: 10 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 140,
+                    damping: 20,
+                  }}
+                  className="w-[92%] max-w-sm bg-black rounded-[16px] py-12"
+                >
+                  <div className="flex flex-col items-center gap-8">
+                    {navItems.map((item) => (
+                      <Link
+                        key={item}
+                        href={navLinks[item]}
+                        onClick={() => setOpen(false)}
+                        className="text-white text-[15px] tracking-wide"
+                      >
+                        {item.toUpperCase()}
+                      </Link>
+                    ))}
+                  </div>
+                </motion.div>
+              </div>
             )}
           </AnimatePresence>
 
-          {/* LOGO */}
-          <div className="h-[50px] w-[50px] bg-black rounded-[14px] flex items-center justify-center">
-            <span className={`${poppins.className} text-orange-500 text-[26px] font-[700]`}>
-              a
-            </span>
+          {/* BOTTOM BAR */}
+          <div className="flex items-center gap-3 w-full">
+            {/* LOGO */}
+            <div className="h-[50px] w-[50px] bg-black rounded-[14px] flex items-center justify-center shrink-0">
+              <span className={`${poppins.className} text-orange-500 text-[26px] font-[700]`}>
+                a
+              </span>
+            </div>
+
+            {/* BUTTON */}
+            <button
+              onClick={() => setOpen(!open)}
+              className="h-[50px] flex-1 bg-black text-white rounded-[14px] font-medium transition-all duration-500 active:scale-95"
+            >
+              {open ? "Close Menu" : "Menu"}
+            </button>
           </div>
-
-          {/* MENU BUTTON */}
-          <button
-            onClick={() => setOpen(!open)}
-            className="h-[50px] px-6 bg-black text-white rounded-[14px] font-medium transition-all duration-500 active:scale-95"
-          >
-            {open ? "CLOSE MENU" : "MENU"}
-          </button>
-
         </div>
       </div>
     </>
