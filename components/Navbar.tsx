@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { poppins } from "@/app/fonts";
 import { usePathname } from "next/navigation";
 
 const navItems = ["About", "Gallery", "Blog", "Contact"];

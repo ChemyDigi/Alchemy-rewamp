@@ -1,21 +1,20 @@
 import Image from "next/image";
-import { poppins } from "@/app/fonts";
 
 export default function BlogHero() {
 	return (
-		<section className="min-h-screen w-full bg-[#e7e7e7]">
+		<section className="min-h-screen w-full bg-white">
 			<div className="mx-auto flex min-h-screen w-full max-w-[1440px] flex-col justify-between px-8 pt-16 pb-10 sm:px-12 lg:flex-row lg:items-end lg:px-20 lg:pt-12 lg:pb-14">
-				<div className="z-10 mt-auto max-w-[620px] pb-8 lg:pb-2">
+				<div className="z-10 mt-auto max-w-[620px] pb-8 lg:translate-y-[-1.5rem] lg:pb-2 xl:translate-y-[-2rem]">
 					<h1
-						className={`${poppins.className} text-[88px] leading-[0.9] font-semibold tracking-[-0.03em] text-black sm:text-[118px] md:text-[148px] lg:text-[170px]`}
+						className="text-7xl leading-[0.88] font-medium tracking-[-0.03em] text-black sm:text-8xl md:text-9xl lg:text-[10.75rem] xl:text-[11.5rem] 2xl:text-[12.5rem]"
 					>
 						Blog
 					</h1>
 
-					<p className="mt-3 text-[24px] font-medium uppercase tracking-[-0.01em] text-[var(--color-orange)] sm:text-[32px]">
+					<p className="mt-3 text-xl font-normal uppercase tracking-[-0.01em] text-[var(--color-orange)] sm:text-3xl lg:text-xl">
 						Insight
 					</p>
-					<p className="text-[22px] leading-none font-normal uppercase tracking-[-0.01em] text-black sm:text-[36px]">
+					<p className="text-xl leading-none font-normal uppercase tracking-[-0.01em] text-black sm:text-3xl lg:text-xl">
 						Driven By Impact.
 					</p>
 				</div>
