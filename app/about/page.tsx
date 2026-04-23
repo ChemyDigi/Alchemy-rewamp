@@ -6,14 +6,14 @@ import Team from "../../components/about/Team";
 export default function Home() {
   return (
     <main className="min-h-screen bg-white text-gray">
-      
+
       {/* NAVBAR */}
       <Navbar />
-<Hero/>
-<Stats/>
-<Team/>
-     
-      <Footer/>
+      <Hero />
+      <Stats />
+      <Team />
+
+      <Footer />
 
     </main>
   );
