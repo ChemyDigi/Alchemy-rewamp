@@ -21,29 +21,30 @@ export default function AboutIntro() {
 						Turning data into destiny, one click at a time.
 					</p>
 
-					<div className="relative mt-10 w-full max-w-[1240px] rounded-[3.25rem] bg-orange px-7 py-4 text-white sm:px-12 sm:py-6 lg:mt-12 lg:rounded-[4.5rem] lg:px-[4.5rem] lg:py-10">
-						<p className="max-w-4xl text-lg leading-[1.3] sm:text-[1.45rem] lg:text-2xl font-medium">
-							We don't just design visuals. We craft digital experiences that transform brands into something unforgettable
-						</p>
+					<div className="relative w-full max-w-[1240px] px-7 py-4 text-white sm:px-12 sm:py-6 lg:mt-4 lg:ml-8 lg:px-[4.5rem] lg:py-10">
+						<Image
+							src="/images/home/ChatBox.png"
+							alt="ChatBox Image"
+							fill
+							aria-hidden="true"
+							className="pointer-events-none select-none object-fill"
+						/>
 
-						<div className="mt-8 flex justify-start sm:justify-end lg:mt-10">
-							<button
-								type="button"
-								className="inline-flex items-center gap-2.5 rounded-full bg-white px-6 py-2.5 text-[0.65rem] font-bold uppercase tracking-tight text-orange transition hover:opacity-90 sm:px-9 sm:py-3 sm:text-sm lg:px-6 lg:py-3 lg:text-lg"
-							>
-								Curious Who We Are ?
-										<ArrowRight size={20} strokeWidth={2.2} aria-hidden="true" />
-							</button>
+						<div className="relative z-10">
+							<p className="max-w-4xl text-lg leading-[1.3] sm:text-[1.45rem] lg:text-3xl font-medium pt-5">
+								We don't just design visuals. We craft digital experiences that transform brands into something unforgettable
+							</p>
+
+							<div className="mt-8 flex justify-start sm:justify-end lg:mt-10">
+								<button
+									type="button"
+									className="inline-flex items-center gap-2.5 rounded-full bg-white px-6 py-2.5 text-[0.65rem] font-bold uppercase tracking-tight text-orange transition hover:opacity-90 sm:px-9 sm:py-3 sm:text-sm lg:px-6 lg:py-3 lg:text-lg"
+								>
+									Curious Who We Are ?
+											<ArrowRight size={20} strokeWidth={2.2} aria-hidden="true" />
+								</button>
+							</div>
 						</div>
-
-						<div
-							aria-hidden="true"
-							className="absolute -right-7 -top-6 h-20 w-20 rounded-full bg-orange sm:h-24 sm:w-24 lg:-right-9 lg:-top-7 lg:h-28 lg:w-28"
-						/>
-						<div
-							aria-hidden="true"
-							className="absolute -right-3 -top-3 h-12 w-12 rounded-full bg-[#ececec] sm:h-14 sm:w-14 lg:-right-4 lg:-top-4 lg:h-16 lg:w-16"
-						/>
 					</div>
 				</div>
 
