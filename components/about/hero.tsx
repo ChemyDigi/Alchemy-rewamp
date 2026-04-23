@@ -16,19 +16,19 @@ function ScrollFillText({ text }: { text: string }) {
   return (
     <p
       ref={ref}
-      className="
+     className="
   mt-16 sm:mt-12 md:mt-10
-  w-full max-w-[95%] sm:max-w-[90%] md:max-w-[900px]
+  w-full max-w-[95%] sm:max-w-[90%] md:max-w-[700px] lg:max-w-[900px]
   font-medium
 
   text-center sm:text-left
   mx-auto sm:mx-0
 
-  text-[26px] sm:text-[26px] md:text-[32px] lg:text-[38px]
+  text-[26px] sm:text-[26px] md:text-[36px] lg:text-[38px]
   leading-[1.5]
   text-gray-400
 
-  translate-x-0 sm:translate-x-8 md:translate-x-48 lg:translate-x-72
+  translate-x-0 sm:translate-x-8 md:translate-x-16 lg:translate-x-72
 "
     >
       {letters.map((letter, i) => {
