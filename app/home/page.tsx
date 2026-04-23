@@ -7,18 +7,19 @@ import AboutIntro from "@/components/home/aboutIntro";
 import Hero from "@/components/home/hero";
 import Services from "@/components/home/services";
 import LogoLoop from "@/components/home/logoloop";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-bg text-gray">
+
+      <Navbar />
+      <Hero />
       <AboutIntro />
-      {/* <Navbar />
-      <Hero />
-      <Features />
-      <Footer /> */}
-      <Hero />
       <Services/>
       <LogoLoop/>
+      <Footer />
     </main>
   );
 }
