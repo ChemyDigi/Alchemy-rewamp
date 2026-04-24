@@ -8,7 +8,7 @@ const posts = [
 		href: "/blog/post",
 		excerpt:
 			"The digital marketing ecosystem is undergoing a fundamental transformation that extends far beyond simple automation. AI agents...",
-		image: "/blog/Blog1.jpg",
+		image: "/images/blog/Blog1.jpg",
 	},
 	{
 		title: "How Cloud Computing is Changing Business",
@@ -16,7 +16,7 @@ const posts = [
 		href: "/blog/post",
 		excerpt:
 			"The digital marketing ecosystem is undergoing a fundamental transformation that extends far beyond simple automation. AI agents...",
-		image: "/blog/Blog1.jpg",
+		image: "/images/blog/Blog1.jpg",
 	},
 	{
 		title: "Cybersecurity in the Digital Age",
@@ -24,7 +24,7 @@ const posts = [
 		href: "/blog/post",
 		excerpt:
 			"With rising cyber threats, protecting data and systems has become more critical than ever. This transformation that extends far ev...",
-		image: "/blog/Blog1.jpg",
+		image: "/images/blog/Blog1.jpg",
 	},
 ];
 
