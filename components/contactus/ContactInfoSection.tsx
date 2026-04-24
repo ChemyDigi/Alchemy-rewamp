@@ -1,11 +1,12 @@
 "use client";
 
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
+import Link from "next/link";
 
 export default function ContactInfoSection() {
     return (
         <section className="w-full bg-[#f5f5f5] py-24 px-6 md:px-12 lg:px-20">
-            <div className="max-w-[1500px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-start">
+            <div className="max-w-[1500px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-stretch">
 
                 {/* LEFT SIDE */}
                 <div>
@@ -97,7 +98,7 @@ export default function ContactInfoSection() {
                 </div>
 
                 {/* RIGHT SIDE FORM */}
-                <div className="bg-[#e7e4e4] rounded-[26px] p-8 md:p-12 shadow-sm">
+                <div className="bg-[#e7e4e4] rounded-[26px] md:p-12 shadow-sm h-full flex flex-col justify-between">
 
                     <h2 className="text-[48px] md:text-[50px] font-black text-black leading-none">
                         Get in Touch
@@ -108,7 +109,7 @@ export default function ContactInfoSection() {
                         we’ll get back to you soon.
                     </p>
 
-                    <form className="mt-10 space-y-8">
+                    <form className="mt-10 space-y-5">
 
                         <Field label="Your Name" />
                         <Field label="Your Mobile Number" />
@@ -142,12 +143,18 @@ export default function ContactInfoSection() {
                         </div>
 
                         {/* Button */}
-                        <button
-                            type="submit"
-                            className="mt-4 bg-[#f28c28] text-white px-8 py-4 rounded-full text-[18px] font-semibold hover:scale-105 transition"
-                        >
-                            SEND A MESSAGE →
-                        </button>
+                        <Link href="/contact">
+                            <button className="group mt-8 bg-orange text-white h-[56px] pl-7 pr-5 rounded-full relative flex items-center overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-black min-w-[200px] hover:min-w-[240px]">
+
+                                <span className="text-base md:text-lg font-medium whitespace-nowrap">
+                                    SEND A MESSAGE
+                                </span>
+
+                                <span className="absolute right-6 text-2xl translate-x-4 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500">
+                                    →
+                                </span>
+                            </button>
+                        </Link>
                     </form>
                 </div>
             </div>
