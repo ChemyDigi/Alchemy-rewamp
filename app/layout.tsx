@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import Header from "@/components/Header";
 
 const seasonSans = localFont({
   src: [
@@ -27,6 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${seasonSans.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
+        <Header />
         {children}
       </body>
     </html>

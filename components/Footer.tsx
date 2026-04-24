@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import { Poppins } from "next/font/google";
@@ -14,26 +15,18 @@ export default function Footer() {
     <footer className="bg-white text-black w-full overflow-hidden">
       {/* BIG TYPO */}
       <div className="w-full px-[100px] pt-10 flex justify-center">
-        <h1
-          className={`
-            ${poppins.className}
-            text-[18vw]
-            font-[800]
-            leading-none
-            tracking-tight
-            flex
-          `}
-        >
-          <span className="text-orange">a</span>
-          lch
-          <span className="inline-block scale-x-[-1]">e</span>
-          m
-          <span className="text-orange">y</span>
-        </h1>
+        <Image
+          src="/alchemyLogo.png"
+          alt="Alchemy Logo"
+          width={1200}
+          height={400}
+          className="w-full max-w-[90vw] md:max-w-[80vw] h-auto object-contain"
+          priority={false}
+        />
       </div>
 
       {/* CONTENT */}
-      <div className="max-w-7xl ml-[100px] mr-6 pt-16 pb-14 flex flex-col md:flex-row justify-between gap-14">
+      <div className="max-w-7xl ml-[100px] mr-6 pt-0 -mt-6 md:-mt-16 pb-14 flex flex-col md:flex-row justify-between gap-14">
         {/* LEFT */}
         <div>
           <p className="text-orange font-semibold mb-3 text-xl">
