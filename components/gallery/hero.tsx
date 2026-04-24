@@ -219,10 +219,10 @@ export default function Hero() {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full px-12 md:px-16">
         <div className="flex items-center justify-between min-h-screen">
           {/* Left Content */}
-          <div className="flex-1 -ml-16 md:-ml-24 mt-48">
+          <div className="flex-1 mt-48">
             <h1 className="text-[120px] md:text-[150px] lg:text-[170px] font-medium text-black leading-[0.8] tracking-tighter mb-6">
               Gallery
             </h1>
@@ -235,7 +235,7 @@ export default function Hero() {
           </div>
 
           {/* Right Content - Card Stack */}
-          <div className="flex-1 flex justify-end">
+          <div className="flex-1 flex justify-end md:pr-24">
             <div style={{ width: 360, height: 520 }}>
               <Stack
                 randomRotation={false}

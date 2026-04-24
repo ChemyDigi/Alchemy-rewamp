@@ -7,13 +7,17 @@ import { X } from 'lucide-react';
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 const useMedia = (queries: string[], values: number[], defaultValue: number): number => {
-  const [value, setValue] = useState<number>(() => values[queries.findIndex(q => matchMedia(q).matches)] ?? defaultValue);
+  const [value, setValue] = useState<number>(defaultValue);
 
   useEffect(() => {
-    const get = () => values[queries.findIndex(q => matchMedia(q).matches)] ?? defaultValue;
-    const handler = () => setValue(get);
-    queries.forEach(q => matchMedia(q).addEventListener('change', handler));
-    return () => queries.forEach(q => matchMedia(q).removeEventListener('change', handler));
+    if (typeof window === 'undefined') return;
+    
+    const get = () => values[queries.findIndex(q => window.matchMedia(q).matches)] ?? defaultValue;
+    setValue(get());
+    
+    const handler = () => setValue(get());
+    queries.forEach(q => window.matchMedia(q).addEventListener('change', handler));
+    return () => queries.forEach(q => window.matchMedia(q).removeEventListener('change', handler));
   }, [queries, values, defaultValue]);
 
   return value;
@@ -386,7 +390,7 @@ export default function ImageGallery() {
   return (
     <>
       <div className="w-full bg-white">
-        <div className="max-w-7xl mx-auto px-4">
+        <div className="w-full px-12 md:px-16">
           <Masonry
             items={items}
             ease="power3.out"
