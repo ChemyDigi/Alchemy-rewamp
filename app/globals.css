@@ -40,3 +40,9 @@ body {
 *::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
 }
+
+/* Change text selection color to orange */
+::selection {
+  background-color: var(--color-orange);
+  color: #ffffff;
+}
