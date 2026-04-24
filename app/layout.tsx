@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import "lenis/dist/lenis.css";
+import Header from "@/components/Header";
+import LenisProvider from "@/components/LenisProvider";
 
 const seasonSans = localFont({
   src: [
@@ -26,8 +29,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${seasonSans.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col">
-        {children}
+      <body className="min-h-full flex flex-col selection:bg-[#E3791D] selection:text-white">
+        <LenisProvider>
+          <Header />
+          {children}
+        </LenisProvider>
       </body>
     </html>
   );
