@@ -74,9 +74,19 @@ export default async function BlogPostPage(props: PageProps<"/blog/[slug]">) {
 					</div>
 
 					<div className="mx-auto mt-10 max-w-full space-y-7 text-lg leading-[1.8] text-black/80 sm:text-[1.28rem] px-30 text-justify">
-						{post.content.map((paragraph) => (
-							<p key={paragraph}>{paragraph}</p>
-						))}
+						{post.content.map((paragraph) => {
+							if (paragraph.startsWith("## ")) {
+								return (
+									<h2
+										key={paragraph}
+										className="mt-12 text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
+									>
+										{paragraph.replace("## ", "")}
+									</h2>
+								);
+							}
+							return <p key={paragraph}>{paragraph}</p>;
+						})}
 					</div>
 				</article>
 
