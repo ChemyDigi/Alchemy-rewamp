@@ -60,7 +60,7 @@ export default function Navbar() {
               }`}
           >
             {/* LOGO */}
-            <Link href="/home">
+            <Link href="/">
               <div className="group h-[50px] w-[50px] bg-black rounded-[14px] flex items-center justify-center overflow-hidden relative shrink-0 cursor-pointer">
 
                 {/* ORANGE (default) */}
@@ -171,11 +171,13 @@ export default function Navbar() {
           {/* BOTTOM BAR */}
           <div className="flex items-center gap-3 w-full">
             {/* LOGO */}
-            <div className="h-[50px] w-[50px] bg-black rounded-[14px] flex items-center justify-center shrink-0">
-              <span className={`${poppins.className} text-orange-500 text-[26px] font-[700]`}>
-                a
-              </span>
-            </div>
+            <Link href="/">
+              <div className="h-[50px] w-[50px] bg-black rounded-[14px] flex items-center justify-center shrink-0">
+                <span className={`${poppins.className} text-orange-500 text-[26px] font-[700]`}>
+                  a
+                </span>
+              </div>
+            </Link>
 
             {/* BUTTON */}
             <button
