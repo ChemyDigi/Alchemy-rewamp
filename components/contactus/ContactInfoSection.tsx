@@ -4,7 +4,7 @@ import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import Link from "next/link";
 export default function ContactInfoSection() {
     return (
-        <section className="w-full bg-[#f5f5f5] py-24 px-6 md:px-12 lg:px-20">
+        <section className="w-full bg-white py-24 px-6 md:px-12 lg:px-20">
             <div className="max-w-[1500px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-start">
 
                 {/* LEFT SIDE */}
@@ -97,7 +97,7 @@ export default function ContactInfoSection() {
                 </div>
 
                 {/* RIGHT SIDE FORM */}
-                <div className="bg-[#e7e4e4] rounded-[26px] p-8 md:p-12 shadow-sm">
+                <div className="bg-[#faf9f9] rounded-[26px] p-8 md:p-12 shadow-sm">
 
                     <h2 className="text-[48px] md:text-[50px] font-black text-black leading-none">
                         Get in Touch
@@ -120,7 +120,7 @@ export default function ContactInfoSection() {
                                 Project Type
                             </label>
 
-                            <select className="w-full bg-transparent border-b border-[#9e9e9e] pb-3 text-[14px] text-black outline-none">
+                            <select className="w-full bg-transparent border-b border-[#9e9e9e] pb-3 text-[14px] text-[#888] outline-none">
                                 <option>Select Project Type</option>
                                 <option>Web Design</option>
                                 <option>Web Development</option>
