@@ -12,7 +12,7 @@ const navLinks: Record<string, string> = {
   About: "/about",
   Gallery: "/gallery",
   Blog: "/blog",
-  Contact: "/contact",
+  Contact: "/contactus",
 };
 
 export default function Navbar() {
