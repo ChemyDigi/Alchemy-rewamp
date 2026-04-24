@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
 import posts from "@/app/blog/data.json";
 
 type BlogPost = {
@@ -42,12 +43,12 @@ export default async function BlogPostPage(props: PageProps<"/blog/[slug]">) {
 					className="group relative inline-flex h-16 w-16 items-center justify-center rounded-full border-2 border-orange text-orange transition duration-300 hover:-translate-y-1 hover:scale-105 sm:h-[72px] sm:w-[72px]"
 					aria-label="Back to blog"
 				>
-					←
+					<ArrowLeft className="h-7 w-7" strokeWidth={2.1} aria-hidden="true" />
 				</Link>
 
 				<article className="mt-0">
 					<div className="mx-auto text-center">
-						<span className="inline-flex rounded-full border border-black px-6 py-1 text-xs uppercase tracking-wide text-black">
+						<span className="inline-flex rounded-full border border-black px-6 py-1 text-xs tracking-wide text-black">
 							{post.category}
 						</span>
 						<h1 className="mt-6 text-6xl leading-[0.98] font-semibold tracking-[-0.02em] text-black sm:text-6xl lg:text-8xl">
