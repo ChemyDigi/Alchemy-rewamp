@@ -19,14 +19,14 @@ const track = [...logos, ...logos, ...logos, ...logos]
 
 export default function LogoLoop() {
   return (
-    <section className="w-full py-20 bg-white overflow-hidden">
+    <section className="w-full pt-8 pb-20 bg-white overflow-hidden">
 
       {/* Heading */}
       <div className="px-12 md:px-16 mb-12">
         <h2 className="text-3xl md:text-5xl font-bold text-black">
           JOIN THE <span className="text-orange">BEST</span>
         </h2>
-        <p className="text-[#505050] mt-2">
+        <p className="text-[#505050] mt-2 text-lg md:text-2xl">
           Trusted by leading partners across industries
         </p>
       </div>

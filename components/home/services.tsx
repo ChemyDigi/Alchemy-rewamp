@@ -45,14 +45,14 @@ export default function Services() {
   }
 
   return (
-    <section className="w-full pt-4 pb-20 md:pt-10 md:pb-20 px-12 md:px-16 bg-white">
+    <section className="w-full pt-2 pb-8 md:pt-4 md:pb-8 px-12 md:px-16 bg-white">
 
       {/* Heading */}
       <div className="mb-12">
         <h2 className="text-3xl md:text-5xl font-bold text-black">
           OUR <span className="text-orange">SERVICES</span>
         </h2>
-        <p className="text-[#505050] mt-2">We bring ideas to life</p>
+        <p className="text-[#505050] mt-2 text-lg md:text-2xl">We bring ideas to life</p>
       </div>
 
       {/* Container */}
