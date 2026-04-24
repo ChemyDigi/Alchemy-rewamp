@@ -1,0 +1,59 @@
+[
+  {
+    "slug": "impact-of-ai-agents-on-digital-marketing",
+    "title": "The Impact of AI Agents on Digital Marketing",
+    "category": "AI",
+    "author": "Shakthi Prabhath",
+    "date": "2025-09-25",
+    "readTime": "7 min",
+    "image": "/images/blog/Blog1.jpg",
+    "excerpt": "The digital marketing ecosystem is undergoing a fundamental transformation that extends far beyond simple automation.",
+    "content": [
+      "The digital marketing ecosystem is undergoing a fundamental transformation that extends far beyond simple automation. AI agents have emerged as sophisticated digital entities capable of learning, adapting, and making complex decisions that were once the exclusive domain of human marketers.",
+      "The revolution we're witnessing represents a paradigm shift from reactive marketing approaches to proactive, predictive strategies. AI agents operate continuously, analyzing market conditions, consumer behavior patterns, and competitive landscapes in real-time.",
+      "Modern AI agents have transformed personalization from a marketing buzzword into a scientific discipline. These systems analyze behavioral data streams that include micro-interactions such as scroll patterns, dwell durations, click sequences, and even the time spent reading specific content sections."
+    ],
+    "readMore": [
+      "how-cloud-computing-is-changing-business",
+      "cybersecurity-in-the-digital-age"
+    ]
+  },
+  {
+    "slug": "how-cloud-computing-is-changing-business",
+    "title": "How Cloud Computing is Changing Business",
+    "category": "Tech",
+    "author": "Alchemy Team",
+    "date": "2025-08-13",
+    "readTime": "6 min",
+    "image": "/images/event.jpg",
+    "excerpt": "Cloud-first companies are reducing infrastructure friction and shipping customer value faster than ever.",
+    "content": [
+      "Cloud platforms have changed business operations by making enterprise-grade infrastructure available on demand. Teams now scale applications, data pipelines, and AI workloads without lengthy procurement cycles.",
+      "The biggest impact is agility. Product teams can run experiments, launch globally, and iterate on user feedback in days instead of quarters. This speed compounds over time and creates a durable strategic advantage.",
+      "Organizations that combine cloud architecture with strong governance and cost visibility are achieving both velocity and resilience. The result is faster execution without sacrificing operational quality."
+    ],
+    "readMore": [
+      "impact-of-ai-agents-on-digital-marketing",
+      "cybersecurity-in-the-digital-age"
+    ]
+  },
+  {
+    "slug": "cybersecurity-in-the-digital-age",
+    "title": "Cybersecurity in the Digital Age",
+    "category": "Cybersecurity",
+    "author": "Alchemy Team",
+    "date": "2025-07-04",
+    "readTime": "8 min",
+    "image": "/images/it.jpg",
+    "excerpt": "As businesses digitize everything, security is no longer a department concern; it is a product and leadership priority.",
+    "content": [
+      "The modern threat landscape evolves continuously, which means static security checklists are no longer enough. Companies need layered defense strategies that combine prevention, detection, and response.",
+      "Security must be embedded early in the delivery lifecycle. From infrastructure as code to dependency monitoring and secure coding standards, proactive controls reduce risk before software reaches production.",
+      "The organizations that perform best treat cybersecurity as a culture and capability, not just a tooling stack. Clear ownership, practiced incident response, and measurable controls drive stronger outcomes."
+    ],
+    "readMore": [
+      "impact-of-ai-agents-on-digital-marketing",
+      "how-cloud-computing-is-changing-business"
+    ]
+  }
+]

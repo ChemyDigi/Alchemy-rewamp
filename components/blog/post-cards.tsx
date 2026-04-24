@@ -1,32 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-
-const posts = [
-	{
-		title: "The Impact of AI agents on Digital Marketing",
-		category: "AI",
-		href: "/blog/post",
-		excerpt:
-			"The digital marketing ecosystem is undergoing a fundamental transformation that extends far beyond simple automation. AI agents...",
-		image: "/images/blog/Blog1.jpg",
-	},
-	{
-		title: "How Cloud Computing is Changing Business",
-		category: "Tech",
-		href: "/blog/post",
-		excerpt:
-			"The digital marketing ecosystem is undergoing a fundamental transformation that extends far beyond simple automation. AI agents...",
-		image: "/images/blog/Blog1.jpg",
-	},
-	{
-		title: "Cybersecurity in the Digital Age",
-		category: "Cybersecurity",
-		href: "/blog/post",
-		excerpt:
-			"With rising cyber threats, protecting data and systems has become more critical than ever. This transformation that extends far ev...",
-		image: "/images/blog/Blog1.jpg",
-	},
-];
+import posts from "@/app/blog/data.json";
 
 export default function BlogPostCards() {
 	return (
@@ -35,8 +9,8 @@ export default function BlogPostCards() {
 				<div className="grid gap-10 md:gap-12 md:grid-cols-2 lg:gap-14 lg:grid-cols-3">
 					{posts.map((post) => (
 						<Link
-							key={post.title}
-							href={post.href}
+							key={post.slug}
+							href={`/blog/${post.slug}`}
 							className="group block max-w-[420px] cursor-pointer"
 						>
 							<article className="origin-center transition-all duration-250 ease-out group-hover:scale-[1.03] group-hover:shadow-xl rounded-b-2xl ">
