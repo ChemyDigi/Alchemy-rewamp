@@ -25,20 +25,19 @@ export default function Hero() {
             </div>
 
             {/* Main Hero Wrapper */}
-            <div className="relative max-w-[1600px] mx-auto min-h-screen px-10 pt-36 z-10 pointer-events-none">
+            <div className="relative max-w-[1600px] mx-auto min-h-screen px-0 pt-116 z-10 pointer-events-none">
 
                 {/* LEFT CONTENT */}
-                <div className="max-w-[700px] relative z-20 pointer-events-auto">
-                    <p className="uppercase text-[#f28c28] tracking-[0.35em] text-sm mb-5">
-                        SAY HELLO
-                    </p>
-
-                    <h1 className="text-[110px] md:text-[160px] font-semibold leading-[0.9] tracking-tight text-black">
+                <div className="z-10 mt-auto max-w-[620px] pb-8 lg:translate-y-[-1.5rem] lg:pb-2 xl:translate-y-[-2rem]">
+                    <h1 className="text-7xl leading-[0.88] font-medium tracking-[-0.03em] text-black sm:text-8xl md:text-9xl lg:text-[10.75rem] xl:text-[11.5rem] 2xl:text-[12.5rem]">
                         Contact
                     </h1>
 
-                    <p className="mt-4 text-xl text-gray-700">
-                        WE'RE READY WHEN YOU ARE.
+                    <p className="mt-3 text-xl font-normal uppercase tracking-[-0.01em] text-[var(--color-orange)] sm:text-3xl lg:text-xl">
+                        Say Hello
+                    </p>
+                    <p className="text-xl leading-none font-normal uppercase tracking-[-0.01em] text-black sm:text-3xl lg:text-xl">
+                        We&apos;re Ready When You Are.
                     </p>
                 </div>
             </div>
