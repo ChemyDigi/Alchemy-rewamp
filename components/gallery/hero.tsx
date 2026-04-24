@@ -220,22 +220,22 @@ export default function Hero() {
   return (
     <div className="min-h-screen bg-white">
       <div className="w-full px-12 md:px-16">
-        <div className="flex items-center justify-between min-h-screen">
+        <div className="flex items-end justify-between min-h-screen pb-20">
           {/* Left Content */}
-          <div className="flex-1 mt-48">
-            <h1 className="text-[120px] md:text-[150px] lg:text-[170px] font-medium text-black leading-[0.8] tracking-tighter mb-6">
+          <div className="z-10 max-w-[620px] lg:translate-y-[-1.5rem] lg:pb-2 xl:translate-y-[-2rem]">
+            <h1 className="text-7xl leading-[0.88] font-medium tracking-[-0.03em] text-black sm:text-8xl md:text-9xl lg:text-[10.75rem] xl:text-[11.5rem] 2xl:text-[12.5rem]">
               Gallery
             </h1>
-            <p className="text-[#E3791D] text-lg md:text-xl font-medium mb-2 tracking-wide">
+            <p className="mt-3 text-xl font-normal uppercase tracking-[-0.01em] text-[#E3791D] sm:text-3xl lg:text-xl">
               CREATIVE
             </p>
-            <p className="text-black text-2xl md:text-3xl font-normal whitespace-nowrap">
+            <p className="text-xl leading-none font-normal uppercase tracking-[-0.01em] text-black sm:text-3xl lg:text-xl">
               STORIES CAPTURED WITH PURPOSE
             </p>
           </div>
 
           {/* Right Content - Card Stack */}
-          <div className="flex-1 flex justify-end md:pr-24">
+          <div className="flex justify-end md:pr-24 pb-16">
             <div style={{ width: 360, height: 520 }}>
               <Stack
                 randomRotation={false}

@@ -3,7 +3,7 @@
 
 import { AnimatePresence, motion } from 'framer-motion';
 import { gsap } from 'gsap';
-import { X } from 'lucide-react';
+import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 const useMedia = (queries: string[], values: number[], defaultValue: number): number => {
@@ -134,8 +134,8 @@ const Masonry: React.FC<MasonryProps> = ({
     preloadImages(items.map(i => i.img)).then(() => setImagesReady(true));
   }, [items]);
 
-  const grid = useMemo<GridItem[]>(() => {
-    if (!width) return [];
+  const { grid, totalHeight } = useMemo(() => {
+    if (!width) return { grid: [], totalHeight: 0 };
     
     const rowHeight = 300;
     const gap = 16;
@@ -154,12 +154,12 @@ const Masonry: React.FC<MasonryProps> = ({
       const itemWidth = width * (item.widthMultiplier / columns);
       
       if (rowWidth + itemWidth > width && row.length > 0) {
-        const totalWidth = row.reduce((sum, i) => sum + (width * (i.widthMultiplier / columns)), 0);
-        const remainingSpace = width - totalWidth;
+        const totalRowWidth = row.reduce((sum, i) => sum + (width * (i.widthMultiplier / columns)), 0);
+        const remainingSpace = width - totalRowWidth;
         const spacePerItem = remainingSpace / row.length;
         
         let xPos = 0;
-        row.forEach((rowItem, idx) => {
+        row.forEach((rowItem) => {
           const calculatedWidth = (width * (rowItem.widthMultiplier / columns)) + spacePerItem;
           rowItems.push({
             ...rowItem,
@@ -181,12 +181,12 @@ const Masonry: React.FC<MasonryProps> = ({
     }
     
     if (row.length > 0) {
-      const totalWidth = row.reduce((sum, i) => sum + (width * (i.widthMultiplier / columns)), 0);
-      const remainingSpace = width - totalWidth;
+      const totalRowWidth = row.reduce((sum, i) => sum + (width * (i.widthMultiplier / columns)), 0);
+      const remainingSpace = width - totalRowWidth;
       const spacePerItem = remainingSpace / row.length;
       
       let xPos = 0;
-      row.forEach((rowItem, idx) => {
+      row.forEach((rowItem) => {
         const calculatedWidth = (width * (rowItem.widthMultiplier / columns)) + spacePerItem;
         rowItems.push({
           ...rowItem,
@@ -199,7 +199,8 @@ const Masonry: React.FC<MasonryProps> = ({
       });
     }
     
-    return rowItems;
+    const height = rowItems.length > 0 ? Math.max(...rowItems.map(i => i.y + i.h)) : 0;
+    return { grid: rowItems, totalHeight: height };
   }, [columns, items, width]);
 
   const hasMounted = useRef(false);
@@ -280,7 +281,7 @@ const Masonry: React.FC<MasonryProps> = ({
   };
 
   return (
-    <div ref={containerRef} className="relative w-full" style={{ minHeight: '800px' }}>
+    <div ref={containerRef} className="relative w-full" style={{ height: totalHeight > 0 ? `${totalHeight}px` : '800px' }}>
       {grid.map(item => (
         <div
           key={item.id}
@@ -298,11 +299,7 @@ const Masonry: React.FC<MasonryProps> = ({
             {colorShiftOnHover && (
               <div className="color-overlay absolute inset-0 rounded-2xl bg-gradient-to-tr from-pink-500/50 to-sky-500/50 opacity-0 pointer-events-none" />
             )}
-            <div className="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 transition duration-300 flex items-center justify-center">
-              <span className="text-white text-sm font-medium bg-black/50 px-4 py-2 rounded-full">
-                VIEW
-              </span>
-            </div>
+            {/* Hover overlay removed per user request */}
           </div>
         </div>
       ))}
@@ -311,7 +308,7 @@ const Masonry: React.FC<MasonryProps> = ({
 };
 
 export default function ImageGallery() {
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [isOpen, setIsOpen] = useState(false);
 
   const items = [
@@ -377,19 +374,33 @@ export default function ImageGallery() {
     },
   ];
 
-  const openImage = (image: string) => {
-    setSelectedImage(image);
+  const openImage = (index: number) => {
+    setSelectedIndex(index);
     setIsOpen(true);
+  };
+  
+  const nextImage = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    if (selectedIndex !== null) {
+      setSelectedIndex((selectedIndex + 1) % items.length);
+    }
+  };
+
+  const prevImage = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    if (selectedIndex !== null) {
+      setSelectedIndex((selectedIndex - 1 + items.length) % items.length);
+    }
   };
 
   const closeImage = () => {
     setIsOpen(false);
-    setTimeout(() => setSelectedImage(null), 300);
+    setTimeout(() => setSelectedIndex(null), 300);
   };
 
   return (
     <>
-      <div className="w-full bg-white">
+      <div className="w-full bg-white pb-10">
         <div className="w-full px-12 md:px-16">
           <Masonry
             items={items}
@@ -398,19 +409,20 @@ export default function ImageGallery() {
             stagger={0.05}
             animateFrom="bottom"
             scaleOnHover={true}
-            hoverScale={0.95}
+            hoverScale={0.98}
             blurToFocus={true}
             colorShiftOnHover={false}
-            onImageClick={openImage}
+            onImageClick={(img) => {
+              const index = items.findIndex(item => item.img === img);
+              openImage(index);
+            }}
           />
         </div>
       </div>
-      {/* 10cm of white space - approximately 40rem */}
-      <div className="w-full bg-white" style={{ height: '40rem' }}></div>
 
       {/* Full Screen Modal */}
       <AnimatePresence>
-        {isOpen && selectedImage && (
+        {isOpen && selectedIndex !== null && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -427,13 +439,30 @@ export default function ImageGallery() {
             >
               <X size={32} />
             </motion.button>
+
+            {/* Left Arrow */}
+            <button
+              className="absolute left-4 md:left-8 text-white/50 hover:text-white transition z-10 p-2"
+              onClick={prevImage}
+            >
+              <ChevronLeft size={48} />
+            </button>
+
+            {/* Right Arrow */}
+            <button
+              className="absolute right-4 md:right-8 text-white/50 hover:text-white transition z-10 p-2"
+              onClick={nextImage}
+            >
+              <ChevronRight size={48} />
+            </button>
             
             <motion.img
+              key={items[selectedIndex].img}
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              src={selectedImage}
+              src={items[selectedIndex].img}
               alt="Full size"
               className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl"
               onClick={(e) => e.stopPropagation()}
