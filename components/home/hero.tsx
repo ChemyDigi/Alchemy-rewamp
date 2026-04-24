@@ -33,7 +33,7 @@ export default function Hero() {
       >
         <div className="mb-6">
           <Image
-            src="/logo.png"
+            src="/images/home/logo.png"
             alt="logo"
             width={280}
             height={280}
