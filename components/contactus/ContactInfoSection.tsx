@@ -120,7 +120,7 @@ export default function ContactInfoSection() {
                                 Project Type
                             </label>
 
-                            <select className="w-full bg-transparent border-b border-[#9e9e9e] pb-3 text-[20px] text-black outline-none">
+                            <select className="w-full bg-transparent border-b border-[#9e9e9e] pb-3 text-[14px] text-black outline-none">
                                 <option>Select Project Type</option>
                                 <option>Web Design</option>
                                 <option>Web Development</option>
@@ -143,7 +143,7 @@ export default function ContactInfoSection() {
 
                         {/* Button */}
                         <Link href="/contact">
-                            <button className="group mt-8 bg-orange text-white h-[56px] rounded-full relative overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-black min-w-[280px] hover:min-w-[340px]">
+                            <button className="group mt-8 bg-orange text-white h-[56px] rounded-full relative overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-black min-w-[230px] hover:min-w-[260px]">
 
                                 <span className="flex 1 absolute left-8 top-1/2 -translate-y-1/2 text-base md:text-lg font-medium whitespace-nowrap">
                                     SEND A MESSAGE

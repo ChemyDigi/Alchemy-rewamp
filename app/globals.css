@@ -32,13 +32,19 @@ body {
 }
 
 /* Hide scrollbars globally */
+html,
+body,
 * {
-  -ms-overflow-style: none; /* IE, Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none !important; /* IE, Edge */
+  scrollbar-width: none !important; /* Firefox */
 }
 
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
 *::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
+  display: none !important; /* Chrome, Safari, Opera */
+  width: 0 !important;
+  height: 0 !important;
 }
 
 /* Change text selection color to orange */
