@@ -25,7 +25,7 @@ export default function Hero() {
             </div>
 
             {/* Main Hero Wrapper */}
-            <div className="relative max-w-[1600px] mx-auto min-h-screen px-0 pt-116 z-10 pointer-events-none">
+            <div className="relative max-w-[1600px] mx-auto min-h-screen px-12 md:px-16 pt-[116px] z-10 pointer-events-none">
 
                 {/* LEFT CONTENT */}
                 <div className="z-10 mt-auto max-w-[620px] pb-8 lg:translate-y-[-1.5rem] lg:pb-2 xl:translate-y-[-2rem]">

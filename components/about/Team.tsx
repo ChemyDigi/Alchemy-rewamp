@@ -63,7 +63,7 @@ export default function TeamSection() {
   }, [checkScroll]);
 
   return (
-    <section className="px-6 md:px-16 py-24 ">
+    <section className="px-12 md:px-16 py-24">
       <div className="max-w-[1300px] mx-auto">
 
         {/* ================= HEADING ================= */}

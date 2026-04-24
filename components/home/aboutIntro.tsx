@@ -5,7 +5,7 @@ import { ArrowRight } from "lucide-react";
 
 export default function AboutIntro() {
 	return (
-		<section className="bg-white px-6 py-14 md:px-10 md:py-20 lg:px-20">
+		<section className="bg-white px-12 pt-24 pb-4 md:px-16 md:pt-32 md:pb-10 lg:px-16">
 			<div className="mx-auto flex w-full max-w-[1840px] flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
 				<div className="w-full lg:flex-1 lg:max-w-[1280px]">
 					<p className="mb-3 text-sm font-bold uppercase tracking-normal text-black sm:text-xl lg:text-3xl">

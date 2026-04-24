@@ -45,7 +45,7 @@ export default function Services() {
   }
 
   return (
-    <section className="w-full py-20 px-4 md:px-10 bg-white">
+    <section className="w-full pt-4 pb-20 md:pt-10 md:pb-20 px-12 md:px-16 bg-white">
 
       {/* Heading */}
       <div className="mb-12">

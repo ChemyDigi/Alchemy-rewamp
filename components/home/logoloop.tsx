@@ -22,7 +22,7 @@ export default function LogoLoop() {
     <section className="w-full py-20 bg-white overflow-hidden">
 
       {/* Heading */}
-      <div className="px-4 md:px-10 mb-12">
+      <div className="px-12 md:px-16 mb-12">
         <h2 className="text-3xl md:text-5xl font-bold text-black">
           JOIN THE <span className="text-orange">BEST</span>
         </h2>

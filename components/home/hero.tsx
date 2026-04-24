@@ -29,7 +29,7 @@ export default function Hero() {
       {/* HERO TEXT */}
       <motion.div
         style={{ y: heroY, scale: heroScale, opacity: heroOpacity }}
-        className="sticky top-0 h-screen flex flex-col items-center justify-center text-center z-10 px-4"
+        className="sticky top-0 h-screen flex flex-col items-center justify-center text-center z-10 px-12 md:px-16"
       >
         <div className="mb-6">
           <Image

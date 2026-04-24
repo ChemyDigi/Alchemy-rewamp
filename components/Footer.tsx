@@ -14,7 +14,7 @@ export default function Footer() {
   return (
     <footer className="bg-white text-black w-full overflow-hidden">
       {/* BIG TYPO */}
-      <div className="w-full px-[100px] pt-10 flex justify-center">
+      <div className="w-full px-12 md:px-16 pt-10 flex justify-center">
         <Image
           src="/alchemyLogo.png"
           alt="Alchemy Logo"
@@ -26,7 +26,7 @@ export default function Footer() {
       </div>
 
       {/* CONTENT */}
-      <div className="max-w-7xl ml-[100px] mr-6 pt-0 -mt-6 md:-mt-16 pb-14 flex flex-col md:flex-row justify-between gap-14">
+      <div className="w-full px-12 md:px-16 pt-0 -mt-6 md:-mt-16 pb-14 flex flex-col md:flex-row justify-between gap-14">
         {/* LEFT */}
         <div>
           <p className="text-orange font-semibold mb-3 text-xl">
@@ -93,7 +93,7 @@ export default function Footer() {
       </div>
 
       {/* BOTTOM */}
-      <div className="border-t border-gray-200 px-6 py-4 flex flex-col md:flex-row justify-between text-sm text-gray-500">
+      <div className="border-t border-gray-200 px-12 md:px-16 py-4 flex flex-col md:flex-row justify-between text-sm text-gray-500">
         <p>© 2025 alchemy. All rights reserved</p>
         <Link href="/privacy-policy" className="hover:text-black">
           Privacy Policy

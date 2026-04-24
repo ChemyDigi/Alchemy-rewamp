@@ -54,7 +54,7 @@ function ScrollFillText({ text }: { text: string }) {
 export default function AboutHero() {
   return (
     <section className="w-full min-h-[80vh] md:min-h-screen flex items-start md:items-center bg-white pt-10 md:pt-0">
-      <div className="w-full px-5 sm:px-8 md:px-16 lg:px-24">
+      <div className="w-full px-12 md:px-16">
         <div className="max-w-[1200px]">
 
           <h1
