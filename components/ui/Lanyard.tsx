@@ -109,7 +109,7 @@ export default function Lanyard({
           <Lightformer
             intensity={10}
             color="white"
-            position={[-10, 0, 14]}
+            position={[-10, 0, 4]}
             rotation={[0, Math.PI / 2, Math.PI / 3]}
             scale={[100, 10, 1]}
           />
@@ -292,10 +292,10 @@ function Band({
             : ("dynamic" as RigidBodyProps["type"])
         }
       >
-        <CuboidCollider args={[0.8, 1.125, 0.01]} />
+        <CuboidCollider args={[1.9, 1.125, 0.01]} />
         <group
-          scale={2.05}
-          position={[0, -0.95, -0.05]}
+          scale={2.9}
+          position={[0, -1.95, 0.1]}
           onPointerOver={() => hover(true)}
           onPointerOut={() => hover(false)}
           onPointerUp={(e: any) => {

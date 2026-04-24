@@ -18,7 +18,8 @@ export default function Hero() {
             {/* Logo */}
             <div className="absolute top-10 left-14 z-30">
                 <h1 className="text-3xl font-bold tracking-tight">
-                    <span className="text-black">alchem</span>
+                    <span className="text-[#f28c28]">a</span>
+                    <span className="text-black">lchem</span>
                     <span className="text-[#f28c28]">y</span>
                 </h1>
             </div>
@@ -39,10 +40,6 @@ export default function Hero() {
                     <p className="mt-4 text-xl text-gray-700">
                         WE'RE READY WHEN YOU ARE.
                     </p>
-
-                    <button className="mt-12 bg-black text-white px-10 py-4 rounded-xl font-medium hover:scale-105 transition-all duration-300">
-                        Menu
-                    </button>
                 </div>
             </div>
 
