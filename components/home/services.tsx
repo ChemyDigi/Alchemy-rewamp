@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 
 type Service = {
@@ -43,26 +43,43 @@ const services: Service[] = [
 ]
 
 export default function Services() {
-  const [activeIndex, setActiveIndex] = useState<number | null>(0)
+  const [activeIndex, setActiveIndex] = useState<number | null>(null)
+  const [isDesktop, setIsDesktop] = useState(false)
 
-  const handleEnter = (index: number) => setActiveIndex(index)
-  const handleLeave = () => setActiveIndex(null)
+  useEffect(() => {
+    const checkScreen = () => {
+      setIsDesktop(window.innerWidth >= 1024)
+    }
+
+    checkScreen()
+    window.addEventListener("resize", checkScreen)
+
+    return () => window.removeEventListener("resize", checkScreen)
+  }, [])
+
+  const handleEnter = (index: number) => {
+    if (isDesktop) setActiveIndex(index)
+  }
+
+  const handleLeave = () => {
+    if (isDesktop) setActiveIndex(null)
+  }
 
   return (
-    <section className="w-full pt-2 pb-8 md:pt-4 md:pb-8 px-12 md:px-16 bg-white">
-
+    <section className="w-full pt-4 pb-8 px-6 md:px-10 lg:px-16 bg-white">
+      
       {/* Heading */}
-      <div className="mb-12">
-        <h2 className="text-3xl md:text-5xl font-bold text-black">
+      <div className="mb-10">
+        <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold text-black">
           OUR <span className="text-orange">SERVICES</span>
         </h2>
-        <p className="text-[#505050] mt-2 text-lg md:text-2xl">
+        <p className="text-[#505050] mt-2 text-sm md:text-lg lg:text-2xl">
           We bring ideas to life
         </p>
       </div>
 
       {/* Container */}
-      <div className="bg-gray-100 rounded-3xl p-6 md:p-30">
+      <div className="bg-gray-100 rounded-3xl p-4 md:p-10 lg:p-20">
         <div className="max-w-4xl mx-auto" onMouseLeave={handleLeave}>
           {services.map((service, index) => {
             const isActive = activeIndex === index
@@ -76,21 +93,21 @@ export default function Services() {
                   {/* TEXT */}
                   <div
                     style={{
-                      maxHeight: isActive ? "0px" : "180px",
+                      maxHeight: isActive ? "0px" : "140px",
                       opacity: isActive ? 0 : 1,
                       transform: isActive
-                        ? "translateY(-16px)"
+                        ? "translateY(-12px)"
                         : "translateY(0px)",
                       overflow: "hidden",
                       transition:
                         "max-height 300ms ease, opacity 300ms ease, transform 300ms ease",
                     }}
-                    className="flex justify-center items-center gap-4 flex-wrap"
+                    className="flex justify-center items-center gap-3 flex-wrap"
                   >
-                    <h3 className="text-4xl md:text-8xl font-semibold text-[#747474] text-center leading-[1.2] py-2">
+                    <h3 className="text-2xl sm:text-3xl md:text-5xl lg:text-7xl font-semibold text-[#747474] text-center leading-[1.2] py-2">
                       {service.title}
                     </h3>
-                    <span className="bg-white text-[12px] px-3 py-1 rounded-full self-center">
+                    <span className="bg-white text-[10px] md:text-xs px-2 py-1 rounded-full">
                       {service.count}
                     </span>
                   </div>
@@ -98,10 +115,10 @@ export default function Services() {
                   {/* EXPAND WRAPPER */}
                   <div
                     style={{
-                      height: isActive ? "420px" : "0px",
-                      marginTop: isActive ? "24px" : "0px",
+                      height: isActive ? "250px" : "0px",
+                      marginTop: isActive ? "16px" : "0px",
                       transition:
-                        "height 900ms cubic-bezier(0.22,1,0.36,1), margin-top 900ms cubic-bezier(0.22,1,0.36,1)",
+                        "height 700ms cubic-bezier(0.22,1,0.36,1), margin-top 700ms cubic-bezier(0.22,1,0.36,1)",
                       overflow: "hidden",
                     }}
                   >
@@ -109,14 +126,14 @@ export default function Services() {
                     <div
                       style={{
                         width: "100%",
-                        height: "420px",
+                        height: "250px",
                         transformOrigin: "center center",
                         transform: isActive ? "scale(1)" : "scale(0)",
                         borderRadius: isActive ? "1rem" : "50%",
                         overflow: "hidden",
                         position: "relative",
                         transition:
-                          "transform 900ms cubic-bezier(0.22,1,0.36,1), border-radius 900ms cubic-bezier(0.22,1,0.36,1)",
+                          "transform 700ms cubic-bezier(0.22,1,0.36,1), border-radius 700ms cubic-bezier(0.22,1,0.36,1)",
                       }}
                     >
                       {/* IMAGE */}
@@ -126,9 +143,9 @@ export default function Services() {
                           width: "100%",
                           height: "100%",
                           transformOrigin: "center center",
-                          transform: isActive ? "scale(1)" : "scale(1.15)",
+                          transform: isActive ? "scale(1)" : "scale(1.1)",
                           transition:
-                            "transform 1200ms cubic-bezier(0.22,1,0.36,1)",
+                            "transform 900ms cubic-bezier(0.22,1,0.36,1)",
                         }}
                       >
                         <img
@@ -143,17 +160,17 @@ export default function Services() {
                         <div
                           style={{
                             position: "absolute",
-                            bottom: isActive ? "1rem" : "50%",
-                            right: isActive ? "1rem" : "50%",
+                            bottom: isActive ? "0.75rem" : "50%",
+                            right: isActive ? "0.75rem" : "50%",
                             transform: isActive
                               ? "translate(0, 0)"
                               : "translate(50%, 50%)",
                             color: "white",
-                            fontSize: "25px",
+                            fontSize: "16px",
                             fontWeight: "500",
                             whiteSpace: "nowrap",
                             transition:
-                              "all 900ms cubic-bezier(0.22, 1, 0.36, 1)",
+                              "all 700ms cubic-bezier(0.22, 1, 0.36, 1)",
                             opacity: isActive ? 1 : 0,
                             pointerEvents: "none",
                             textShadow: "0 2px 4px rgba(0,0,0,0.3)",
