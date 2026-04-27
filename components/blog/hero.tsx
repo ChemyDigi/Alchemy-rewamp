@@ -21,7 +21,7 @@ export default function BlogHero() {
 
 				<div className="relative mx-auto mt-8 w-full max-w-[340px] shrink-0 sm:max-w-[420px] md:max-w-[500px] lg:mt-0 lg:mr-6 lg:max-w-[560px] xl:max-w-[620px]">
 					<Image
-						src="/blog/Bulb.png"
+						src="/images/blog/Bulb.png"
 						alt="Glowing light bulb"
 						width={1220}
 						height={1310}

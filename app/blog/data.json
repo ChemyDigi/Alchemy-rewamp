@@ -80,7 +80,7 @@
     "author": "Alchemy Team",
     "date": "2025-08-13",
     "readTime": "6 min",
-    "image": "/images/event.jpg",
+    "image": "/images/home/event.jpg",
     "excerpt": "Cloud-first companies are reducing infrastructure friction and shipping customer value faster than ever.",
     "content": [
       "Cloud platforms have changed business operations by making enterprise-grade infrastructure available on demand. Teams now scale applications, data pipelines, and AI workloads without lengthy procurement cycles.",
@@ -99,7 +99,7 @@
     "author": "Alchemy Team",
     "date": "2025-07-04",
     "readTime": "8 min",
-    "image": "/images/it.jpg",
+    "image": "/images/home/it.jpg",
     "excerpt": "As businesses digitize everything, security is no longer a department concern; it is a product and leadership priority.",
     "content": [
       "The modern threat landscape evolves continuously, which means static security checklists are no longer enough. Companies need layered defense strategies that combine prevention, detection, and response.",
