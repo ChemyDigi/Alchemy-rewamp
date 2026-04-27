@@ -74,7 +74,7 @@ export default async function BlogPostPage(props: PageProps<"/blog/[slug]">) {
 						/>
 					</div>
 
-					<div className="mx-auto mt-10 max-w-full space-y-7 text-lg leading-[1.8] text-black/80 sm:text-[1.28rem] px-30 text-justify">
+					<div className="mx-auto mt-10 max-w-full space-y-7 px-4 text-lg leading-[1.8] text-black sm:text-[1.25rem] sm:px-30 text-justify">
 						{post.content.map((paragraph) => {
 							if (paragraph.startsWith("## ")) {
 								return (
