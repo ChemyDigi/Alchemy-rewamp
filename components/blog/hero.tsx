@@ -1,4 +1,5 @@
 import Image from "next/image";
+import CardSwap, { Card } from "./CardSwap";
 
 export default function BlogHero() {
 	return (
@@ -19,15 +20,35 @@ export default function BlogHero() {
 					</p>
 				</div>
 
-				<div className="relative mx-auto mt-8 w-full max-w-[340px] shrink-0 sm:max-w-[420px] md:max-w-[500px] lg:mt-0 lg:mr-6 lg:max-w-[560px] xl:max-w-[620px]">
-					<Image
-						src="/images/blog/Bulb.png"
-						alt="Glowing light bulb"
-						width={1220}
-						height={1310}
-						priority
-						className="h-auto w-full object-contain"
-					/>
+				<div className="relative mx-auto mt-8 w-full max-w-[340px] shrink-0 sm:max-w-[420px] md:max-w-[500px] lg:mt-0 lg:mr-6 lg:max-w-[560px] xl:max-w-[620px] lg:-translate-y-24 xl:-translate-y-38">
+					<div className="relative h-[460px] w-full overflow-visible">
+						<CardSwap
+							cardDistance={60}
+							verticalDistance={70}
+							delay={5000}
+							pauseOnHover={false}
+							width="clamp(220px, 36vw, 360px)"
+							height="clamp(280px, 42vw, 420px)"
+						>
+							<Card customClass="bg-black text-white border-white p-6 sm:p-7">
+								<div className="absolute inset-0 rounded-xl overflow-hidden">
+									<Image src="/images/blog/Blog1.jpg" alt="Blog 1" fill className="object-cover" />
+								</div>
+							</Card>
+
+							<Card customClass="bg-black text-white border-white/70 p-6 sm:p-7">
+								<div className="absolute inset-0 rounded-xl overflow-hidden">
+									<Image src="/images/home/event.jpg" alt="Event" fill className="object-cover" />
+								</div>
+							</Card>
+
+							<Card customClass="bg-black text-white border-white/70 p-6 sm:p-7">
+								<div className="absolute inset-0 rounded-xl overflow-hidden">
+									<Image src="/images/home/it.jpg" alt="IT" fill className="object-cover" />
+								</div>
+							</Card>
+						</CardSwap>
+					</div>
 				</div>
 			</div>
 		</section>
