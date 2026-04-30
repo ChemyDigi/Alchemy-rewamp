@@ -9,6 +9,7 @@ import Services from "@/components/home/services";
 import LogoLoop from "@/components/home/logoloop";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import PanoramicCarousel from "@/components/home/PanoramicCarousel";
 
 export default function Home() {
   return (
@@ -19,6 +20,7 @@ export default function Home() {
       <AboutIntro />
       <Services/>
       <LogoLoop/>
+      <PanoramicCarousel />
       <Footer />
     </main>
   );
