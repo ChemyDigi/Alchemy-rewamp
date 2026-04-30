@@ -149,7 +149,7 @@ export default function PanoramicCarousel() {
       <div className="w-full text-center pt-20 ">
         <h1 className="text-4xl md:text-5xl font-bold mb-3">
           <span className="text-black">OUR LATESET </span>
-          <span className="text-orange-500">CREATIONS</span>
+          <span className="text-orange">CREATIONS</span>
         </h1>
 
         <p className="text-base md:text-lg text-black">
@@ -165,7 +165,7 @@ export default function PanoramicCarousel() {
           onClick={() => updateSlides("prev")}
           className="absolute left-6 top-1/2 -translate-y-1/2 z-50 
                      w-12 h-12 rounded-full 
-                     bg-orange-500 text-white text-2xl 
+                     bg-orange text-white text-2xl 
                      flex items-center justify-center 
                      hover:bg-black transition"
         >
@@ -177,7 +177,7 @@ export default function PanoramicCarousel() {
           onClick={() => updateSlides("next")}
           className="absolute right-6 top-1/2 -translate-y-1/2 z-50 
                      w-12 h-12 rounded-full 
-                     bg-orange-500 text-white text-2xl 
+                     bg-orange text-white text-2xl 
                      flex items-center justify-center 
                      hover:bg-black transition"
         >
@@ -216,7 +216,7 @@ export default function PanoramicCarousel() {
 
         {/* ✅ TEXT INSIDE CAROUSEL */}
         <div className="absolute bottom-4 text-center max-w-xl px-6">
-          <h2 className="text-orange-500 text-3xl font-bold mb-2">
+          <h2 className="text-orange text-3xl font-bold mb-2">
             {CARDS[activeIndex].title}
           </h2>
           <p className="text-black/70 text-lg">
