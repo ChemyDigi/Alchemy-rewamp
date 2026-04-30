@@ -2,27 +2,27 @@
 
 // ─── Placeholder image data ───────────────────────────────────────────────────
 const col1: ImageItem[] = [
-  { src: "/images/services-dm/1.png", alt: "Squib skincare tins", aspect: "square" },
-  { src: "/images/services-dm/2.png", alt: "Pink product flat-lay", aspect: "tall" },
-  { src: "/images/services-dm/3.png", alt: "Alure gold ad", aspect: "square" },
+  { src: "/images/posts/1 (1).jpg", alt: "Squib skincare tins", aspect: "tall" },
+  { src: "/images/posts/1 (2).jpg", alt: "Pink product flat-lay", aspect: "tall" },
+  { src: "/images/posts/1 (3).jpg", alt: "Alure gold ad", aspect: "square" },
 ];
 
 const col2: ImageItem[] = [
-  { src: "/images/services-dm/4.png", alt: "Model with candy", aspect: "square" },
-  { src: "/images/services-dm/5.jpg", alt: "Peach & Lily serum", aspect: "tall" },
-  { src: "/images/services-dm/6.jpg", alt: "Rosé hair-care", aspect: "tall" },
+  { src: "/images/posts/1 (4).jpg", alt: "Model with candy", aspect: "square" },
+  { src: "/images/posts/1 (5).jpg", alt: "Peach & Lily serum", aspect: "tall" },
+  { src: "/images/posts/1 (6).jpg", alt: "Rosé hair-care", aspect: "tall" },
 ];
 
 const col3: ImageItem[] = [
-  { src: "/images/services-dm/7.jpg", alt: "Skin Bloom spray", aspect: "tall" },
-  { src: "/images/services-dm/8.jpg", alt: "Dark hand with serum", aspect: "tall" },
-  { src: "/images/services-dm/9.jpg", alt: "Foam cleanser duo", aspect: "square" },
+  { src: "/images/posts/1 (7).jpg", alt: "Skin Bloom spray", aspect: "tall" },
+  { src: "/images/posts/1 (8).jpg", alt: "Dark hand with serum", aspect: "tall" },
+  { src: "/images/posts/1 (9).jpg", alt: "Foam cleanser duo", aspect: "square" },
 ];
 
 const col4: ImageItem[] = [
-  { src: "/images/services-dm/10.jpg", alt: "Bold type stack", aspect: "square" },
-  { src: "/images/services-dm/11.jpg", alt: "Alure avocado ad", aspect: "tall" },
-  { src: "/images/services-dm/12.jpg", alt: "Fresh Routine dropper", aspect: "tall" },
+  { src: "/images/posts/1 (10).jpg", alt: "Bold type stack", aspect: "square" },
+  { src: "/images/posts/1 (1).jpg", alt: "Alure avocado ad", aspect: "tall" },
+  { src: "/images/posts/1 (2).jpg", alt: "Fresh Routine dropper", aspect: "tall" },
 ];
 
 // ─── Types ────────────────────────────────────────────────────────────────────
