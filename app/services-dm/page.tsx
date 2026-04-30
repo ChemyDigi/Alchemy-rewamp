@@ -12,12 +12,9 @@ export default function Home() {
             <Navbar />
             <Hero />
             <ScrollFillText text="We craft stories, not just campaigns. We build connections, not just clicks." />
-            <Work/>
             <Video />
+            <Work/>
             <Footer />
-
-
-
         </main>
     );
 }
