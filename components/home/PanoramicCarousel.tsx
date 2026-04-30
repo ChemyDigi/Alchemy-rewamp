@@ -149,11 +149,11 @@ export default function PanoramicCarousel() {
       <div className="w-full text-center pt-20 ">
         <h1 className="text-4xl md:text-5xl font-bold mb-3">
           <span className="text-black">OUR LATESET </span>
-          <span className="text-orange-500">CREATOIONS</span>
+          <span className="text-orange-500">CREATIONS</span>
         </h1>
 
         <p className="text-base md:text-lg text-black">
-          a showcase of innovation
+          A showcase of innovation
         </p>
       </div>
 
