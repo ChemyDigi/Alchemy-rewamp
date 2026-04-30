@@ -2,6 +2,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Hero from "@/components/services-it/hero";
 import { WaitlistHero } from "@/components/services-it/waitlist-hero";
+import Work from "@/components/services-it/work"
 
 export default function Home() {
   return (
@@ -10,7 +11,9 @@ export default function Home() {
       <Navbar />
       <Hero/>
       <WaitlistHero/>
+      
       <Footer />
+      <Work/>
     </main>
   );
 }
