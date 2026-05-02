@@ -55,14 +55,12 @@ export default function ServicesSection() {
         {/* LEFT */}
         <div className="z-10 text-center lg:text-left">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight mb-6 text-black">
-            CUSTOM WEB & MOBILE <br className="hidden sm:block" />
-            DEVELOPMENT
+            PERFORMANCE-DRIVEN<br className="hidden sm:block" />
+            DIGITAL MARKETING
           </h1>
 
           <p className="text-sm sm:text-base text-black/80 leading-relaxed mb-6 max-w-[550px] mx-auto lg:mx-0">
-            Transform ideas into powerful digital experiences with our full
-            cycle web and mobile development services. From intuitive design to
-            robust engineering, we craft solutions that elevate your brand.
+            Transform visibility into measurable growth with our data-driven digital marketing services. From strategic campaigns to performance analytics, we drive engagement that converts audiences into loyal customers.
           </p>
 
           <button className="bg-orange text-white text-sm px-6 py-3 rounded-full flex items-center gap-2 hover:bg-orange-600 transition font-bold mx-auto lg:mx-0">
