@@ -66,24 +66,25 @@ export default function PanoramicCarousel() {
   const [activeIndex, setActiveIndex] = useState(0);
   // Prevent multiple animations from firing simultaneously
   const isTweening = useRef(false);
+  // Track current rotation offset for continuous dragging
+  const currentRotation = useRef(0);
 
   /**
-   * updateSlides: Rotates carousel in a direction
-   * - "next": Rotates cards clockwise (move to next card)
-   * - "prev": Rotates cards counter-clockwise (move to previous card)
-   * - Finds the card closest to center position and updates activeIndex
-   * - Sets tween flag to prevent animation overlap
+   * updateSlides: Rotates carousel continuously based on drag distance
+   * - Calculates rotation based on drag pixels (smoother than discrete steps)
+   * - Updates activeIndex based on closest card to center
+   * - Can be called with immediate=true for real-time dragging
    */
-  function updateSlides(dir: "next" | "prev") {
-    if (isTweening.current) return;
-    isTweening.current = true;
+  function updateSlides(rotationDelta: number, immediate: boolean = false) {
+    if (!immediate && isTweening.current) return;
+    if (!immediate) isTweening.current = true;
 
-    // Determine rotation direction: 1 = clockwise (next), -1 = counter-clockwise (prev)
-    const multiplier = dir === "next" ? 1 : -1;
+    // Update current rotation offset
+    currentRotation.current += rotationDelta;
 
     setRotations((prev) => {
-      // Increment/decrement each card's rotation by ANGLE
-      const updated = prev.map((r) => r + multiplier * ANGLE);
+      // Apply rotation delta to all cards for continuous movement
+      const updated = prev.map((r) => r + rotationDelta);
 
       // Find which card is closest to center (0 degrees) after rotation
       let closestIndex = 0;
@@ -103,10 +104,12 @@ export default function PanoramicCarousel() {
       return updated;
     });
 
-    // Unlock carousel after animation completes (600ms matches CSS transition time)
-    setTimeout(() => {
-      isTweening.current = false;
-    }, 600);
+    // Unlock carousel after animation completes (only for non-immediate updates)
+    if (!immediate) {
+      setTimeout(() => {
+        isTweening.current = false;
+      }, 400);
+    }
   }
 
   // Store reference to carousel container for event listeners
@@ -117,10 +120,10 @@ export default function PanoramicCarousel() {
   const isDragging = useRef(false);
 
   /**
-   * Setup drag/swipe handlers
-   * - Mouse drag: Click and drag horizontally (20px threshold)
-   * - Touch swipe: Swipe on mobile/touch devices (20px threshold)
-   * - More responsive than before for better mobile UX
+   * Setup drag/swipe handlers for continuous carousel movement
+   * - Mouse drag: Click and drag horizontally (real-time rotation)
+   * - Touch swipe: Swipe on mobile/touch devices (real-time rotation)
+   * - Smooth continuous movement while dragging
    */
   useEffect(() => {
     const el = stageRef.current;
@@ -132,16 +135,24 @@ export default function PanoramicCarousel() {
       isDragging.current = true;
     };
 
-    const onMouseUp = (e: MouseEvent) => {
-      if (!dragStart.current) return;
-      // Calculate horizontal drag distance
+    const onMouseMove = (e: MouseEvent) => {
+      if (!isDragging.current || !dragStart.current) return;
+
+      // Calculate current drag distance from start
       const dx = e.clientX - dragStart.current.x;
 
-      // Only update carousel if drag exceeds 20px threshold (lower than before for easier mobile use)
-      if (Math.abs(dx) > 20) {
-        updateSlides(dx > 0 ? "prev" : "next");
-      }
+      // Convert drag distance to rotation (100px drag = ~30° rotation)
+      const rotationDelta = (dx / 100) * ANGLE;
 
+      // Update carousel in real-time while dragging (immediate mode)
+      if (Math.abs(rotationDelta) > 0.1) {
+        updateSlides(rotationDelta, true);
+        // Reset drag start for incremental dragging
+        dragStart.current = { x: e.clientX };
+      }
+    };
+
+    const onMouseUp = (e: MouseEvent) => {
       dragStart.current = null;
       isDragging.current = false;
     };
@@ -152,34 +163,46 @@ export default function PanoramicCarousel() {
       isDragging.current = true;
     };
 
-    const onTouchEnd = (e: TouchEvent) => {
-      if (!dragStart.current) return;
-      // Calculate horizontal swipe distance
-      const dx = e.changedTouches[0].clientX - dragStart.current.x;
+    const onTouchMove = (e: TouchEvent) => {
+      if (!isDragging.current || !dragStart.current) return;
 
-      // Only update carousel if swipe exceeds 20px threshold (lower than before for easier mobile use)
-      if (Math.abs(dx) > 20) {
-        updateSlides(dx > 0 ? "prev" : "next");
+      // Calculate current drag distance from start
+      const dx = e.touches[0].clientX - dragStart.current.x;
+
+      // Convert drag distance to rotation (100px drag = ~30° rotation)
+      const rotationDelta = (dx / 100) * ANGLE;
+
+      // Update carousel in real-time while dragging (immediate mode)
+      if (Math.abs(rotationDelta) > 0.1) {
+        updateSlides(rotationDelta, true);
+        // Reset drag start for incremental dragging
+        dragStart.current = { x: e.touches[0].clientX };
       }
+    };
 
+    const onTouchEnd = (e: TouchEvent) => {
       dragStart.current = null;
       isDragging.current = false;
     };
 
     // Attach event listeners
     el.addEventListener("mousedown", onMouseDown);
+    el.addEventListener("mousemove", onMouseMove);
     window.addEventListener("mouseup", onMouseUp);
 
     el.addEventListener("touchstart", onTouchStart);
-    el.addEventListener("touchend", onTouchEnd);
+    el.addEventListener("touchmove", onTouchMove);
+    window.addEventListener("touchend", onTouchEnd);
 
     // Cleanup event listeners on unmount
     return () => {
       el.removeEventListener("mousedown", onMouseDown);
+      el.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("mouseup", onMouseUp);
 
       el.removeEventListener("touchstart", onTouchStart);
-      el.removeEventListener("touchend", onTouchEnd);
+      el.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
     };
   }, []);
 
@@ -208,7 +231,7 @@ export default function PanoramicCarousel() {
             - Orange background, white arrow
             - Triggers "prev" rotation */}
         <button
-          onClick={() => updateSlides("prev")}
+          onClick={() => updateSlides(-ANGLE)}
           className="absolute left-6 top-1/2 -translate-y-1/2 z-50 
                      w-12 h-12 rounded-full 
                      bg-orange text-white text-2xl 
@@ -223,7 +246,7 @@ export default function PanoramicCarousel() {
             - Orange background, white arrow
             - Triggers "next" rotation */}
         <button
-          onClick={() => updateSlides("next")}
+          onClick={() => updateSlides(ANGLE)}
           className="absolute right-6 top-1/2 -translate-y-1/2 z-50 
                      w-12 h-12 rounded-full 
                      bg-orange text-white text-2xl 
@@ -265,9 +288,9 @@ export default function PanoramicCarousel() {
                 transformOrigin: `50% 50% ${ORIGIN_Z}px`,
                 // rotateY creates the carousel effect, translateX fine-tunes positioning
                 transform: `rotateY(${rotations[i]}deg) translateX(20px)`,
-                // Smooth easing animation - cubic-bezier for fluid motion without overshooting
+                // Ultra-smooth animation for real-time dragging response
                 transition:
-                  "transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+                  "transform 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
                 // Hide cards facing away from viewport
                 backfaceVisibility: "hidden",
               }}
@@ -276,9 +299,9 @@ export default function PanoramicCarousel() {
         </div>
 
         {/* TEXT OVERLAY - Displays active card's title & description
-            - Positioned at bottom of carousel
+            - Positioned at bottom of carousel (moved down for better spacing)
             - Updates automatically when activeIndex changes */}
-        <div className="absolute bottom-4 text-center max-w-xl px-6">
+        <div className="absolute bottom-1 text-center max-w-xl px-6">
           <h2 className="text-orange text-3xl font-bold mb-2">
             {CARDS[activeIndex].title}
           </h2>
