@@ -3,11 +3,14 @@
 import { useEffect, useRef, useState } from "react";
 
 /* ─── CONFIG ─────────────────────────────────────────── */
+// ANGLE: Rotation angle (in degrees) between each card in the carousel
 const ANGLE = 30;
+// ORIGIN_Z: Distance (in pixels) from the viewport for 3D rotation origin
 const ORIGIN_Z = 650;
+// PERSPECTIVE: 3D perspective depth effect (lower = more dramatic)
 const PERSPECTIVE = 1800;
 
-/* 🖼️ CARD DATA */
+/* 🖼️ CARD DATA - Array of carousel items with images and descriptions */
 const CARDS = [
   {
     image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
@@ -54,26 +57,40 @@ const CARDS = [
 ];
 
 export default function PanoramicCarousel() {
+  // Track rotation angles for each card (initially spread at ANGLE intervals)
   const [rotations, setRotations] = useState<number[]>((() =>
     CARDS.map((_, i) => i * -ANGLE)
   ) as any);
 
+  // Track which card is currently in focus/center position
   const [activeIndex, setActiveIndex] = useState(0);
+  // Prevent multiple animations from firing simultaneously
   const isTweening = useRef(false);
 
+  /**
+   * updateSlides: Rotates carousel in a direction
+   * - "next": Rotates cards clockwise (move to next card)
+   * - "prev": Rotates cards counter-clockwise (move to previous card)
+   * - Finds the card closest to center position and updates activeIndex
+   * - Sets tween flag to prevent animation overlap
+   */
   function updateSlides(dir: "next" | "prev") {
     if (isTweening.current) return;
     isTweening.current = true;
 
+    // Determine rotation direction: 1 = clockwise (next), -1 = counter-clockwise (prev)
     const multiplier = dir === "next" ? 1 : -1;
 
     setRotations((prev) => {
+      // Increment/decrement each card's rotation by ANGLE
       const updated = prev.map((r) => r + multiplier * ANGLE);
 
+      // Find which card is closest to center (0 degrees) after rotation
       let closestIndex = 0;
       let minDiff = Infinity;
 
       updated.forEach((r, i) => {
+        // Check distance from 0 (normalized with modulo 360)
         const diff = Math.abs(r % 360);
         if (diff < minDiff) {
           minDiff = diff;
@@ -81,58 +98,82 @@ export default function PanoramicCarousel() {
         }
       });
 
+      // Update the active card display
       setActiveIndex(closestIndex);
       return updated;
     });
 
+    // Unlock carousel after animation completes (600ms matches CSS transition time)
     setTimeout(() => {
       isTweening.current = false;
-    }, 700);
+    }, 600);
   }
 
+  // Store reference to carousel container for event listeners
   const stageRef = useRef<HTMLDivElement>(null);
+  // Track drag starting position for mouse/touch interactions
   const dragStart = useRef<{ x: number } | null>(null);
+  // Track if currently dragging for visual feedback
+  const isDragging = useRef(false);
 
+  /**
+   * Setup drag/swipe handlers
+   * - Mouse drag: Click and drag horizontally (20px threshold)
+   * - Touch swipe: Swipe on mobile/touch devices (20px threshold)
+   * - More responsive than before for better mobile UX
+   */
   useEffect(() => {
     const el = stageRef.current;
     if (!el) return;
 
+    // MOUSE EVENTS
     const onMouseDown = (e: MouseEvent) => {
       dragStart.current = { x: e.clientX };
+      isDragging.current = true;
     };
 
     const onMouseUp = (e: MouseEvent) => {
       if (!dragStart.current) return;
+      // Calculate horizontal drag distance
       const dx = e.clientX - dragStart.current.x;
 
-      if (Math.abs(dx) > 40) {
+      // Only update carousel if drag exceeds 20px threshold (lower than before for easier mobile use)
+      if (Math.abs(dx) > 20) {
         updateSlides(dx > 0 ? "prev" : "next");
       }
 
       dragStart.current = null;
+      isDragging.current = false;
     };
 
+    // TOUCH EVENTS (Mobile/Tablet)
     const onTouchStart = (e: TouchEvent) => {
       dragStart.current = { x: e.touches[0].clientX };
+      isDragging.current = true;
     };
 
     const onTouchEnd = (e: TouchEvent) => {
       if (!dragStart.current) return;
+      // Calculate horizontal swipe distance
       const dx = e.changedTouches[0].clientX - dragStart.current.x;
 
-      if (Math.abs(dx) > 40) {
+      // Only update carousel if swipe exceeds 20px threshold (lower than before for easier mobile use)
+      if (Math.abs(dx) > 20) {
         updateSlides(dx > 0 ? "prev" : "next");
       }
 
       dragStart.current = null;
+      isDragging.current = false;
     };
 
+    // Attach event listeners
     el.addEventListener("mousedown", onMouseDown);
     window.addEventListener("mouseup", onMouseUp);
 
     el.addEventListener("touchstart", onTouchStart);
     el.addEventListener("touchend", onTouchEnd);
 
+    // Cleanup event listeners on unmount
     return () => {
       el.removeEventListener("mousedown", onMouseDown);
       window.removeEventListener("mouseup", onMouseUp);
@@ -145,7 +186,8 @@ export default function PanoramicCarousel() {
   return (
     <div className="w-full bg-white overflow-hidden pb-40">
 
-      {/* ✅ HEADING SECTION (SEPARATE DIV) */}
+      {/* ═══ HEADER SECTION ═══ 
+          Displays title with "OUR LATEST CREATIONS" headline */}
       <div className="w-full text-center pt-20 ">
         <h1 className="text-4xl md:text-5xl font-bold mb-3">
           <span className="text-black">OUR LATESET </span>
@@ -157,10 +199,14 @@ export default function PanoramicCarousel() {
         </p>
       </div>
 
-      {/* ✅ CAROUSEL SECTION */}
+      {/* ═══ MAIN CAROUSEL SECTION ═══ 
+          Container for 3D rotating cards with full height */}
       <div className="relative w-full h-[80vh] flex items-center justify-center">
 
-        {/* 🔘 LEFT BUTTON (INSIDE CAROUSEL) */}
+        {/* LEFT NAVIGATION BUTTON (Prev) 
+            - Positioned on left side, vertically centered
+            - Orange background, white arrow
+            - Triggers "prev" rotation */}
         <button
           onClick={() => updateSlides("prev")}
           className="absolute left-6 top-1/2 -translate-y-1/2 z-50 
@@ -172,7 +218,10 @@ export default function PanoramicCarousel() {
           ←
         </button>
 
-        {/* 🔘 RIGHT BUTTON (INSIDE CAROUSEL) */}
+        {/* RIGHT NAVIGATION BUTTON (Next)
+            - Positioned on right side, vertically centered
+            - Orange background, white arrow
+            - Triggers "next" rotation */}
         <button
           onClick={() => updateSlides("next")}
           className="absolute right-6 top-1/2 -translate-y-1/2 z-50 
@@ -184,15 +233,23 @@ export default function PanoramicCarousel() {
           →
         </button>
 
-        {/* 🎯 STAGE */}
+        {/* CAROUSEL STAGE - 3D ROTATING CONTAINER
+            - Applies 3D perspective to child cards
+            - Contains all card elements for rotation
+            - Handles mouse/touch drag interactions (20px threshold)
+            - Draggable on both desktop and mobile */}
         <div
           ref={stageRef}
-          className="relative w-full h-full flex items-center justify-center"
+          className="relative w-full h-full flex items-center justify-center cursor-grab active:cursor-grabbing select-none"
           style={{
             perspective: PERSPECTIVE,
             transformStyle: "preserve-3d",
           }}
         >
+          {/* CARD ELEMENTS - Each card rotates around Z-axis
+              - Initially positioned at ANGLE intervals
+              - Rotations update based on carousel direction
+              - Only visible card is front-facing (backfaceVisibility: hidden) */}
           {CARDS.map((card, i) => (
             <div
               key={i}
@@ -204,17 +261,23 @@ export default function PanoramicCarousel() {
                 backgroundImage: `url(${card.image})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
+                // 3D rotation origin: center of card, positioned ORIGIN_Z pixels behind
                 transformOrigin: `50% 50% ${ORIGIN_Z}px`,
+                // rotateY creates the carousel effect, translateX fine-tunes positioning
                 transform: `rotateY(${rotations[i]}deg) translateX(20px)`,
+                // Smooth easing animation - cubic-bezier for fluid motion without overshooting
                 transition:
-                  "transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1)",
+                  "transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+                // Hide cards facing away from viewport
                 backfaceVisibility: "hidden",
               }}
             />
           ))}
         </div>
 
-        {/* ✅ TEXT INSIDE CAROUSEL */}
+        {/* TEXT OVERLAY - Displays active card's title & description
+            - Positioned at bottom of carousel
+            - Updates automatically when activeIndex changes */}
         <div className="absolute bottom-4 text-center max-w-xl px-6">
           <h2 className="text-orange text-3xl font-bold mb-2">
             {CARDS[activeIndex].title}
