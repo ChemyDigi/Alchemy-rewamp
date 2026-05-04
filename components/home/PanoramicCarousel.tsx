@@ -156,7 +156,8 @@ export default function PanoramicCarousel() {
       const dx = e.clientX - dragStart.current.x;
 
       // Convert drag distance to rotation (100px drag = ~30° rotation)
-      const rotationDelta = (dx / 100) * ANGLE;
+      // Negative sign so dragging left rotates left, dragging right rotates right
+      const rotationDelta = (-dx / 100) * ANGLE;
 
       // Update carousel in real-time while dragging (immediate mode)
       if (Math.abs(rotationDelta) > 0.1) {
@@ -187,7 +188,8 @@ export default function PanoramicCarousel() {
       const dx = e.touches[0].clientX - dragStart.current.x;
 
       // Convert drag distance to rotation (100px drag = ~30° rotation)
-      const rotationDelta = (dx / 100) * ANGLE;
+      // Negative sign so dragging left rotates left, dragging right rotates right
+      const rotationDelta = (-dx / 100) * ANGLE;
 
       // Update carousel in real-time while dragging (immediate mode)
       if (Math.abs(rotationDelta) > 0.1) {
