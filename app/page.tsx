@@ -10,7 +10,7 @@ import LogoLoop from "@/components/home/logoloop";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PanoramicCarousel from "@/components/home/PanoramicCarousel";
-
+import LogoSection from "@/components/home/LogoSection";
 export default function Home() {
   return (
     <main className="min-h-screen bg-bg text-gray">
@@ -21,6 +21,7 @@ export default function Home() {
       <Services/>
       <LogoLoop/>
       <PanoramicCarousel />
+      <LogoSection />
       <Footer />
     </main>
   );
