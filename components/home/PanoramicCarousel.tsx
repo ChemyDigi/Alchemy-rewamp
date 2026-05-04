@@ -306,8 +306,8 @@ export default function PanoramicCarousel() {
                 backgroundPosition: "center",
                 // 3D rotation origin: center of card, positioned ORIGIN_Z pixels behind
                 transformOrigin: `50% 50% ${ORIGIN_Z}px`,
-                // rotateY creates the carousel effect, translateX fine-tunes positioning
-                transform: `rotateY(${rotations[i]}deg) translateX(20px)`,
+                // rotateY creates the carousel effect, translateX shifts carousel left for centering
+                transform: `rotateY(${rotations[i]}deg) translateX(-1px)`,
                 // Ultra-smooth animation for real-time dragging response
                 transition:
                   "transform 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
@@ -321,7 +321,7 @@ export default function PanoramicCarousel() {
         {/* TEXT OVERLAY - Displays active card's title & description
             - Positioned at bottom of carousel and centered horizontally
             - Lowered a bit more for better spacing below the card */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 text-center max-w-xl px-6">
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 text-center max-w-xl px-6">
           <h2 className="text-orange text-3xl font-bold mb-2">
             {CARDS[activeIndex].title}
           </h2>
