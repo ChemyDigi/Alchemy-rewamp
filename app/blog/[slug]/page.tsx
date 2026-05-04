@@ -40,7 +40,7 @@ export default async function BlogPostPage(props: PageProps<"/blog/[slug]">) {
 			<div className="mx-auto w-full max-w-[1440px] px-6 sm:px-10 lg:px-16">
 				<Link
 					href="/blog"
-					className="group relative inline-flex h-16 w-16 items-center justify-center rounded-full border-2 border-orange text-orange transition duration-300 hover:-translate-y-1 hover:scale-105 sm:h-[72px] sm:w-[72px]"
+					className="group relative inline-flex h-16 w-16 items-center justify-center rounded-full border-2 border-orange text-orange transition duration-300 hover:-translate-y-1 hover:scale-105 hover:bg-orange hover:text-white hover:shadow-lg sm:h-[72px] sm:w-[72px]"
 					aria-label="Back to blog"
 				>
 					<ArrowLeft className="h-7 w-7" strokeWidth={2.1} aria-hidden="true" />
