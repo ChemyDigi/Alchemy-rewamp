@@ -58,16 +58,18 @@ function InfiniteColumn({
   images,
   direction = "up",
   speed = 30,
+  mobileDirection = "right",
 }: {
   images: ImageItem[];
   direction?: "up" | "down";
   speed?: number;
+  mobileDirection?: "right" | "left";
 }) {
   const items = [...images, ...images, ...images];
 
   return (
     <div className="relative flex-1 min-w-[250px] overflow-hidden h-full">
-      {/* DESKTOP (vertical scroll) */}
+      {/* DESKTOP (vertical scroll) - NO CHANGES */}
       <div
         className={`hidden md:flex flex-col gap-20 infinite-scroll-${direction}`}
         style={{
@@ -79,11 +81,11 @@ function InfiniteColumn({
         ))}
       </div>
 
-      {/* MOBILE (horizontal scroll) */}
+      {/* MOBILE (horizontal scroll) - ONLY MOBILE CHANGES */}
       <div
-        className={`flex md:hidden gap-6 infinite-scroll-x`}
+        className={`flex md:hidden gap-6 infinite-scroll-${mobileDirection}`}
         style={{
-          animationDuration: `${speed}s`,
+          animationDuration: `4s`,
         }}
       >
         {items.map((img, i) => (
@@ -112,12 +114,21 @@ function InfiniteColumn({
           }
         }
 
-        @keyframes scroll-x {
+        @keyframes scroll-right {
           0% {
             transform: translateX(0);
           }
           100% {
             transform: translateX(-66.666%);
+          }
+        }
+
+        @keyframes scroll-left {
+          0% {
+            transform: translateX(-66.666%);
+          }
+          100% {
+            transform: translateX(0);
           }
         }
 
@@ -129,8 +140,12 @@ function InfiniteColumn({
           animation: scroll-down linear infinite;
         }
 
-        .infinite-scroll-x {
-          animation: scroll-x linear infinite;
+        .infinite-scroll-right {
+          animation: scroll-right linear infinite;
+        }
+
+        .infinite-scroll-left {
+          animation: scroll-left linear infinite;
         }
       `}</style>
     </div>
@@ -142,32 +157,35 @@ export default function WorkSection() {
   return (
     <section className="relative w-full h-[120vh] min-h-[700px] bg-[#0e0b09] overflow-hidden flex items-center justify-center">
 
-      {/* Desktop TOP shadow */}
+      {/* Desktop TOP shadow - NO CHANGE */}
       <div className="hidden md:block pointer-events-none absolute top-0 left-0 w-full h-40 z-20 bg-gradient-to-b from-[#0e0b09] to-transparent" />
 
-      {/* Desktop BOTTOM shadow */}
+      {/* Desktop BOTTOM shadow - NO CHANGE */}
       <div className="hidden md:block pointer-events-none absolute bottom-0 left-0 w-full h-40 z-20 bg-gradient-to-t from-[#0e0b09] to-transparent" />
 
-      {/* Mobile LEFT shadow */}
+      {/* Mobile LEFT shadow - NO CHANGE */}
       <div className="md:hidden pointer-events-none absolute left-0 top-0 h-full w-16 z-20 bg-gradient-to-r from-[#0e0b09] to-transparent" />
 
-      {/* Mobile RIGHT shadow */}
+      {/* Mobile RIGHT shadow - NO CHANGE */}
       <div className="md:hidden pointer-events-none absolute right-0 top-0 h-full w-16 z-20 bg-gradient-to-l from-[#0e0b09] to-transparent" />
 
-      {/* WORK background */}
-      <span className="pointer-events-none absolute inset-0 flex items-center justify-center font-black uppercase text-white text-[22vw] md:text-[18vw] z-0">
+      {/* WORK background - Desktop: center, Mobile: top */}
+      <span className="pointer-events-none absolute inset-0 flex items-center justify-center font-black uppercase text-white text-[22vw] md:text-[18vw] z-0 md:inset-0 top-8 h-fit md:h-auto">
         WORK
       </span>
 
-      {/* Blur overlay */}
+      {/* Blur overlay - NO CHANGE */}
       <div className="absolute inset-0 z-[5] backdrop-blur-sm bg-black/5" />
 
-      {/* Columns */}
-      <div className="absolute inset-0 flex flex-col md:flex-row gap-10 md:gap-32 px-6 md:px-8 z-10 overflow-hidden">
-        <InfiniteColumn images={col1} direction="up" speed={35} />
-        <InfiniteColumn images={col2} direction="down" speed={40} />
-        <InfiniteColumn images={col3} direction="up" speed={38} />
-        <InfiniteColumn images={col4} direction="down" speed={35} />
+      {/* Columns - Desktop: 4 columns, Mobile: 3 columns */}
+      <div className="absolute inset-0 flex flex-col md:flex-row gap-10 md:gap-32 px-0 md:px-8 z-10 overflow-hidden top-32 md:top-0">
+        <InfiniteColumn images={col1} direction="up" speed={35} mobileDirection="right" />
+        <InfiniteColumn images={col2} direction="down" speed={40} mobileDirection="left" />
+        <InfiniteColumn images={col3} direction="up" speed={38} mobileDirection="right" />
+        {/* Hide 4th column on mobile only */}
+        <div className="hidden md:block">
+          <InfiniteColumn images={col4} direction="down" speed={35} mobileDirection="left" />
+        </div>
       </div>
     </section>
   );
