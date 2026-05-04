@@ -148,7 +148,7 @@ export default function PanoramicCarousel() {
     setTimeout(() => {
       setActiveIndex(closestIndex);
       isTweening.current = false;
-    }, 400);
+    }, 700);
   }
 
   function snapToNearestCard() {
@@ -352,7 +352,7 @@ export default function PanoramicCarousel() {
             // Mobile: Single large card
             <div
               key={activeIndex}
-              className="transition-all duration-500 ease-out"
+              className="transition-all duration-700 ease-out"
               style={{
                 position: "absolute",
                 width: cardSize.width,
@@ -382,7 +382,7 @@ export default function PanoramicCarousel() {
                   transform: `rotateY(${rotations[i]}deg) translateX(-1px)`,
                   // Ultra-smooth animation for real-time dragging response
                   transition:
-                    "transform 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+                    "transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1)",
                   // Hide cards facing away from viewport
                   backfaceVisibility: "hidden",
                 }}
