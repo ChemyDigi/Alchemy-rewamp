@@ -45,7 +45,7 @@ export default function ServicesSection() {
       <div
         className="
           max-w-[1400px] mx-auto
-          px-6 sm:px-10 md:px-16 lg:px-[10px]
+          px-6 sm:px-10 md:px-10 lg:px-[10px]
           pt-20 md:pt-36 pb-8
           grid grid-cols-1 lg:grid-cols-2
           items-center gap-10
@@ -53,7 +53,8 @@ export default function ServicesSection() {
       >
 
         {/* LEFT */}
-        <div className="z-10 text-center lg:text-left">
+        {/* LEFT */}
+<div className="z-10 text-center lg:text-left mt-6 sm:mt-8 md:mt-12 lg:mt-16">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight mb-6 text-black">
             PERFORMANCE-DRIVEN<br className="hidden sm:block" />
             DIGITAL MARKETING
@@ -69,15 +70,16 @@ export default function ServicesSection() {
         </div>
 
         {/* RIGHT IMAGE */}
-        <div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[650px]">
-          <Image
-            src="/images/dm/hero.png"
-            alt="hero"
-            fill
-            className="object-contain"
-            priority
-          />
-        </div>
+   
+<div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[650px] -mt-6 sm:-mt-8 md:-mt-10 lg:-mt-12">
+  <Image
+    src="/images/dm/hero2.png"
+    alt="hero"
+    fill
+    className="object-contain"
+    priority
+  />
+</div>
 
       </div>
 
