@@ -1,0 +1,64 @@
+{
+  "galleries": [
+    {
+      "brandId": "tommee-tippee",
+      "title": "Digital Marketing",
+      "items": [
+        {
+          "id": 1,
+          "src": "/images/item_1.png",
+          "className": "col-span-2 row-span-2",
+          "type": "image"
+        },
+        {
+          "id": 2,
+          "src": "/images/item_2.png",
+          "className": "col-span-1 row-span-2",
+          "type": "image"
+        },
+        {
+          "id": 3,
+          "src": "/images/item_3.png",
+          "className": "col-span-1 row-span-2",
+          "type": "image"
+        },
+        {
+          "id": 4,
+          "src": "/images/item_4.png",
+          "className": "col-span-1 row-span-2",
+          "type": "image"
+        },
+        {
+          "id": 5,
+          "src": "/images/item_5.png",
+          "className": "col-span-2 row-span-2",
+          "type": "image"
+        },
+        {
+          "id": 6,
+          "src": "/images/item_6.png",
+          "className": "col-span-1 row-span-2",
+          "type": "image"
+        }
+      ]
+    },
+    {
+      "brandId": "another-brand",
+      "title": "Marketing Campaign",
+      "items": [
+        {
+          "id": 1,
+          "src": "/images/another-1.png",
+          "className": "col-span-2 row-span-2",
+          "type": "image"
+        },
+        {
+          "id": 2,
+          "src": "/images/another-2.png",
+          "className": "col-span-1 row-span-2",
+          "type": "image"
+        }
+      ]
+    }
+  ]
+}
