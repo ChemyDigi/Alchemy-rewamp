@@ -32,11 +32,12 @@ interface ImageItem {
   aspect: "square" | "tall";
 }
 
-// ─── Single card ─────────────────────────────────────────────────────────────
+// ─── Card ────────────────────────────────────────────────────────────────────
 function Card({ item }: { item: ImageItem }) {
-  const heightClass = item.aspect === "tall"
-    ? "h-48 md:h-60 lg:h-72"
-    : "h-40 md:h-52 lg:h-50";
+  const heightClass =
+    item.aspect === "tall"
+      ? "h-48 md:h-60 lg:h-72"
+      : "h-40 md:h-52 lg:h-50";
 
   return (
     <div
@@ -47,41 +48,51 @@ function Card({ item }: { item: ImageItem }) {
         alt={item.alt}
         className="absolute inset-0 w-full h-full object-cover"
         loading="lazy"
-        onError={(e) => {
-          const t = e.currentTarget;
-          t.style.display = "none";
-        }}
       />
     </div>
   );
 }
 
-// ─── Vertical infinite-scroll column using CSS animations ────────────────────
-interface ColumnProps {
+// ─── Infinite Column (Desktop vertical / Mobile horizontal) ───────────────────
+function InfiniteColumn({
+  images,
+  direction = "up",
+  speed = 30,
+}: {
   images: ImageItem[];
   direction?: "up" | "down";
-  speed?: number; // seconds for one complete loop
-}
-
-function InfiniteColumn({ images, direction = "up", speed = 30 }: ColumnProps) {
-  // Triple the images for seamless looping (prevents the reset jump)
+  speed?: number;
+}) {
   const items = [...images, ...images, ...images];
-  
+
   return (
-    <div className="relative flex-1 min-w-0 overflow-hidden h-full">
-      <div 
-        className={`flex flex-col gap-20 infinite-scroll-${direction}`}
+    <div className="relative flex-1 min-w-[250px] overflow-hidden h-full">
+      {/* DESKTOP (vertical scroll) */}
+      <div
+        className={`hidden md:flex flex-col gap-20 infinite-scroll-${direction}`}
         style={{
           animationDuration: `${speed}s`,
-          animationTimingFunction: "linear",
-          animationIterationCount: "infinite",
         }}
       >
         {items.map((img, i) => (
           <Card key={`${img.src}-${i}`} item={img} />
         ))}
       </div>
-      
+
+      {/* MOBILE (horizontal scroll) */}
+      <div
+        className={`flex md:hidden gap-6 infinite-scroll-x`}
+        style={{
+          animationDuration: `${speed}s`,
+        }}
+      >
+        {items.map((img, i) => (
+          <div key={`${img.src}-${i}`} className="w-40 flex-shrink-0">
+            <Card item={img} />
+          </div>
+        ))}
+      </div>
+
       <style jsx>{`
         @keyframes scroll-up {
           0% {
@@ -91,7 +102,7 @@ function InfiniteColumn({ images, direction = "up", speed = 30 }: ColumnProps) {
             transform: translateY(-66.666%);
           }
         }
-        
+
         @keyframes scroll-down {
           0% {
             transform: translateY(-66.666%);
@@ -100,44 +111,59 @@ function InfiniteColumn({ images, direction = "up", speed = 30 }: ColumnProps) {
             transform: translateY(0);
           }
         }
-        
+
+        @keyframes scroll-x {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-66.666%);
+          }
+        }
+
         .infinite-scroll-up {
           animation: scroll-up linear infinite;
         }
-        
+
         .infinite-scroll-down {
           animation: scroll-down linear infinite;
+        }
+
+        .infinite-scroll-x {
+          animation: scroll-x linear infinite;
         }
       `}</style>
     </div>
   );
 }
 
-// ─── Main section ─────────────────────────────────────────────────────────────
+// ─── Main Section ─────────────────────────────────────────────────────────────
 export default function WorkSection() {
   return (
-    <section className="relative w-full h-screen min-h-[600px] max-h-[1000px] bg-[#0e0b09] overflow-hidden flex items-center justify-center">
-      {/* ── Giant background "WORK" text ───────────────────────────────────── */}
-      <span
-        aria-hidden="true"
-        className="
-          pointer-events-none select-none absolute inset-0
-          flex items-center justify-center
-          font-black uppercase tracking-tighter leading-none
-          text-white
-          text-[22vw] md:text-[20vw] lg:text-[18vw]
-          z-0
-        "
-        style={{ 
-          textShadow: '0 0 20px rgba(0,0,0,0.5)',
-          willChange: 'transform'
-        }}
-      >
+    <section className="relative w-full h-[120vh] min-h-[700px] bg-[#0e0b09] overflow-hidden flex items-center justify-center">
+
+      {/* Desktop TOP shadow */}
+      <div className="hidden md:block pointer-events-none absolute top-0 left-0 w-full h-40 z-20 bg-gradient-to-b from-[#0e0b09] to-transparent" />
+
+      {/* Desktop BOTTOM shadow */}
+      <div className="hidden md:block pointer-events-none absolute bottom-0 left-0 w-full h-40 z-20 bg-gradient-to-t from-[#0e0b09] to-transparent" />
+
+      {/* Mobile LEFT shadow */}
+      <div className="md:hidden pointer-events-none absolute left-0 top-0 h-full w-16 z-20 bg-gradient-to-r from-[#0e0b09] to-transparent" />
+
+      {/* Mobile RIGHT shadow */}
+      <div className="md:hidden pointer-events-none absolute right-0 top-0 h-full w-16 z-20 bg-gradient-to-l from-[#0e0b09] to-transparent" />
+
+      {/* WORK background */}
+      <span className="pointer-events-none absolute inset-0 flex items-center justify-center font-black uppercase text-white text-[22vw] md:text-[18vw] z-0">
         WORK
       </span>
 
-      {/* ── Carousel columns ── */}
-      <div className="absolute inset-0 flex gap-32 px-8 z-10">
+      {/* Blur overlay */}
+      <div className="absolute inset-0 z-[5] backdrop-blur-sm bg-black/5" />
+
+      {/* Columns */}
+      <div className="absolute inset-0 flex flex-col md:flex-row gap-10 md:gap-32 px-6 md:px-8 z-10 overflow-hidden">
         <InfiniteColumn images={col1} direction="up" speed={35} />
         <InfiniteColumn images={col2} direction="down" speed={40} />
         <InfiniteColumn images={col3} direction="up" speed={38} />
