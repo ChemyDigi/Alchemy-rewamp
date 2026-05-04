@@ -5,10 +5,6 @@ import { useEffect, useRef, useState } from "react";
 /* ─── CONFIG ─────────────────────────────────────────── */
 // ANGLE: Rotation angle (in degrees) between each card in the carousel
 const ANGLE = 30;
-// ORIGIN_Z: Distance (in pixels) from the viewport for 3D rotation origin
-const ORIGIN_Z = 650;
-// PERSPECTIVE: 3D perspective depth effect (lower = more dramatic)
-const PERSPECTIVE = 1800;
 
 /* 🖼️ CARD DATA - Array of carousel items with images and descriptions */
 const CARDS = [
@@ -68,6 +64,27 @@ export default function PanoramicCarousel() {
   const isTweening = useRef(false);
   // Track current rotation offset for continuous dragging
   const currentRotation = useRef(0);
+
+  // Responsive values based on screen size
+  const [isMobile, setIsMobile] = useState(false);
+  const [cardSize, setCardSize] = useState({ width: 300, height: 380 });
+  const [perspective, setPerspective] = useState(1800);
+  const [originZ, setOriginZ] = useState(650);
+
+  // Update responsive values on mount and resize
+  useEffect(() => {
+    const updateResponsiveValues = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      setCardSize(mobile ? { width: 220, height: 280 } : { width: 300, height: 380 });
+      setPerspective(mobile ? 1200 : 1800);
+      setOriginZ(mobile ? 400 : 650);
+    };
+
+    updateResponsiveValues();
+    window.addEventListener('resize', updateResponsiveValues);
+    return () => window.removeEventListener('resize', updateResponsiveValues);
+  }, []);
 
   /**
    * updateSlides: Rotates carousel continuously based on drag distance
@@ -233,20 +250,20 @@ export default function PanoramicCarousel() {
 
       {/* ═══ HEADER SECTION ═══ 
           Displays title with "OUR LATEST CREATIONS" headline */}
-      <div className="w-full text-center pt-20 ">
-        <h1 className="text-4xl md:text-5xl font-bold mb-3">
+      <div className={`w-full text-center ${isMobile ? 'pt-12' : 'pt-20'}`}>
+        <h1 className={`font-bold mb-3 ${isMobile ? 'text-3xl md:text-4xl' : 'text-4xl md:text-5xl'}`}>
           <span className="text-black">OUR LATESET </span>
           <span className="text-orange">CREATIONS</span>
         </h1>
 
-        <p className="text-base md:text-lg text-black">
+        <p className={`text-black ${isMobile ? 'text-sm md:text-base' : 'text-base md:text-lg'}`}>
           A showcase of innovation
         </p>
       </div>
 
       {/* ═══ MAIN CAROUSEL SECTION ═══ 
-          Container for 3D rotating cards with full height */}
-      <div className="relative w-full h-[80vh] flex items-center justify-center">
+          Container for 3D rotating cards with responsive height */}
+      <div className={`relative w-full flex items-center justify-center ${isMobile ? 'h-[60vh]' : 'h-[80vh]'}`}>
 
         {/* LEFT NAVIGATION BUTTON (Prev) 
             - Positioned on left side, vertically centered
@@ -254,11 +271,9 @@ export default function PanoramicCarousel() {
             - Triggers "prev" rotation */}
         <button
           onClick={() => updateSlides(-ANGLE)}
-          className="absolute left-6 top-1/2 -translate-y-1/2 z-50 
-                     w-12 h-12 rounded-full 
-                     bg-orange text-white text-2xl 
-                     flex items-center justify-center 
-                     hover:bg-black transition"
+          className={`absolute top-1/2 -translate-y-1/2 z-50 rounded-full 
+                     bg-orange text-white flex items-center justify-center 
+                     hover:bg-black transition ${isMobile ? 'left-2 w-10 h-10 text-lg' : 'left-6 w-12 h-12 text-2xl'}`}
         >
           ←
         </button>
@@ -269,11 +284,9 @@ export default function PanoramicCarousel() {
             - Triggers "next" rotation */}
         <button
           onClick={() => updateSlides(ANGLE)}
-          className="absolute right-6 top-1/2 -translate-y-1/2 z-50 
-                     w-12 h-12 rounded-full 
-                     bg-orange text-white text-2xl 
-                     flex items-center justify-center 
-                     hover:bg-black transition"
+          className={`absolute top-1/2 -translate-y-1/2 z-50 rounded-full 
+                     bg-orange text-white flex items-center justify-center 
+                     hover:bg-black transition ${isMobile ? 'right-2 w-10 h-10 text-lg' : 'right-6 w-12 h-12 text-2xl'}`}
         >
           →
         </button>
@@ -287,7 +300,7 @@ export default function PanoramicCarousel() {
           ref={stageRef}
           className="relative w-full h-full flex items-center justify-center cursor-grab active:cursor-grabbing select-none"
           style={{
-            perspective: PERSPECTIVE,
+            perspective: perspective,
             transformStyle: "preserve-3d",
           }}
         >
@@ -300,16 +313,16 @@ export default function PanoramicCarousel() {
               key={i}
               style={{
                 position: "absolute",
-                width: 300,
-                height: 380,
-                borderRadius: 16,
+                width: cardSize.width,
+                height: cardSize.height,
+                borderRadius: isMobile ? 12 : 16,
                 backgroundImage: `url(${card.image})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
-                // 3D rotation origin: center of card, positioned ORIGIN_Z pixels behind
-                transformOrigin: `50% 50% ${ORIGIN_Z}px`,
+                // 3D rotation origin: center of card, positioned originZ pixels behind
+                transformOrigin: `50% 50% ${originZ}px`,
                 // rotateY creates the carousel effect, translateX shifts carousel left for centering
-                transform: `rotateY(${rotations[i]}deg) translateX(-1px)`,
+                transform: `rotateY(${rotations[i]}deg) translateX(${isMobile ? -60 : -80}px)`,
                 // Ultra-smooth animation for real-time dragging response
                 transition:
                   "transform 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
@@ -322,12 +335,12 @@ export default function PanoramicCarousel() {
 
         {/* TEXT OVERLAY - Displays active card's title & description
             - Positioned at bottom of carousel and centered horizontally
-            - Lowered a bit more for better spacing below the card */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 text-center max-w-xl px-6">
-          <h2 className="text-orange text-3xl font-bold mb-2">
+            - Responsive sizing and spacing for mobile */}
+        <div className={`absolute left-1/2 -translate-x-1/2 text-center ${isMobile ? 'bottom-2 max-w-sm px-4' : 'bottom-0 max-w-xl px-6'}`}>
+          <h2 className={`text-orange font-bold mb-2 ${isMobile ? 'text-2xl' : 'text-3xl'}`}>
             {CARDS[activeIndex].title}
           </h2>
-          <p className="text-black/70 text-lg">
+          <p className={`text-black/70 ${isMobile ? 'text-base' : 'text-lg'}`}>
             {CARDS[activeIndex].desc}
           </p>
         </div>
