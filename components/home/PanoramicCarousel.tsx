@@ -361,7 +361,6 @@ export default function PanoramicCarousel() {
                 backgroundImage: `url(${CARDS[activeIndex].image})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
-                boxShadow: "0 20px 40px rgba(0,0,0,0.3)",
               }}
             />
           ) : (
@@ -396,7 +395,7 @@ export default function PanoramicCarousel() {
             - Positioned at bottom of carousel and centered horizontally
             - Responsive sizing and spacing for mobile/tablet/desktop */}
         <div className={`absolute left-1/2 -translate-x-1/2 text-center ${
-          deviceType === 'mobile' ? 'bottom-[-50] max-w-xs px-4' :
+          deviceType === 'mobile' ? 'bottom-[-50] max-w-xs px-4 h-20 flex flex-col justify-center' :
           deviceType === 'tablet' ? 'bottom-2 max-w-md px-6' : 'bottom-[-50] max-w-xl px-6'
         }`}>
           <h2 className={`text-orange font-bold mb-2 ${
