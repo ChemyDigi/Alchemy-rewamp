@@ -66,7 +66,7 @@ export default function PanoramicCarousel() {
   const currentRotation = useRef(0);
 
   // Responsive values based on screen size
-  const [isMobile, setIsMobile] = useState(false);
+  const [deviceType, setDeviceType] = useState<'mobile' | 'tablet' | 'desktop'>('desktop');
   const [cardSize, setCardSize] = useState({ width: 300, height: 380 });
   const [perspective, setPerspective] = useState(1800);
   const [originZ, setOriginZ] = useState(650);
@@ -74,11 +74,34 @@ export default function PanoramicCarousel() {
   // Update responsive values on mount and resize
   useEffect(() => {
     const updateResponsiveValues = () => {
-      const mobile = window.innerWidth < 768;
-      setIsMobile(mobile);
-      setCardSize(mobile ? { width: 220, height: 280 } : { width: 300, height: 380 });
-      setPerspective(mobile ? 1200 : 1800);
-      setOriginZ(mobile ? 400 : 650);
+      const width = window.innerWidth;
+      let type: 'mobile' | 'tablet' | 'desktop';
+      let size, persp, origin;
+
+      if (width < 640) {
+        // Mobile: Single large card
+        type = 'mobile';
+        size = { width: 280, height: 360 };
+        persp = 800;
+        origin = 300;
+      } else if (width < 1024) {
+        // Tablet: Smaller 3D carousel
+        type = 'tablet';
+        size = { width: 240, height: 320 };
+        persp = 1400;
+        origin = 500;
+      } else {
+        // Desktop: Full 3D carousel
+        type = 'desktop';
+        size = { width: 300, height: 380 };
+        persp = 1800;
+        origin = 650;
+      }
+
+      setDeviceType(type);
+      setCardSize(size);
+      setPerspective(persp);
+      setOriginZ(origin);
     };
 
     updateResponsiveValues();
@@ -250,20 +273,32 @@ export default function PanoramicCarousel() {
 
       {/* ═══ HEADER SECTION ═══ 
           Displays title with "OUR LATEST CREATIONS" headline */}
-      <div className={`w-full text-center ${isMobile ? 'pt-12' : 'pt-20'}`}>
-        <h1 className={`font-bold mb-3 ${isMobile ? 'text-3xl md:text-4xl' : 'text-4xl md:text-5xl'}`}>
+      <div className={`w-full text-center ${
+        deviceType === 'mobile' ? 'pt-8' : 
+        deviceType === 'tablet' ? 'pt-12' : 'pt-20'
+      }`}>
+        <h1 className={`font-bold mb-3 ${
+          deviceType === 'mobile' ? 'text-2xl md:text-3xl' : 
+          deviceType === 'tablet' ? 'text-3xl md:text-4xl' : 'text-4xl md:text-5xl'
+        }`}>
           <span className="text-black">OUR LATESET </span>
           <span className="text-orange">CREATIONS</span>
         </h1>
 
-        <p className={`text-black ${isMobile ? 'text-sm md:text-base' : 'text-base md:text-lg'}`}>
+        <p className={`text-black ${
+          deviceType === 'mobile' ? 'text-xs md:text-sm' : 
+          deviceType === 'tablet' ? 'text-sm md:text-base' : 'text-base md:text-lg'
+        }`}>
           A showcase of innovation
         </p>
       </div>
 
       {/* ═══ MAIN CAROUSEL SECTION ═══ 
           Container for 3D rotating cards with responsive height */}
-      <div className={`relative w-full flex items-center justify-center ${isMobile ? 'h-[60vh]' : 'h-[80vh]'}`}>
+      <div className={`relative w-full flex items-center justify-center ${
+        deviceType === 'mobile' ? 'h-[50vh]' : 
+        deviceType === 'tablet' ? 'h-[65vh]' : 'h-[80vh]'
+      }`}>
 
         {/* LEFT NAVIGATION BUTTON (Prev) 
             - Positioned on left side, vertically centered
@@ -273,7 +308,10 @@ export default function PanoramicCarousel() {
           onClick={() => updateSlides(-ANGLE)}
           className={`absolute top-1/2 -translate-y-1/2 z-50 rounded-full 
                      bg-orange text-white flex items-center justify-center 
-                     hover:bg-black transition ${isMobile ? 'left-2 w-10 h-10 text-lg' : 'left-6 w-12 h-12 text-2xl'}`}
+                     hover:bg-black transition ${
+            deviceType === 'mobile' ? 'left-1 w-8 h-8 text-sm' : 
+            deviceType === 'tablet' ? 'left-3 w-10 h-10 text-lg' : 'left-6 w-12 h-12 text-2xl'
+          }`}
         >
           ←
         </button>
@@ -286,7 +324,10 @@ export default function PanoramicCarousel() {
           onClick={() => updateSlides(ANGLE)}
           className={`absolute top-1/2 -translate-y-1/2 z-50 rounded-full 
                      bg-orange text-white flex items-center justify-center 
-                     hover:bg-black transition ${isMobile ? 'right-2 w-10 h-10 text-lg' : 'right-6 w-12 h-12 text-2xl'}`}
+                     hover:bg-black transition ${
+            deviceType === 'mobile' ? 'right-1 w-8 h-8 text-sm' : 
+            deviceType === 'tablet' ? 'right-3 w-10 h-10 text-lg' : 'right-6 w-12 h-12 text-2xl'
+          }`}
         >
           →
         </button>
@@ -305,42 +346,69 @@ export default function PanoramicCarousel() {
           }}
         >
           {/* CARD ELEMENTS - Each card rotates around Z-axis
-              - Initially positioned at ANGLE intervals
-              - Rotations update based on carousel direction
-              - Only visible card is front-facing (backfaceVisibility: hidden) */}
-          {CARDS.map((card, i) => (
+              - On mobile: Show only active card, larger size
+              - On tablet/desktop: Show full 3D carousel */}
+          {deviceType === 'mobile' ? (
+            // Mobile: Single large card
             <div
-              key={i}
+              key={activeIndex}
+              className="transition-all duration-500 ease-out"
               style={{
                 position: "absolute",
                 width: cardSize.width,
                 height: cardSize.height,
-                borderRadius: isMobile ? 12 : 16,
-                backgroundImage: `url(${card.image})`,
+                borderRadius: 16,
+                backgroundImage: `url(${CARDS[activeIndex].image})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
-                // 3D rotation origin: center of card, positioned originZ pixels behind
-                transformOrigin: `50% 50% ${originZ}px`,
-                // rotateY creates the carousel effect, translateX shifts carousel left for centering
-                transform: `rotateY(${rotations[i]}deg) translateX(${isMobile ? -60 : -80}px)`,
-                // Ultra-smooth animation for real-time dragging response
-                transition:
-                  "transform 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-                // Hide cards facing away from viewport
-                backfaceVisibility: "hidden",
+                boxShadow: "0 20px 40px rgba(0,0,0,0.3)",
               }}
             />
-          ))}
+          ) : (
+            // Tablet/Desktop: Full 3D carousel
+            CARDS.map((card, i) => (
+              <div
+                key={i}
+                style={{
+                  position: "absolute",
+                  width: cardSize.width,
+                  height: cardSize.height,
+                  borderRadius: deviceType === 'tablet' ? 14 : 16,
+                  backgroundImage: `url(${card.image})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  // 3D rotation origin: center of card, positioned originZ pixels behind
+                  transformOrigin: `50% 50% ${originZ}px`,
+                  // rotateY creates the carousel effect, translateX shifts carousel left for centering
+                  transform: `rotateY(${rotations[i]}deg) translateX(-1px)`,
+                  // Ultra-smooth animation for real-time dragging response
+                  transition:
+                    "transform 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+                  // Hide cards facing away from viewport
+                  backfaceVisibility: "hidden",
+                }}
+              />
+            ))
+          )}
         </div>
 
         {/* TEXT OVERLAY - Displays active card's title & description
             - Positioned at bottom of carousel and centered horizontally
-            - Responsive sizing and spacing for mobile */}
-        <div className={`absolute left-1/2 -translate-x-1/2 text-center ${isMobile ? 'bottom-2 max-w-sm px-4' : 'bottom-0 max-w-xl px-6'}`}>
-          <h2 className={`text-orange font-bold mb-2 ${isMobile ? 'text-2xl' : 'text-3xl'}`}>
+            - Responsive sizing and spacing for mobile/tablet/desktop */}
+        <div className={`absolute left-1/2 -translate-x-1/2 text-center ${
+          deviceType === 'mobile' ? 'bottom-[-50] max-w-xs px-4' :
+          deviceType === 'tablet' ? 'bottom-2 max-w-md px-6' : 'bottom-[-50] max-w-xl px-6'
+        }`}>
+          <h2 className={`text-orange font-bold mb-2 ${
+            deviceType === 'mobile' ? 'text-xl' : 
+            deviceType === 'tablet' ? 'text-2xl' : 'text-3xl'
+          }`}>
             {CARDS[activeIndex].title}
           </h2>
-          <p className={`text-black/70 ${isMobile ? 'text-base' : 'text-lg'}`}>
+          <p className={`text-black/70 ${
+            deviceType === 'mobile' ? 'text-sm' : 
+            deviceType === 'tablet' ? 'text-base' : 'text-lg'
+          }`}>
             {CARDS[activeIndex].desc}
           </p>
         </div>
