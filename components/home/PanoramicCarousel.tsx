@@ -82,16 +82,19 @@ export default function PanoramicCarousel() {
     // Update current rotation offset
     currentRotation.current += rotationDelta;
 
+    if (immediate) {
+      setRotations((prev) => prev.map((r) => r + rotationDelta));
+      return;
+    }
+
+    let closestIndex = 0;
+
     setRotations((prev) => {
-      // Apply rotation delta to all cards for continuous movement
       const updated = prev.map((r) => r + rotationDelta);
 
       // Find which card is closest to center (0 degrees) after rotation
-      let closestIndex = 0;
       let minDiff = Infinity;
-
       updated.forEach((r, i) => {
-        // Check distance from 0 (normalized with modulo 360)
         const diff = Math.abs(r % 360);
         if (diff < minDiff) {
           minDiff = diff;
@@ -99,16 +102,27 @@ export default function PanoramicCarousel() {
         }
       });
 
-      // Update the active card display
-      setActiveIndex(closestIndex);
       return updated;
     });
 
-    // Unlock carousel after animation completes (only for non-immediate updates)
-    if (!immediate) {
-      setTimeout(() => {
-        isTweening.current = false;
-      }, 400);
+    setTimeout(() => {
+      setActiveIndex(closestIndex);
+      isTweening.current = false;
+    }, 400);
+  }
+
+  function snapToNearestCard() {
+    const targetRotation = Math.round(currentRotation.current / ANGLE) * ANGLE;
+    const delta = targetRotation - currentRotation.current;
+    if (Math.abs(delta) > 0.01) {
+      updateSlides(delta);
+    } else {
+      const closestIndex = rotations.reduce((bestIndex, r, i) => {
+        const diff = Math.abs(r % 360);
+        const bestDiff = Math.abs(rotations[bestIndex] % 360);
+        return diff < bestDiff ? i : bestIndex;
+      }, 0);
+      setActiveIndex(closestIndex);
     }
   }
 
@@ -153,6 +167,9 @@ export default function PanoramicCarousel() {
     };
 
     const onMouseUp = (e: MouseEvent) => {
+      if (isDragging.current) {
+        snapToNearestCard();
+      }
       dragStart.current = null;
       isDragging.current = false;
     };
@@ -181,6 +198,9 @@ export default function PanoramicCarousel() {
     };
 
     const onTouchEnd = (e: TouchEvent) => {
+      if (isDragging.current) {
+        snapToNearestCard();
+      }
       dragStart.current = null;
       isDragging.current = false;
     };
@@ -299,9 +319,9 @@ export default function PanoramicCarousel() {
         </div>
 
         {/* TEXT OVERLAY - Displays active card's title & description
-            - Positioned at bottom of carousel (moved down for better spacing)
-            - Updates automatically when activeIndex changes */}
-        <div className="absolute bottom-1 text-center max-w-xl px-6">
+            - Positioned at bottom of carousel and centered horizontally
+            - Lowered a bit more for better spacing below the card */}
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 text-center max-w-xl px-6">
           <h2 className="text-orange text-3xl font-bold mb-2">
             {CARDS[activeIndex].title}
           </h2>
