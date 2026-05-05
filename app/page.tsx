@@ -16,13 +16,21 @@ export default function Home() {
       <Services />
 
       {/* ── Trusted-by / Partners section ── */}
-      <section style={{ background: "#ffffffff", padding: "90px 48px" }}>
-        <div style={{
+      <style>{`
+        @media (max-width: 767px) {
+          #clients-section   { padding: 48px 24px !important; }
+          #clients-inner     { flex-direction: column !important; gap: 32px !important; }
+          #clients-text      { flex: unset !important; width: 100% !important; }
+          #clients-logo      { flex: unset !important; width: 100% !important; max-height: 380px !important; }
+        }
+      `}</style>
+      <section id="clients-section" style={{ background: "#ffffffff", padding: "90px 48px" }}>
+        <div id="clients-inner" style={{
           maxWidth: "1200px", margin: "0 auto",
           display: "flex", gap: "80px", alignItems: "center",
         }}>
           {/* Left: Text */}
-          <div style={{ flex: "0 0 360px" }}>
+          <div id="clients-text" style={{ flex: "0 0 360px" }}>
             <span style={{
               display: "inline-flex", alignItems: "center", gap: "6px",
               padding: "5px 14px", background: "#fff",
@@ -52,7 +60,7 @@ export default function Home() {
           </div>
 
           {/* Right: Circular animated logo cluster */}
-          <div style={{
+          <div id="clients-logo" style={{
             flex: 1,
             aspectRatio: "1 / 1",
             maxHeight: "540px",
