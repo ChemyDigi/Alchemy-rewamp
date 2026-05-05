@@ -26,8 +26,8 @@ function ScrollFillText({
 	return (
 		<p
 			ref={ref}
-			className={`mt-1 max-w-[760px] text-[22px] sm:text-[22px] md:text-[28px] font-medium leading-[1.65] tracking-[-0.03em] text-[#7e7e7e] ${
-				isRightAligned ? "ml-auto text-right" : "text-left"
+			className={`mt-1 max-w-[760px] text-[28px] font-medium leading-[1.65] tracking-[-0.03em] text-[#7e7e7e] ${
+				isRightAligned ? "text-right" : "text-left"
 			} ${className ?? ""}`}
 		>
 			{letters.map((letter, i) => {
@@ -46,22 +46,23 @@ function ScrollFillText({
 	);
 }
 
-export default function AlchemyPics() {
+export default function AlchemyRecords() {
 	return (
 		<section className="w-full bg-white overflow-hidden">
 			<div className="flex w-full flex-col items-start px-10 py-1 sm:px-10 md:px-20 lg:py-2">
-				<Image
-					src="/images/services/AV/AlchemyPics1.png"
-					alt="Alchemy Pictures logo"
-					width={760}
-					height={360}
-					priority
-					className="h-auto w-full max-w-[460px] object-contain"
-				/>
+				<div className="flex w-full justify-end">
+					<Image
+						src="/images/services/AV/AlchemyPics1.png"
+						alt="Alchemy Records logo"
+						width={760}
+						height={360}
+						priority
+						className="h-auto w-full max-w-[460px] object-contain"
+					/>
+				</div>
 
 				<ScrollFillText
-					align="right"
-					text="We create impactful visual stories through video and live streaming, blending creativity and technical skill to connect with your audience."
+					text="We shape raw talent into powerful sound, helping artists grow while delivering full production from creation to final mastering."
 					className="mt-1"
 				/>
 			</div>

@@ -27,7 +27,7 @@ export default function ServicesSection() {
             VISUAL PRODUCTION
           </h1>
 
-          <p className="text-sm sm:text-base text-black leading-relaxed mb-6 max-w-[550px] mx-auto lg:mx-0">
+          <p className="text-sm sm:text-base text-black leading-relaxed mb-6 max-w-[550px] mx-auto lg:mx-0 text-justify">
             Transform ideas into powerful digital experiences with our full cycle audio and visual production services. From intuitive design to robust engineering, we craft solutions that elevate your brand and connect you with your audience.
           </p>
 
