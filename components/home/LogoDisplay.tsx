@@ -103,7 +103,7 @@ const MIN_STAY = 2600;
 const MAX_STAY = 5200;
 const FADE_MS  = 680;
 
-/* ─── TYPES ────────────────────────────────────────────────────────── */
+/* ─── TYPES ───────────────────────────────────────────────────────── */
 type Phase = "in" | "visible" | "out";
 interface Slot { id: number; cellIndex: number; logoSrc: string; phase: Phase; }
 

@@ -12,9 +12,11 @@ export default function Home() {
 
       <Navbar />
       <Hero />
+      <AboutIntro />
+      <Services />
 
       {/* ── Trusted-by / Partners section ── */}
-      <section style={{ background: "#f8f9fb", padding: "90px 48px" }}>
+      <section style={{ background: "#ffffffff", padding: "90px 48px" }}>
         <div style={{
           maxWidth: "1200px", margin: "0 auto",
           display: "flex", gap: "80px", alignItems: "center",
@@ -37,7 +39,7 @@ export default function Home() {
               letterSpacing: "-0.02em",
             }}>
               Trusted by{" "}
-              <span style={{ color: "#f97316" }}>200+</span>
+              <span style={{ color: "#f97316" }}>40+</span>
               <br />leading brands
             </h2>
             <p style={{
@@ -47,26 +49,6 @@ export default function Home() {
               From creative production to digital marketing, we deliver
               measurable results for Sri Lanka&rsquo;s top companies.
             </p>
-            <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-              <a href="/contactus" style={{
-                display: "inline-block", padding: "12px 28px",
-                background: "#0f0f0f", color: "#fff",
-                borderRadius: "10px", fontSize: "14px",
-                fontWeight: 600, textDecoration: "none",
-                letterSpacing: "0.01em",
-              }}>
-                Work with us
-              </a>
-              <a href="/about" style={{
-                display: "inline-block", padding: "12px 28px",
-                background: "transparent", color: "#0f0f0f",
-                border: "1.5px solid #e5e7eb",
-                borderRadius: "10px", fontSize: "14px",
-                fontWeight: 600, textDecoration: "none",
-              }}>
-                Learn more
-              </a>
-            </div>
           </div>
 
           {/* Right: Circular animated logo cluster */}
@@ -81,8 +63,7 @@ export default function Home() {
         </div>
       </section>
 
-      <AboutIntro />
-      <Services/>
+
       <PanoramicCarousel />
       <Footer />
     </main>
