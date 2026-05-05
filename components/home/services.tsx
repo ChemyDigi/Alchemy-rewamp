@@ -17,28 +17,28 @@ const services: Service[] = [
     count: "01",
     image: "/images/home/it.jpg",
     label: "IT Solutions",
-    link: "/services/it",
+    link: "/services-it",
   },
   {
     title: "AV Production",
     count: "02",
     image: "/images/home/av.jpg",
     label: "AV Production",
-    link: "/services/av-production",
+    link: "/services-av",
   },
   {
     title: "Digital Marketing",
     count: "03",
     image: "/images/home/marketing.jpg",
     label: "Digital Marketing",
-    link: "/services/digital-marketing",
+    link: "/services-dm",
   },
   {
     title: "Event Management",
     count: "04",
     image: "/images/home/event.jpg",
     label: "Event Management",
-    link: "/services/event-management",
+    link: "/services-event",
   },
 ]
 
