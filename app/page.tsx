@@ -31,7 +31,7 @@ export default function Home() {
               fontWeight: 600, color: "#888",
               letterSpacing: "0.05em", marginBottom: "28px",
             }}>
-              Our Clients
+
             </span>
             <h2 style={{
               fontSize: "clamp(30px, 3vw, 44px)", fontWeight: 800,
