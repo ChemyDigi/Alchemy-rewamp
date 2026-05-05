@@ -1,56 +1,53 @@
 "use client";
 
+import type { StaticImageData } from "next/image";
 import { useEffect, useRef, useState } from "react";
+import post1 from "@/public/images/carousel/post1.jpeg";
+import post2 from "@/public/images/carousel/post2.jpeg";
+import post3 from "@/public/images/carousel/post3.jpeg";
+import post4 from "@/public/images/carousel/post4.jpeg";
+import post5 from "@/public/images/carousel/post5.jpeg";
 
 /* ─── CONFIG ─────────────────────────────────────────── */
 // ANGLE: Rotation angle (in degrees) between each card in the carousel
 const ANGLE = 30;
 
-/* 🖼️ CARD DATA - Array of carousel items with images and descriptions */
-const CARDS = [
+type CarouselImage = StaticImageData | string;
+const getImageSrc = (image: CarouselImage) =>
+  typeof image === "string" ? image : image.src;
+
+/* CARD DATA - Array of carousel items with images and descriptions */
+const ORIGINAL_CARDS = [
   {
-    image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
-    title: "Mountains",
-    desc: "Experience breathtaking mountain landscapes.",
+    image: post1,
+    title: "Post 1",
+    desc: "Beautiful scenic shot from our carousel collection.",
   },
   {
-    image: "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
-    title: "Desert",
-    desc: "Feel the calm and vast desert views.",
+    image: post2,
+    title: "Post 2",
+    desc: "Beautiful scenic shot from our carousel collection.",
   },
   {
-    image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
-    title: "Forest",
-    desc: "Explore lush green forests and nature.",
+    image: post3,
+    title: "Post 3",
+    desc: "Beautiful scenic shot from our carousel collection.",
   },
   {
-    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
-    title: "Ocean",
-    desc: "Relax with the sound of waves.",
+    image: post4,
+    title: "Post 4",
+    desc: "Beautiful scenic shot from our carousel collection.",
   },
   {
-    image: "https://images.unsplash.com/photo-1491553895911-0055eca6402d",
-    title: "City",
-    desc: "Dive into vibrant city life.",
+    image: post5,
+    title: "Post 5",
+    desc: "Beautiful scenic shot from our carousel collection.",
   },
-  {
-    image: "https://images.unsplash.com/photo-1470770841072-f978cf4d019e",
-    title: "Snow",
-    desc: "Enjoy peaceful snowy landscapes.",
-  },
-  ...Array(3).fill(0).flatMap(() => [
-    {
-      image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
-      title: "Mountains",
-      desc: "Experience breathtaking mountain landscapes.",
-    },
-    {
-      image: "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
-      title: "Desert",
-      desc: "Feel the calm and vast desert views.",
-    },
-  ]),
 ];
+
+// Repeat the original five cards multiple times so the 3D carousel forms a full ring
+// and never leaves blank space when rotating continuously.
+const CARDS = [...ORIGINAL_CARDS, ...ORIGINAL_CARDS, ...ORIGINAL_CARDS];
 
 export default function PanoramicCarousel() {
   // Track rotation angles for each card (initially spread at ANGLE intervals)
@@ -358,7 +355,7 @@ export default function PanoramicCarousel() {
                 width: cardSize.width,
                 height: cardSize.height,
                 borderRadius: 16,
-                backgroundImage: `url(${CARDS[activeIndex].image})`,
+                backgroundImage: `url(${getImageSrc(CARDS[activeIndex].image)})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}
@@ -373,7 +370,7 @@ export default function PanoramicCarousel() {
                   width: cardSize.width,
                   height: cardSize.height,
                   borderRadius: deviceType === 'tablet' ? 14 : 16,
-                  backgroundImage: `url(${card.image})`,
+                  backgroundImage: `url(${getImageSrc(card.image)})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                   // 3D rotation origin: center of card, positioned originZ pixels behind
