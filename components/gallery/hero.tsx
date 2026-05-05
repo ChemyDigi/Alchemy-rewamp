@@ -3,6 +3,8 @@
 
 import { motion, useMotionValue, useTransform, type PanInfo } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import photo8 from '@/public/images/gallery/photo8.png';
+import photo9 from '@/public/images/gallery/photo9.png';
 
 interface CardRotateProps {
   children: React.ReactNode;
@@ -100,9 +102,10 @@ function Stack({
           id: 1,
           content: (
             <img
-              src="https://images.unsplash.com/photo-1480074568708-e7b720bb3f09?q=80&w=500&auto=format"
-              alt="card-1"
-              className="w-full h-full object-cover pointer-events-none"
+              src={photo8.src}
+              alt="photo8"
+              className="w-full h-full object-cover pointer-events-none bg-white"
+              style={{ backgroundColor: '#fff' }}
             />
           )
         },
@@ -110,29 +113,10 @@ function Stack({
           id: 2,
           content: (
             <img
-              src="https://images.unsplash.com/photo-1449844908441-8829872d2607?q=80&w=500&auto=format"
-              alt="card-2"
-              className="w-full h-full object-cover pointer-events-none"
-            />
-          )
-        },
-        {
-          id: 3,
-          content: (
-            <img
-              src="https://images.unsplash.com/photo-1452626212852-811d58933cae?q=80&w=500&auto=format"
-              alt="card-3"
-              className="w-full h-full object-cover pointer-events-none"
-            />
-          )
-        },
-        {
-          id: 4,
-          content: (
-            <img
-              src="https://images.unsplash.com/photo-1572120360610-d971b9d7767c?q=80&w=500&auto=format"
-              alt="card-4"
-              className="w-full h-full object-cover pointer-events-none"
+              src={photo9.src}
+              alt="photo9"
+              className="w-full h-full object-cover pointer-events-none bg-white"
+              style={{ backgroundColor: '#fff' }}
             />
           )
         }
@@ -186,7 +170,8 @@ function Stack({
             disableDrag={shouldDisableDrag}
           >
             <motion.div
-              className="rounded-2xl overflow-hidden w-full h-full shadow-xl"
+              className="rounded-2xl overflow-hidden w-full h-full shadow-xl bg-white"
+              style={{ backfaceVisibility: 'hidden', transformStyle: 'preserve-3d' }}
               onClick={() => shouldEnableClick && sendToBack(card.id)}
               animate={{
                 rotateZ: (stack.length - index - 1) * 4 + randomRotate,
@@ -211,49 +196,49 @@ function Stack({
 
 export default function Hero() {
   const images = [
-    "https://images.unsplash.com/photo-1480074568708-e7b720bb3f09?q=80&w=600&auto=format",
-    "https://images.unsplash.com/photo-1449844908441-8829872d2607?q=80&w=600&auto=format",
-    "https://images.unsplash.com/photo-1452626212852-811d58933cae?q=80&w=600&auto=format",
-    "https://images.unsplash.com/photo-1572120360610-d971b9d7767c?q=80&w=600&auto=format"
+    photo8.src,
+    photo9.src
   ];
 
   return (
-    <div className="min-h-screen bg-white">
-      <div className="w-full px-12 md:px-16">
-        <div className="flex items-end justify-between min-h-screen pb-20">
-          {/* Left Content */}
-          <div className="z-10 max-w-[620px] lg:translate-y-[-1.5rem] lg:pb-2 xl:translate-y-[-2rem]">
-            <h1 className="text-7xl leading-[0.88] font-medium tracking-[-0.03em] text-black sm:text-8xl md:text-9xl lg:text-[10.75rem] xl:text-[11.5rem] 2xl:text-[12.5rem]">
-              Gallery
-            </h1>
-            <p className="mt-3 text-xl font-normal uppercase tracking-[-0.01em] text-[#E3791D] sm:text-3xl lg:text-xl">
-              CREATIVE
-            </p>
-            <p className="text-xl leading-none font-normal uppercase tracking-[-0.01em] text-black sm:text-3xl lg:text-xl">
-              STORIES CAPTURED WITH PURPOSE
-            </p>
-          </div>
-
+    <div className="min-h-screen bg-white pt-16 md:pt-0">
+      <div className="w-full px-4 sm:px-8 md:px-12 lg:px-16">
+        <div className="flex flex-col lg:flex-row items-center lg:items-end lg:justify-between gap-6 lg:gap-16 py-10 lg:py-20">
           {/* Right Content - Card Stack */}
-          <div className="flex justify-end md:pr-24 pb-16">
-            <div style={{ width: 360, height: 520 }}>
+          <div className="flex justify-center lg:justify-end lg:pr-24 pb-4 lg:pb-0 order-1 lg:order-2 w-full lg:w-auto">
+            <div className="w-64 h-80 sm:w-72 sm:h-96 md:w-72 md:h-[400px] lg:w-80 lg:h-[480px] xl:w-80 xl:h-[520px]">
               <Stack
                 randomRotation={false}
-                sensitivity={300}
+                sensitivity={200}
                 sendToBackOnClick={true}
                 cards={images.map((src, i) => (
-                  <img 
-                    key={i} 
-                    src={src} 
-                    alt={`card-${i + 1}`} 
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                  <img
+                    key={i}
+                    src={src}
+                    alt={`card-${i + 1}`}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', backgroundColor: '#fff' }}
                   />
                 ))}
                 autoplay={false}
                 autoplayDelay={3500}
                 pauseOnHover={false}
+                mobileClickOnly={true}
+                mobileBreakpoint={768}
               />
             </div>
+          </div>
+
+          {/* Left Content */}
+          <div className="z-10 max-w-[620px] text-center lg:text-left lg:translate-y-[-1.5rem] lg:pb-2 xl:translate-y-[-2rem] mb-2 lg:mb-0 order-2 lg:order-1 w-full">
+            <h1 className="text-3xl leading-[0.95] font-medium tracking-[-0.03em] text-black sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl">
+              Gallery
+            </h1>
+            <p className="mt-2 text-sm font-normal uppercase tracking-[-0.01em] text-[#E3791D] sm:text-base md:text-lg lg:text-xl">
+              CREATIVE
+            </p>
+            <p className="text-sm leading-snug font-normal uppercase tracking-[-0.01em] text-black sm:text-base md:text-lg lg:text-xl">
+              STORIES CAPTURED WITH PURPOSE
+            </p>
           </div>
         </div>
       </div>
