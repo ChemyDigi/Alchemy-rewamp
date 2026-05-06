@@ -1,37 +1,43 @@
 "use client";
 
-import Link from "next/link";
+import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function ServicesSection() {
+  const [activeIndex, setActiveIndex] = useState<number | null>(0);
+
+  const toggle = (index: number) => {
+    setActiveIndex(activeIndex === index ? null : index);
+  };
 
   return (
     <section className="w-full bg-white overflow-hidden">
 
       {/* ================= HERO SECTION ================= */}
       <div
-        className="
-          max-w-[1400px] mx-auto
-          pl-6 sm:pl-10 md:pl-10 lg:pl-[10px] pr-0
-          pt-20 md:pt-36 pb-8
-          grid grid-cols-1 lg:grid-cols-2
-          items-center gap-10
-        "
+ className="
+  max-w-[1400px] mx-auto
+  px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12
+  pt-20 md:pt-36 pb-8
+  grid grid-cols-1 lg:grid-cols-2
+  items-center gap-10
+"
       >
 
         {/* LEFT */}
         {/* LEFT */}
-        <div className="z-10 text-center lg:text-left mt-6 sm:mt-8 md:mt-12 lg:mt-16">
-          <h1 className="text-2xl sm:text-4xl md:text-5xl font-semibold leading-[1.15] mb-4 sm:mb-6 text-black tracking-wide">
+<div className="z-10 text-center lg:text-left mt-6 sm:mt-8 md:mt-12 lg:mt-16">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight mb-6 text-black">
             PROFESSIONAL AUDIO & <br className="hidden sm:block" />
             VISUAL PRODUCTION
           </h1>
 
-          <p className="text-sm sm:text-base text-black leading-relaxed mb-4 sm:mb-6 max-w-[550px] mx-auto lg:mx-0 text-justify pr-6 sm:px-0">
+          <p className="text-normal sm:text-base text-black leading-relaxed mb-6 max-w-[550px] mx-auto lg:mx-0 text-justify">
             Transform ideas into powerful digital experiences with our full cycle audio and visual production services. From intuitive design to robust engineering, we craft solutions that elevate your brand and connect you with your audience.
           </p>
 
-            {/* BUTTON → /contact */}
+          {/* BUTTON → /contact */}
             <Link href="/contactus">
                 <button className="group mt-8 bg-orange text-white h-[56px] pl-8 pr-8 rounded-full relative flex items-center overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-black min-w-[200px] hover:min-w-[260px]">
 
@@ -44,19 +50,18 @@ export default function ServicesSection() {
                 </span>
                 </button>
             </Link>
-
         </div>
 
         {/* RIGHT IMAGE */}
    
-        <div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[640px] -mt-6 sm:-mt-8 md:-mt-10 lg:-mt-14">
-        <Image
+        <div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[650px] -mt-6 sm:-mt-8 md:-mt-10 lg:-mt-12">
+          <Image
             src="/images/services/AV/AVHero.jpeg"
             alt="hero"
             fill
-            className="object-cover"
+            className="object-contain"
             priority
-        />
+          />
         </div>
 
       </div>
