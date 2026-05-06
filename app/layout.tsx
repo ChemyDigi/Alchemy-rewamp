@@ -4,6 +4,10 @@ import "./globals.css";
 import "lenis/dist/lenis.css";
 import Header from "@/components/Header";
 import LenisProvider from "@/components/LenisProvider";
+import { Geist } from "next/font/google";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const seasonSans = localFont({
   src: [
@@ -37,7 +41,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${seasonSans.variable} h-full antialiased`}>
+    <html lang="en" className={cn("h-full", "antialiased", seasonSans.variable, "font-sans", geist.variable)}>
       <body className="min-h-full flex flex-col selection:bg-[#E3791D] selection:text-white">
         <LenisProvider>
           <Header />
