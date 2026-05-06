@@ -47,7 +47,7 @@ export default function Footer() {
           </p>
 
           {/* BUTTON → /contact */}
-          <Link href="/contact">
+          <Link href="/contactus">
             <button className="group mt-8 bg-orange text-white h-[56px] pl-8 pr-8 rounded-full relative flex items-center overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-black min-w-[280px] hover:min-w-[340px]">
 
               <span className="text-base md:text-lg font-medium whitespace-nowrap">
