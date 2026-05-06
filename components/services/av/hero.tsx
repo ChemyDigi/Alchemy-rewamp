@@ -22,17 +22,17 @@ export default function ServicesSection() {
         {/* LEFT */}
         {/* LEFT */}
         <div className="z-10 text-center lg:text-left mt-6 sm:mt-8 md:mt-12 lg:mt-16">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold leading-[1.15] mb-6 text-black tracking-wide">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-semibold leading-[1.15] mb-4 sm:mb-6 text-black tracking-wide">
             PROFESSIONAL AUDIO & <br className="hidden sm:block" />
             VISUAL PRODUCTION
           </h1>
 
-          <p className="text-sm sm:text-base text-black leading-relaxed mb-6 max-w-[550px] mx-auto lg:mx-0 text-justify">
+          <p className="text-sm sm:text-base text-black leading-relaxed mb-4 sm:mb-6 max-w-[550px] mx-auto lg:mx-0 text-justify pr-6 sm:px-0">
             Transform ideas into powerful digital experiences with our full cycle audio and visual production services. From intuitive design to robust engineering, we craft solutions that elevate your brand and connect you with your audience.
           </p>
 
             {/* BUTTON → /contact */}
-            <Link href="/contact">
+            <Link href="/contactus">
                 <button className="group mt-8 bg-orange text-white h-[56px] pl-8 pr-8 rounded-full relative flex items-center overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-black min-w-[200px] hover:min-w-[260px]">
 
                 <span className="text-base md:text-lg font-medium whitespace-nowrap">

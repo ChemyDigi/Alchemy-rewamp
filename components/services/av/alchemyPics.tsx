@@ -26,8 +26,8 @@ function ScrollFillText({
 	return (
 		<p
 			ref={ref}
-			className={`mt-1 max-w-[760px] text-[22px] sm:text-[22px] md:text-[28px] font-medium leading-[1.65] tracking-[-0.03em] text-[#7e7e7e] ${
-				isRightAligned ? "ml-auto text-right" : "text-left"
+			className={`mt-1 max-w-[760px] text-[22px] sm:text-[22px] md:text-[28px] font-medium leading-[1.65] tracking-[-0.03em] text-[#7e7e7e] text-center ${
+				isRightAligned ? "md:ml-auto md:text-right" : "md:text-left"
 			} ${className ?? ""}`}
 		>
 			{letters.map((letter, i) => {
@@ -67,7 +67,7 @@ export default function AlchemyPics() {
 			</div>
 
 			<div className="w-full px-10 pb-10 pt-8 sm:px-10 md:px-20 lg:pb-16 lg:pt-12">
-				<div className="mx-auto w-full max-w-[1400px] overflow-hidden rounded-[28px] bg-black shadow-[0_20px_80px_rgba(0,0,0,0.12)]">
+				<div className="mx-auto w-full max-w-[1400px] overflow-hidden rounded-[28px] bg-black">
 					<video
 						className="h-auto w-full object-cover"
 						src="/showreel.mp4"
