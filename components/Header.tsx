@@ -21,7 +21,7 @@ export default function Header() {
             alt="Alchemy Logo"
             width={150}
             height={40}
-            className="w-auto h-8 sm:h-10 object-contain"
+            className="w-auto h-8 sm:h-10 object-contain -translate-x-4 md:translate-x-0"
             priority
           />
         </Link>
