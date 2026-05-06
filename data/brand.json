@@ -1,0 +1,30 @@
+{
+  "brands": [
+    {
+      "id": "tommee-tippee",
+      "slug": "tommee-tippee",
+      "heroImage": "/images/brand-main.png",
+      "brandName": "Tommee Tippee",
+      "bornYear": "1965",
+      "introduction": "Tommee Tippee is a globally trusted baby care brand that helps parents confidently care for their little ones with thoughtfully designed, everyday essentials. It offers practical, parent friendly solutions for feeding, soothing, and hygiene making early parenting simpler and more intuitive.",
+      "details": {
+        "brandName": "Tommee Tippee",
+        "timeFrame": "Present",
+        "role": "Digital Marketing"
+      }
+    },
+    {
+      "id": "another-brand",
+      "slug": "another-brand",
+      "heroImage": "/images/another-brand-main.png",
+      "brandName": "Another Brand",
+      "bornYear": "2000",
+      "introduction": "This is another brand description that will animate on scroll...",
+      "details": {
+        "brandName": "Another Brand",
+        "timeFrame": "2020-Present",
+        "role": "Creative Director"
+      }
+    }
+  ]
+}

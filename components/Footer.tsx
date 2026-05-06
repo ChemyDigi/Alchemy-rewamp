@@ -94,7 +94,7 @@ export default function Footer() {
 
       {/* BOTTOM */}
       <div className="border-t border-gray-200 px-12 md:px-16 py-4 flex flex-col md:flex-row justify-between text-sm text-gray-500">
-        <p>© 2025 alchemy. All rights reserved</p>
+        <p>© 2026 alchemy. All rights reserved</p>
         <Link href="/privacy-policy" className="hover:text-black">
           Privacy Policy
         </Link>

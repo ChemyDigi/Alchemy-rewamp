@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import { Backlight } from "@/components/magicui/backlight";
 
 function ScrollFillText({
 	text,
@@ -68,15 +69,17 @@ export default function AlchemyRecords() {
 			</div>
 
 			<div className="w-full px-10 pb-10 pt-8 sm:px-10 md:px-20 lg:pb-16 lg:pt-12">
-				<div className="mx-auto w-full max-w-[1400px] overflow-hidden rounded-[28px] bg-black">
-					<video
-						className="h-auto w-full object-cover"
-						src="/showreel.mp4"
-						controls
-						playsInline
-						preload="metadata"
-					/>
-				</div>
+				<Backlight blur={40} className="w-full">
+					<div className="mx-auto w-full max-w-[1400px] overflow-hidden rounded-[28px] bg-black shadow-[0_20px_80px_rgba(0,0,0,0.12)]">
+						<video
+							className="h-auto w-full object-cover"
+							src="/showreel.mp4"
+							controls
+							playsInline
+							preload="metadata"
+						/>
+					</div>
+				</Backlight>
 			</div>
 		</section>
 	);
