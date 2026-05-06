@@ -24,7 +24,7 @@ const services: Service[] = [
     count: "02",
     image: "/images/home/av.jpg",
     label: "AV Production",
-    link: "/services-av",
+    link: "/services/av-production",
   },
   {
     title: "Digital Marketing",
@@ -67,7 +67,7 @@ export default function Services() {
 
   return (
     <section className="w-full pt-4 pb-8 px-6 md:px-10 lg:px-16 bg-white">
-      
+
       {/* Heading */}
       <div className="mb-10">
         <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold text-black">
