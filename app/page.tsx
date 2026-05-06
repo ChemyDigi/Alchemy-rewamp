@@ -34,7 +34,7 @@ export default function Home() {
             <span style={{
               display: "inline-flex", alignItems: "center", gap: "6px",
               padding: "5px 14px", background: "#fff",
-              border: "1px solid #e5e7eb",
+              border: "1px solid #ffffffff",
               borderRadius: "20px", fontSize: "12px",
               fontWeight: 600, color: "#888",
               letterSpacing: "0.05em", marginBottom: "28px",
