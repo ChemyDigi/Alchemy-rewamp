@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getHomeContent, updateHomeContent, HomeContent, ServiceImage, BrandLogo } from "@/lib/firestore";
+import { getHomeContent, updateHomeContent, HomeContent, ServiceImage, BrandLogo, TrustedLogo, CarouselProject } from "@/lib/firestore";
 import { PageHeader, AdminCard, AdminButton, AdminInput } from "@/components/admin/AdminUI";
 import ImageUpload from "@/components/admin/ImageUpload";
 import ConfirmDialog from "@/components/admin/ConfirmDialog";
@@ -10,37 +10,63 @@ import { Plus, Trash2, X, Save } from "lucide-react";
 
 const emptyServiceImage = (): ServiceImage => ({ title: "", imageUrl: "", link: "", order: 0 });
 const emptyBrandLogo = (): BrandLogo => ({ name: "", logoUrl: "", order: 0 });
+const emptyTrustedLogo = (): TrustedLogo => ({ url: "", order: 0 });
+const emptyCarouselProject = (): CarouselProject => ({ image: "", title: "", desc: "", order: 0 });
 
 export default function AdminHomePage() {
   const [serviceImages, setServiceImages] = useState<ServiceImage[]>([]);
   const [brandLogos, setBrandLogos] = useState<BrandLogo[]>([]);
+  const [watchReelUrl, setWatchReelUrl] = useState("");
+  const [trustedLogos, setTrustedLogos] = useState<TrustedLogo[]>([]);
+  const [carouselProjects, setCarouselProjects] = useState<CarouselProject[]>([]);
   const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
+  const [savingAll, setSavingAll] = useState(false);
+  const [savingSection, setSavingSection] = useState<string | null>(null);
   const [deleteService, setDeleteService] = useState<number | null>(null);
   const [deleteLogo, setDeleteLogo] = useState<number | null>(null);
+  const [deleteTrustedLogo, setDeleteTrustedLogo] = useState<number | null>(null);
+  const [deleteCarouselProject, setDeleteCarouselProject] = useState<number | null>(null);
 
   useEffect(() => {
     getHomeContent().then((data) => {
       if (data) {
         setServiceImages(data.serviceImages ?? []);
         setBrandLogos(data.brandLogos ?? []);
+        setWatchReelUrl(data.watchReelUrl ?? "");
+        setTrustedLogos(data.trustedLogos ?? []);
+        setCarouselProjects(data.carouselProjects ?? []);
       }
       setLoading(false);
     });
   }, []);
 
-  async function handleSave() {
-    setSaving(true);
+  async function handleSaveAll() {
+    setSavingAll(true);
     try {
       await updateHomeContent({
+        watchReelUrl,
+        trustedLogos: trustedLogos.map((t, i) => ({ ...t, order: i })),
+        carouselProjects: carouselProjects.map((c, i) => ({ ...c, order: i })),
         serviceImages: serviceImages.map((s, i) => ({ ...s, order: i })),
         brandLogos: brandLogos.map((b, i) => ({ ...b, order: i })),
       });
-      toast.success("Home content updated");
+      toast.success("All home content updated");
     } catch {
       toast.error("Save failed");
     } finally {
-      setSaving(false);
+      setSavingAll(false);
+    }
+  }
+
+  async function handleSaveSection(sectionName: string, data: Partial<HomeContent>) {
+    setSavingSection(sectionName);
+    try {
+      await updateHomeContent(data);
+      toast.success(`${sectionName} updated`);
+    } catch {
+      toast.error(`Failed to save ${sectionName}`);
+    } finally {
+      setSavingSection(null);
     }
   }
 
@@ -50,6 +76,14 @@ export default function AdminHomePage() {
 
   function updateBrandLogo(idx: number, field: keyof BrandLogo, value: string) {
     setBrandLogos((b) => b.map((item, i) => i === idx ? { ...item, [field]: value } : item));
+  }
+
+  function updateTrustedLogo(idx: number, field: keyof TrustedLogo, value: string) {
+    setTrustedLogos((t) => t.map((item, i) => i === idx ? { ...item, [field]: value } : item));
+  }
+
+  function updateCarouselProject(idx: number, field: keyof CarouselProject, value: string) {
+    setCarouselProjects((c) => c.map((item, i) => i === idx ? { ...item, [field]: value } : item));
   }
 
   if (loading) {
@@ -66,32 +100,77 @@ export default function AdminHomePage() {
         title="Home Page Content"
         description="Manage service images and brand logos displayed on the homepage"
         action={
-          <AdminButton variant="primary" size="md" onClick={handleSave} loading={saving}>
+          <AdminButton variant="primary" size="md" onClick={handleSaveAll} loading={savingAll}>
             <Save size={15} />
-            Save Changes
+            Save All
           </AdminButton>
         }
       />
-
-      {/* Service Images */}
+      {/* Trusted Logos */}
       <AdminCard className="mb-6">
         <div className="flex items-center justify-between mb-5">
-          <h2 className="text-white font-semibold">Service Images</h2>
-          <AdminButton variant="secondary" size="sm" onClick={() => setServiceImages((s) => [...s, emptyServiceImage()])}>
-            <Plus size={13} />
-            Add Service Image
-          </AdminButton>
+          <h2 className="text-white font-semibold">Trusted Company Logos</h2>
+          <div className="flex gap-2">
+            <AdminButton variant="secondary" size="sm" onClick={() => setTrustedLogos((t) => [...t, emptyTrustedLogo()])}>
+              <Plus size={13} />
+              Add Logo
+            </AdminButton>
+            <AdminButton variant="primary" size="sm" onClick={() => handleSaveSection("Trusted Logos", { trustedLogos: trustedLogos.map((t, i) => ({ ...t, order: i })) })} loading={savingSection === "Trusted Logos"}>
+              <Save size={13} />
+              Save Logos
+            </AdminButton>
+          </div>
         </div>
 
-        {serviceImages.length === 0 ? (
-          <p className="text-slate-600 text-sm text-center py-6">No service images yet</p>
+        {trustedLogos.length === 0 ? (
+          <p className="text-slate-600 text-sm text-center py-6">No trusted logos yet</p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {trustedLogos.map((logo, idx) => (
+              <div key={idx} className="bg-[#080818] border border-[#1a1a35] rounded-xl p-4 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-slate-500 text-xs font-semibold uppercase tracking-wider">Logo {idx + 1}</span>
+                  <button onClick={() => setDeleteTrustedLogo(idx)} className="text-slate-500 hover:text-red-400 transition-colors">
+                    <X size={15} />
+                  </button>
+                </div>
+                <ImageUpload
+                  label="Logo Image"
+                  value={logo.url}
+                  onChange={(url) => updateTrustedLogo(idx, "url", url)}
+                  onRemove={() => updateTrustedLogo(idx, "url", "")}
+                />
+              </div>
+            ))}
+          </div>
+        )}
+      </AdminCard>
+
+      {/* Latest Projects Carousel */}
+      <AdminCard className="mb-6">
+        <div className="flex items-center justify-between mb-5">
+          <h2 className="text-white font-semibold">Latest Projects (Carousel)</h2>
+          <div className="flex gap-2">
+            <AdminButton variant="secondary" size="sm" onClick={() => setCarouselProjects((c) => [...c, emptyCarouselProject()])}>
+              <Plus size={13} />
+              Add Project
+            </AdminButton>
+            <AdminButton variant="primary" size="sm" onClick={() => handleSaveSection("Carousel Projects", { carouselProjects: carouselProjects.map((c, i) => ({ ...c, order: i })) })} loading={savingSection === "Carousel Projects"}>
+              <Save size={13} />
+              Save Projects
+            </AdminButton>
+          </div>
+        </div>
+
+        {carouselProjects.length === 0 ? (
+          <p className="text-slate-600 text-sm text-center py-6">No projects yet</p>
         ) : (
           <div className="space-y-4">
-            {serviceImages.map((item, idx) => (
+            {carouselProjects.map((item, idx) => (
               <div key={idx} className="bg-[#080818] border border-[#1a1a35] rounded-xl p-4">
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-slate-500 text-xs font-semibold uppercase tracking-wider">Service Image {idx + 1}</span>
-                  <button onClick={() => setDeleteService(idx)} className="text-slate-500 hover:text-red-400 transition-colors">
+                  <span className="text-slate-500 text-xs font-semibold uppercase tracking-wider">Project {idx + 1}</span>
+                  <button onClick={() => setDeleteCarouselProject(idx)} className="text-slate-500 hover:text-red-400 transition-colors">
                     <X size={15} />
                   </button>
                 </div>
@@ -99,22 +178,22 @@ export default function AdminHomePage() {
                   <div className="space-y-3">
                     <AdminInput
                       label="Title"
-                      placeholder="e.g. IT Solutions"
+                      placeholder="e.g. Project Name"
                       value={item.title}
-                      onChange={(e) => updateServiceImage(idx, "title", e.target.value)}
+                      onChange={(e) => updateCarouselProject(idx, "title", e.target.value)}
                     />
                     <AdminInput
-                      label="Link URL"
-                      placeholder="e.g. /services-it"
-                      value={item.link}
-                      onChange={(e) => updateServiceImage(idx, "link", e.target.value)}
+                      label="Description"
+                      placeholder="e.g. Beautiful scenic shot..."
+                      value={item.desc}
+                      onChange={(e) => updateCarouselProject(idx, "desc", e.target.value)}
                     />
                   </div>
                   <ImageUpload
-                    label="Service Image"
-                    value={item.imageUrl}
-                    onChange={(url) => updateServiceImage(idx, "imageUrl", url)}
-                    onRemove={() => updateServiceImage(idx, "imageUrl", "")}
+                    label="Project Image"
+                    value={item.image}
+                    onChange={(url) => updateCarouselProject(idx, "image", url)}
+                    onRemove={() => updateCarouselProject(idx, "image", "")}
                   />
                 </div>
               </div>
@@ -123,49 +202,9 @@ export default function AdminHomePage() {
         )}
       </AdminCard>
 
-      {/* Brand Logos */}
-      <AdminCard className="mb-6">
-        <div className="flex items-center justify-between mb-5">
-          <h2 className="text-white font-semibold">Brand Logos</h2>
-          <AdminButton variant="secondary" size="sm" onClick={() => setBrandLogos((b) => [...b, emptyBrandLogo()])}>
-            <Plus size={13} />
-            Add Brand Logo
-          </AdminButton>
-        </div>
-
-        {brandLogos.length === 0 ? (
-          <p className="text-slate-600 text-sm text-center py-6">No brand logos yet</p>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {brandLogos.map((logo, idx) => (
-              <div key={idx} className="bg-[#080818] border border-[#1a1a35] rounded-xl p-4 space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-slate-500 text-xs font-semibold uppercase tracking-wider">Logo {idx + 1}</span>
-                  <button onClick={() => setDeleteLogo(idx)} className="text-slate-500 hover:text-red-400 transition-colors">
-                    <X size={15} />
-                  </button>
-                </div>
-                <AdminInput
-                  label="Brand Name"
-                  placeholder="e.g. Acme Corp"
-                  value={logo.name}
-                  onChange={(e) => updateBrandLogo(idx, "name", e.target.value)}
-                />
-                <ImageUpload
-                  label="Logo Image"
-                  value={logo.logoUrl}
-                  onChange={(url) => updateBrandLogo(idx, "logoUrl", url)}
-                  onRemove={() => updateBrandLogo(idx, "logoUrl", "")}
-                />
-              </div>
-            ))}
-          </div>
-        )}
-      </AdminCard>
-
       {/* Save button (bottom) */}
       <div className="flex gap-3 pb-6">
-        <AdminButton variant="primary" size="lg" onClick={handleSave} loading={saving}>
+        <AdminButton variant="primary" size="lg" onClick={handleSaveAll} loading={savingAll}>
           <Save size={15} />
           Save All Changes
         </AdminButton>
@@ -195,6 +234,30 @@ export default function AdminHomePage() {
           }
         }}
         onCancel={() => setDeleteLogo(null)}
+      />
+      <ConfirmDialog
+        open={deleteTrustedLogo !== null}
+        title="Remove Trusted Logo"
+        message="Remove this logo from the homepage?"
+        onConfirm={() => {
+          if (deleteTrustedLogo !== null) {
+            setTrustedLogos((t) => t.filter((_, i) => i !== deleteTrustedLogo));
+            setDeleteTrustedLogo(null);
+          }
+        }}
+        onCancel={() => setDeleteTrustedLogo(null)}
+      />
+      <ConfirmDialog
+        open={deleteCarouselProject !== null}
+        title="Remove Carousel Project"
+        message="Remove this project from the carousel?"
+        onConfirm={() => {
+          if (deleteCarouselProject !== null) {
+            setCarouselProjects((c) => c.filter((_, i) => i !== deleteCarouselProject));
+            setDeleteCarouselProject(null);
+          }
+        }}
+        onCancel={() => setDeleteCarouselProject(null)}
       />
     </>
   );

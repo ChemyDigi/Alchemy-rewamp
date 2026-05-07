@@ -1,25 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
-
-type ImageItem = {
-  id: number;
-  src: string;
-};
-
-const images: ImageItem[] = [
-  { id: 1, src: "/images/gallery/gallery_1.png" },
-  { id: 2, src: "/images/gallery/gallery_2.png" },
-  { id: 3, src: "/images/gallery/gallery_3.png" },
-  { id: 4, src: "/images/gallery/gallery_4.png" },
-  { id: 5, src: "/images/gallery/gallery_5.png" },
-  { id: 6, src: "/images/gallery/gallery_6.png" },
-  { id: 6, src: "/images/gallery/gallery_7.png" },
-];
+import { getGallery, type GalleryItem } from "@/lib/firestore";
 
 export default function GallerySection() {
+  const [images, setImages] = useState<GalleryItem[]>([]);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    getGallery().then(setImages);
+  }, []);
 
   const open = (index: number) => setActiveIndex(index);
   const close = () => setActiveIndex(null);
@@ -39,58 +30,23 @@ export default function GallerySection() {
       
       <div className="flex flex-col gap-4">
 
-        {/* ROW 1 */}
+        {/* DYNAMIC BENTO GRID */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          
-          {/* BIG LEFT */}
-          <div
-            className="relative md:col-span-2 h-[250px] md:h-[300px] rounded-2xl overflow-hidden cursor-pointer"
-            onClick={() => open(0)}
-          >
-            <Image src={images[0].src} alt="" fill className="object-cover" />
-          </div>
-
-          {/* RIGHT SQUARE */}
-          <div
-            className="relative h-[250px] md:h-[300px] rounded-2xl overflow-hidden cursor-pointer"
-            onClick={() => open(1)}
-          >
-            <Image src={images[1].src} alt="" fill className="object-cover" />
-          </div>
-        </div>
-
-        {/* ROW 2 */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          
-          {[2, 3, 4].map((i) => (
-            <div
-              key={i}
-              className="relative h-[250px] md:h-[280px] rounded-2xl overflow-hidden cursor-pointer"
-              onClick={() => open(i)}
-            >
-              <Image src={images[i].src} alt="" fill className="object-cover" />
-            </div>
-          ))}
-        </div>
-
-        {/* ROW 3 */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          
-          {/* LEFT SQUARE */}
-          <div
-            className="relative h-[250px] md:h-[300px] rounded-2xl overflow-hidden cursor-pointer"
-            onClick={() => open(5)}
-          >
-            <Image src={images[5].src} alt="" fill className="object-cover" />
-          </div>
-
-          {/* RIGHT BIG */}
-          <div
-            className="relative md:col-span-2 h-[250px] md:h-[300px] rounded-2xl overflow-hidden cursor-pointer"
-            onClick={() => open(0)}
-          >
-            <Image src={images[0].src} alt="" fill className="object-cover" />
-          </div>
+          {images.map((img, i) => {
+            const pos = i % 7;
+            const isSpan2 = pos === 0 || pos === 6;
+            return (
+              <div
+                key={img.id || i}
+                className={`relative h-[250px] md:h-[300px] rounded-2xl overflow-hidden cursor-pointer ${
+                  isSpan2 ? "md:col-span-2" : "col-span-1"
+                }`}
+                onClick={() => open(i)}
+              >
+                <Image src={img.imageUrl} alt={img.title || ""} fill className="object-cover" />
+              </div>
+            );
+          })}
         </div>
 
       </div>
@@ -118,8 +74,8 @@ export default function GallerySection() {
           {/* IMAGE */}
           <div className="relative w-[90vw] max-w-5xl h-[70vh]">
             <Image
-              src={images[activeIndex].src}
-              alt=""
+              src={images[activeIndex].imageUrl}
+              alt={images[activeIndex].title || ""}
               fill
               className="object-contain rounded-xl"
             />

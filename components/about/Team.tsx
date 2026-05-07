@@ -2,39 +2,19 @@
 
 import { useRef, useState, useCallback, useEffect } from "react";
 import Image from "next/image";
+import { getTeam, type TeamMember } from "@/lib/firestore";
 
-type TeamMember = {
-  name: string;
-  role: string;
-  img: string;
-};
 
-const names = [
-  "Ravindu Lakshan",
-  "Iwanka Sandaru",
-  "Isuri Udayangani",
-  "Dineth Gunawardana",
-  "Member 5",
-  "Member 6",
-  "Member 7",
-  "Member 8",
-  "Member 9",
-  "Member 10",
-  "Member 11",
-  "Member 12",
-  "Member 13",
-];
-
-const TEAM_MEMBERS: TeamMember[] = Array.from({ length: 13 }, (_, i) => ({
-  name: names[i],
-  role: "Creative Team Lead",
-  img: `/team/${i + 1}.jpg`,
-}));
 
 export default function TeamSection() {
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const [showLeft, setShowLeft] = useState(false);
   const [showRight, setShowRight] = useState(true);
+
+  useEffect(() => {
+    getTeam().then(setTeamMembers);
+  }, []);
 
   const arrowBtn =
     "absolute top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white text-black flex items-center justify-center shadow-md transition-all duration-300 ease-out hover:bg-orange-500 hover:text-white hover:scale-110 hover:shadow-xl hover:shadow-[0_0_20px_rgba(249,115,22,0.6)] active:scale-95";
@@ -80,11 +60,11 @@ export default function TeamSection() {
 
         {/* ================= MOBILE ================= */}
         <div className="grid md:hidden gap-10">
-          {TEAM_MEMBERS.map((m) => (
-            <div key={m.name}>
+          {teamMembers.map((m) => (
+            <div key={m.id || m.name}>
               <div className="rounded-2xl overflow-hidden">
                 <Image
-                  src={m.img}
+                  src={m.imageUrl || "/placeholder.jpg"}
                   alt={m.name}
                   width={400}
                   height={500}
@@ -120,16 +100,16 @@ export default function TeamSection() {
               [-ms-overflow-style:none]
               [&::-webkit-scrollbar]:hidden"
           >
-            {TEAM_MEMBERS.map((m, i) => (
+            {teamMembers.map((m, i) => (
               <div
-                key={m.name}
+                key={m.id || m.name}
                 className={`min-w-[300px] ${
                   i % 2 === 0 ? "mt-0" : "mt-12"
                 }`}
               >
                 <div className="rounded-2xl overflow-hidden">
                   <Image
-                    src={m.img}
+                    src={m.imageUrl || "/placeholder.jpg"}
                     alt={m.name}
                     width={400}
                     height={500}

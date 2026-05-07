@@ -2,11 +2,8 @@
 
 import type { StaticImageData } from "next/image";
 import { useEffect, useRef, useState } from "react";
-import post1 from "@/public/images/carousel/post1.jpeg";
-import post2 from "@/public/images/carousel/post2.jpeg";
-import post3 from "@/public/images/carousel/post3.jpeg";
-import post4 from "@/public/images/carousel/post4.jpeg";
-import post5 from "@/public/images/carousel/post5.jpeg";
+import { getHomeContent } from "@/lib/firestore";
+
 
 /* ─── CONFIG ─────────────────────────────────────────── */
 // ANGLE: Rotation angle (in degrees) between each card in the carousel
@@ -16,44 +13,26 @@ type CarouselImage = StaticImageData | string;
 const getImageSrc = (image: CarouselImage) =>
   typeof image === "string" ? image : image.src;
 
-/* CARD DATA - Array of carousel items with images and descriptions */
-const ORIGINAL_CARDS = [
-  {
-    image: post1,
-    title: "Post 1",
-    desc: "Beautiful scenic shot from our carousel collection.",
-  },
-  {
-    image: post2,
-    title: "Post 2",
-    desc: "Beautiful scenic shot from our carousel collection.",
-  },
-  {
-    image: post3,
-    title: "Post 3",
-    desc: "Beautiful scenic shot from our carousel collection.",
-  },
-  {
-    image: post4,
-    title: "Post 4",
-    desc: "Beautiful scenic shot from our carousel collection.",
-  },
-  {
-    image: post5,
-    title: "Post 5",
-    desc: "Beautiful scenic shot from our carousel collection.",
-  },
-];
-
-// Repeat the original five cards multiple times so the 3D carousel forms a full ring
-// and never leaves blank space when rotating continuously.
-const CARDS = [...ORIGINAL_CARDS, ...ORIGINAL_CARDS, ...ORIGINAL_CARDS];
-
 export default function PanoramicCarousel() {
+  const [activeCards, setActiveCards] = useState<any[]>([]);
+
   // Track rotation angles for each card (initially spread at ANGLE intervals)
-  const [rotations, setRotations] = useState<number[]>((() =>
-    CARDS.map((_, i) => i * -ANGLE)
-  ) as any);
+  const [rotations, setRotations] = useState<number[]>([]);
+
+  useEffect(() => {
+    getHomeContent().then((data) => {
+      if (data?.carouselProjects && data.carouselProjects.length > 0) {
+        const customCards = data.carouselProjects.map(c => ({
+          image: c.image,
+          title: c.title,
+          desc: c.desc,
+        }));
+        const newCards = [...customCards, ...customCards, ...customCards];
+        setActiveCards(newCards);
+        setRotations(newCards.map((_, i) => i * -ANGLE));
+      }
+    });
+  }, []);
 
   // Track which card is currently in focus/center position
   const [activeIndex, setActiveIndex] = useState(0);
@@ -265,37 +244,37 @@ export default function PanoramicCarousel() {
     };
   }, []);
 
+  if (activeCards.length === 0) {
+    return null; // Return nothing if no projects are configured
+  }
+
   return (
     <div className="w-full bg-white overflow-hidden pb-40">
 
       {/* ═══ HEADER SECTION ═══ 
           Displays title with "OUR LATEST CREATIONS" headline */}
-      <div className={`w-full text-center ${
-        deviceType === 'mobile' ? 'pt-8' : 
-        deviceType === 'tablet' ? 'pt-12' : 'pt-20'
-      }`}>
-        <h1 className={`font-bold mb-3 ${
-          deviceType === 'mobile' ? 'text-2xl md:text-3xl' : 
-          deviceType === 'tablet' ? 'text-3xl md:text-4xl' : 'text-4xl md:text-5xl'
+      <div className={`w-full text-center ${deviceType === 'mobile' ? 'pt-8' :
+          deviceType === 'tablet' ? 'pt-12' : 'pt-20'
         }`}>
+        <h1 className={`font-bold mb-3 ${deviceType === 'mobile' ? 'text-2xl md:text-3xl' :
+            deviceType === 'tablet' ? 'text-3xl md:text-4xl' : 'text-4xl md:text-5xl'
+          }`}>
           <span className="text-black">OUR LATESET </span>
           <span className="text-orange">CREATIONS</span>
         </h1>
 
-        <p className={`text-black ${
-          deviceType === 'mobile' ? 'text-xs md:text-sm' : 
-          deviceType === 'tablet' ? 'text-sm md:text-base' : 'text-base md:text-lg'
-        }`}>
+        <p className={`text-black ${deviceType === 'mobile' ? 'text-xs md:text-sm' :
+            deviceType === 'tablet' ? 'text-sm md:text-base' : 'text-base md:text-lg'
+          }`}>
           A showcase of innovation
         </p>
       </div>
 
       {/* ═══ MAIN CAROUSEL SECTION ═══ 
           Container for 3D rotating cards with responsive height */}
-      <div className={`relative w-full flex items-center justify-center ${
-        deviceType === 'mobile' ? 'h-[50vh]' : 
-        deviceType === 'tablet' ? 'h-[65vh]' : 'h-[80vh]'
-      }`}>
+      <div className={`relative w-full flex items-center justify-center ${deviceType === 'mobile' ? 'h-[50vh]' :
+          deviceType === 'tablet' ? 'h-[65vh]' : 'h-[80vh]'
+        }`}>
 
         {/* LEFT NAVIGATION BUTTON (Prev) 
             - Positioned on left side, vertically centered
@@ -305,10 +284,9 @@ export default function PanoramicCarousel() {
           onClick={() => updateSlides(-ANGLE)}
           className={`absolute top-1/2 -translate-y-1/2 z-50 rounded-full 
                      bg-orange text-white flex items-center justify-center 
-                     hover:bg-black transition ${
-            deviceType === 'mobile' ? 'left-1 w-8 h-8 text-sm' : 
-            deviceType === 'tablet' ? 'left-3 w-10 h-10 text-lg' : 'left-6 w-12 h-12 text-2xl'
-          }`}
+                     hover:bg-black transition ${deviceType === 'mobile' ? 'left-1 w-8 h-8 text-sm' :
+              deviceType === 'tablet' ? 'left-3 w-10 h-10 text-lg' : 'left-6 w-12 h-12 text-2xl'
+            }`}
         >
           ←
         </button>
@@ -321,10 +299,9 @@ export default function PanoramicCarousel() {
           onClick={() => updateSlides(ANGLE)}
           className={`absolute top-1/2 -translate-y-1/2 z-50 rounded-full 
                      bg-orange text-white flex items-center justify-center 
-                     hover:bg-black transition ${
-            deviceType === 'mobile' ? 'right-1 w-8 h-8 text-sm' : 
-            deviceType === 'tablet' ? 'right-3 w-10 h-10 text-lg' : 'right-6 w-12 h-12 text-2xl'
-          }`}
+                     hover:bg-black transition ${deviceType === 'mobile' ? 'right-1 w-8 h-8 text-sm' :
+              deviceType === 'tablet' ? 'right-3 w-10 h-10 text-lg' : 'right-6 w-12 h-12 text-2xl'
+            }`}
         >
           →
         </button>
@@ -355,14 +332,14 @@ export default function PanoramicCarousel() {
                 width: cardSize.width,
                 height: cardSize.height,
                 borderRadius: 16,
-                backgroundImage: `url(${getImageSrc(CARDS[activeIndex].image)})`,
+                backgroundImage: `url(${getImageSrc(activeCards[activeIndex]?.image)})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}
             />
           ) : (
             // Tablet/Desktop: Full 3D carousel
-            CARDS.map((card, i) => (
+            activeCards.map((card, i) => (
               <div
                 key={i}
                 style={{
@@ -391,21 +368,18 @@ export default function PanoramicCarousel() {
         {/* TEXT OVERLAY - Displays active card's title & description
             - Positioned at bottom of carousel and centered horizontally
             - Responsive sizing and spacing for mobile/tablet/desktop */}
-        <div className={`absolute left-1/2 -translate-x-1/2 text-center ${
-          deviceType === 'mobile' ? 'bottom-[-50] max-w-xs px-4 h-20 flex flex-col justify-center' :
-          deviceType === 'tablet' ? 'bottom-2 max-w-md px-6' : 'bottom-[-50] max-w-xl px-6'
-        }`}>
-          <h2 className={`text-orange font-bold mb-2 ${
-            deviceType === 'mobile' ? 'text-xl' : 
-            deviceType === 'tablet' ? 'text-2xl' : 'text-3xl'
+        <div className={`absolute left-1/2 -translate-x-1/2 text-center ${deviceType === 'mobile' ? 'bottom-[-50] max-w-xs px-4 h-20 flex flex-col justify-center' :
+            deviceType === 'tablet' ? 'bottom-2 max-w-md px-6' : 'bottom-[-50] max-w-xl px-6'
           }`}>
-            {CARDS[activeIndex].title}
+          <h2 className={`text-orange font-bold mb-2 ${deviceType === 'mobile' ? 'text-xl' :
+              deviceType === 'tablet' ? 'text-2xl' : 'text-3xl'
+            }`}>
+            {activeCards[activeIndex]?.title}
           </h2>
-          <p className={`text-black/70 ${
-            deviceType === 'mobile' ? 'text-sm' : 
-            deviceType === 'tablet' ? 'text-base' : 'text-lg'
-          }`}>
-            {CARDS[activeIndex].desc}
+          <p className={`text-black/70 ${deviceType === 'mobile' ? 'text-sm' :
+              deviceType === 'tablet' ? 'text-base' : 'text-lg'
+            }`}>
+            {activeCards[activeIndex]?.desc}
           </p>
         </div>
       </div>

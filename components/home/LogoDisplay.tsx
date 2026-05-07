@@ -1,43 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import { getHomeContent } from "@/lib/firestore";
 
-/* ─── ALL LOGOS ────────────────────────────────────────────────────── */
-const ALL_LOGOS = [
-    "/images/logos/2.png",
-    "/images/logos/98acres.png",
-    "/images/logos/airdoot.png",
-    "/images/logos/better_butter_bakery.png",
-    "/images/logos/bogawantalawa.webp",
-    "/images/logos/bongo.lk.png",
-    "/images/logos/bonterra.png",
-    "/images/logos/champion.png",
-    "/images/logos/clogard.png",
-    "/images/logos/cloud_destinations.png",
-    "/images/logos/coop_city.png",
-    "/images/logos/dash.png",
-    "/images/logos/dialog.png",
-    "/images/logos/flames.png",
-    "/images/logos/go_nuts_donuts.png",
-    "/images/logos/hemas.jpg",
-    "/images/logos/herbalblooms.png",
-    "/images/logos/innov8.png",
-    "/images/logos/keels.png",
-    "/images/logos/laugfs.png",
-    "/images/logos/lavilla.png",
-    "/images/logos/m&m.png",
-    "/images/logos/naturesecret.png",
-    "/images/logos/panda_baby.png",
-    "/images/logos/qie_auto.png",
-    "/images/logos/relax.png",
-    "/images/logos/sarasavi.png",
-    "/images/logos/serenepavillion.png",
-    "/images/logos/stassen.png",
-    "/images/logos/stelacom.png",
-    "/images/logos/sunquick.png",
-    "/images/logos/sunshine.png",
-    "/images/logos/swisstek.png",
-];
+
 
 /* ─── CIRCULAR CELL POSITIONS ─────────────────────────────────────────
  *  Each cell is a { cx, cy } in percentage (0–100) relative to the
@@ -114,6 +80,7 @@ const pick = <T,>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)];
 
 /* ═══ COMPONENT ════════════════════════════════════════════════════════ */
 export default function LogoDisplay() {
+    const activeLogosRef = useRef<string[]>([]);
     const stateRef = useRef<Slot[]>([]);
     const timersRef = useRef<Map<number, ReturnType<typeof setTimeout>>>(new Map());
     const mounted = useRef(true);
@@ -135,9 +102,11 @@ export default function LogoDisplay() {
     }, []);
 
     const freeLogo = useCallback((): string => {
+        const availLogos = activeLogosRef.current;
+        if (availLogos.length === 0) return "";
         const used = new Set(stateRef.current.map(s => s.logoSrc));
-        const avail = ALL_LOGOS.filter(l => !used.has(l));
-        return avail.length ? pick(avail) : pick(ALL_LOGOS);
+        const avail = availLogos.filter(l => !used.has(l));
+        return avail.length ? pick(avail) : pick(availLogos);
     }, []);
 
     const scheduleCycle = useCallback((slotId: number, stayMs: number) => {
@@ -152,6 +121,7 @@ export default function LogoDisplay() {
                 const current = stateRef.current.find(s => s.id === slotId);
                 const newCell = freeCell(current?.cellIndex);
                 const newLogo = freeLogo();
+                if (!newLogo) return;
                 const newId = uid();
 
                 stateRef.current = stateRef.current
@@ -171,21 +141,32 @@ export default function LogoDisplay() {
 
     useEffect(() => {
         mounted.current = true;
-        // Cells 1..TOTAL_CELLS-1 available (0 is reserved for Alchemy center)
-        const cells = shuffle(Array.from({ length: TOTAL_CELLS - 1 }, (_, i) => i + 1))
-            .slice(0, VISIBLE_COUNT);
-        const logos = shuffle(ALL_LOGOS);
-        const initial: Slot[] = cells.map((cellIndex, i) => ({
-            id: uid(), cellIndex, logoSrc: logos[i % logos.length], phase: "in" as Phase,
-        }));
-        stateRef.current = initial;
-        rerender();
+        
+        getHomeContent().then(data => {
+            if (!mounted.current) return;
+            const customLogos = (data?.trustedLogos?.map(t => t.url) || []).filter(Boolean);
+            console.log("LogoDisplay - Fetched customLogos:", customLogos);
+            
+            if (customLogos.length > 0) {
+                activeLogosRef.current = customLogos;
+                
+                // Initialize slots
+                const cells = shuffle(Array.from({ length: TOTAL_CELLS - 1 }, (_, i) => i + 1))
+                    .slice(0, VISIBLE_COUNT);
+                const logos = shuffle(customLogos);
+                const initial: Slot[] = cells.map((cellIndex, i) => ({
+                    id: uid(), cellIndex, logoSrc: logos[i % logos.length], phase: "in" as Phase,
+                }));
+                stateRef.current = initial;
+                rerender();
 
-        initial.forEach((slot, i) => {
-            const delay = i * 120;
-            const t = setTimeout(() => { setPhase(slot.id, "visible"); }, FADE_MS + delay);
-            timersRef.current.set(-(slot.id + i), t);
-            scheduleCycle(slot.id, randBetween(MIN_STAY, MAX_STAY) + delay);
+                initial.forEach((slot, i) => {
+                    const delay = i * 120;
+                    const t = setTimeout(() => { setPhase(slot.id, "visible"); }, FADE_MS + delay);
+                    timersRef.current.set(-(slot.id + i), t);
+                    scheduleCycle(slot.id, randBetween(MIN_STAY, MAX_STAY) + delay);
+                });
+            }
         });
 
         return () => {
@@ -195,7 +176,7 @@ export default function LogoDisplay() {
             stateRef.current = [];
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [scheduleCycle, setPhase, rerender]);
 
     const slots = stateRef.current;
 

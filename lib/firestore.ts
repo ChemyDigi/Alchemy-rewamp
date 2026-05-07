@@ -6,6 +6,7 @@ import {
   deleteDoc,
   getDocs,
   getDoc,
+  setDoc,
   query,
   where,
   orderBy,
@@ -66,9 +67,26 @@ export interface BrandLogo {
   order: number;
 }
 
+export interface CarouselProject {
+  id?: string;
+  image: string;
+  title: string;
+  desc: string;
+  order: number;
+}
+
+export interface TrustedLogo {
+  id?: string;
+  url: string;
+  order: number;
+}
+
 export interface HomeContent {
-  serviceImages: ServiceImage[];
-  brandLogos: BrandLogo[];
+  watchReelUrl?: string;
+  trustedLogos?: TrustedLogo[];
+  carouselProjects?: CarouselProject[];
+  serviceImages?: ServiceImage[];
+  brandLogos?: BrandLogo[];
   updatedAt?: Timestamp;
 }
 
@@ -210,10 +228,10 @@ export async function getHomeContent(): Promise<HomeContent | null> {
 }
 
 export async function updateHomeContent(data: Partial<HomeContent>): Promise<void> {
-  await updateDoc(doc(db, "homeContent", "main"), {
+  await setDoc(doc(db, "homeContent", "main"), {
     ...data,
     updatedAt: serverTimestamp(),
-  });
+  }, { merge: true });
 }
 
 // ─── Services CRUD ────────────────────────────────────────────────────────────

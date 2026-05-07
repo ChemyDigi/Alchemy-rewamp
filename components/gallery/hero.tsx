@@ -3,8 +3,7 @@
 
 import { motion, useMotionValue, useTransform, type PanInfo } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import photo8 from '@/public/images/gallery/photo8.png';
-import photo9 from '@/public/images/gallery/photo9.png';
+import { getGallery } from '@/lib/firestore';
 
 interface CardRotateProps {
   children: React.ReactNode;
@@ -97,30 +96,7 @@ function Stack({
     if (cards.length) {
       return cards.map((content, index) => ({ id: index + 1, content }));
     } else {
-      return [
-        {
-          id: 1,
-          content: (
-            <img
-              src={photo8.src}
-              alt="photo8"
-              className="w-full h-full object-cover pointer-events-none bg-white"
-              style={{ backgroundColor: '#fff' }}
-            />
-          )
-        },
-        {
-          id: 2,
-          content: (
-            <img
-              src={photo9.src}
-              alt="photo9"
-              className="w-full h-full object-cover pointer-events-none bg-white"
-              style={{ backgroundColor: '#fff' }}
-            />
-          )
-        }
-      ];
+      return [];
     }
   });
 
@@ -195,10 +171,14 @@ function Stack({
 }
 
 export default function Hero() {
-  const images = [
-    photo8.src,
-    photo9.src
-  ];
+  const [images, setImages] = useState<string[]>([]);
+
+  useEffect(() => {
+    getGallery().then(data => {
+      // Use the first 5 images for the hero stack
+      setImages(data.map(item => item.imageUrl).slice(0, 5));
+    });
+  }, []);
 
   return (
     <div className="min-h-screen bg-white pt-16 md:pt-0">
