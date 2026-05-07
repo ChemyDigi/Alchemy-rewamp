@@ -2,34 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-
-const services = [
-  {
-    title: "Website Development",
-    content:
-      "Build, revamp, and launch websites or landing pages that grab attention instantly thanks to compelling UX and a user-centric approach.",
-  },
-  {
-    title: "Mobile Development",
-    content:
-      "We create high-performance mobile applications tailored to your business goals.",
-  },
-  {
-    title: "SEO Optimization",
-    content:
-      "Improve your visibility and ranking with our advanced SEO strategies.",
-  },
-  {
-    title: "Wordpress Development",
-    content:
-      "Custom WordPress solutions that are scalable and secure.",
-  },
-  {
-    title: "Website Redesign",
-    content:
-      "Transform outdated websites into modern digital experiences.",
-  },
-];
+import Link from "next/link";
 
 export default function ServicesSection() {
   const [activeIndex, setActiveIndex] = useState<number | null>(0);
@@ -43,43 +16,53 @@ export default function ServicesSection() {
 
       {/* ================= HERO SECTION ================= */}
       <div
-        className="
-          max-w-[1400px] mx-auto
-          px-6 sm:px-10 md:px-10 lg:px-[10px]
-          pt-20 md:pt-36 pb-8
-          grid grid-cols-1 lg:grid-cols-2
-          items-center gap-10
-        "
+ className="
+  max-w-[1400px] mx-auto
+  px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12
+  pt-20 md:pt-36 pb-8
+  grid grid-cols-1 lg:grid-cols-2
+  items-center gap-10
+"
       >
 
         {/* LEFT */}
         {/* LEFT */}
-<div className="z-10 text-center lg:text-left mt-6 sm:mt-8 md:mt-12 lg:mt-16">
+        <div className="z-10 text-center lg:text-left mt-6 sm:mt-8 md:mt-12 lg:mt-16">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight mb-6 text-black">
-            PERFORMANCE-DRIVEN<br className="hidden sm:block" />
+            PERFORMANCE-DRIVEN <br className="hidden sm:block" />
             DIGITAL MARKETING
           </h1>
 
-          <p className="text-sm sm:text-base text-black/80 leading-relaxed mb-6 max-w-[550px] mx-auto lg:mx-0">
+          <p className="text-normal sm:text-base text-black/80 leading-relaxed mb-6 max-w-[550px] mx-auto lg:mx-0 lg:text-justify">
             Transform visibility into measurable growth with our data-driven digital marketing services. From strategic campaigns to performance analytics, we drive engagement that converts audiences into loyal customers.
           </p>
 
-          <button className="bg-orange text-white text-sm px-6 py-3 rounded-full flex items-center gap-2 hover:bg-orange-600 transition font-bold mx-auto lg:mx-0">
-            GET IN TOUCH →
-          </button>
+          {/* BUTTON → /contact */}
+            <Link href="/contactus">
+              <button className="group mt-8 mx-auto sm:mx-0 bg-orange text-white h-[48px] pl-10 pr-10 rounded-full relative flex items-center overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-black min-w-[200px] hover:min-w-[260px]">
+
+                <span className="text-base md:text-lg font-medium whitespace-nowrap">
+                    GET IN TOUCH
+                </span>
+
+                <span className="absolute right-6 text-2xl translate-x-4 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500">
+                    →
+                </span>
+                </button>
+            </Link>
         </div>
 
         {/* RIGHT IMAGE */}
    
-<div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[650px] -mt-6 sm:-mt-8 md:-mt-10 lg:-mt-12">
-  <Image
-    src="/images/dm/hero2.png"
-    alt="hero"
-    fill
-    className="object-contain"
-    priority
-  />
-</div>
+        <div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[650px] -mt-6 sm:-mt-8 md:-mt-10 lg:-mt-12">
+          <Image
+            src="/images/dm/hero2.png"
+            alt="hero"
+            fill
+            className="object-contain"
+            priority
+          />
+        </div>
 
       </div>
 
