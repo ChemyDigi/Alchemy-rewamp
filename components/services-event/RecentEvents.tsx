@@ -49,7 +49,7 @@ export default function RecentEvents() {
       <div className="max-w-7xl mx-auto relative">
         
         {/* Grey background area - positioned absolutely to allow overlap */}
-        <div className="absolute inset-x-0 bottom-0 top-[80px] md:top-[100px] lg:top-[120px] bg-[#f7f7f7] rounded-[4px] z-0" />
+        <div className="absolute inset-x-0 bottom-0 top-[60px] md:top-[80px] lg:top-[100px] bg-[#f7f7f7] rounded-[4px] z-0" />
 
         {/* Content Grid - relative and z-10 to sit above the grey box */}
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
@@ -57,14 +57,14 @@ export default function RecentEvents() {
           {/* Left Column: Heading and Text */}
           <div className="flex flex-col h-full lg:pl-16">
             {/* Title - stays on white, aligns with image top */}
-            <div className="h-[80px] md:h-[100px] lg:h-[120px] flex items-center">
+            <div className="h-[60px] md:h-[80px] lg:h-[100px] flex items-center">
               <h2 className="text-2xl md:text-4xl lg:text-5xl font-extrabold uppercase tracking-tight text-black">
                 OUR RECENT <span className="text-orange">EVENTS</span>
               </h2>
             </div>
 
             {/* Event Text Content - inside the grey area */}
-            <div className="py-12 lg:py-20">
+            <div className="py-8 lg:py-14">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentEvent.id}
@@ -88,7 +88,7 @@ export default function RecentEvents() {
 
           {/* Right Column: Overlapping Image */}
           <div className="lg:pr-16 w-full">
-            <div className="relative w-full h-[300px] md:h-[400px] lg:h-[500px] rounded-[6px] overflow-hidden">
+            <div className="relative w-full h-[250px] md:h-[320px] lg:h-[400px] rounded-[6px] overflow-hidden">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentEvent.id}
