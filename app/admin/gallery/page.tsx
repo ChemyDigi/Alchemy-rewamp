@@ -65,8 +65,9 @@ export default function AdminGalleryPage() {
       toast.success("Photo added");
       setShowForm(false);
       load();
-    } catch {
-      toast.error("Failed to add photo");
+    } catch (err: any) {
+      console.error(err);
+      toast.error(err.message || "Failed to add photo");
     } finally {
       setSaving(false);
     }
@@ -83,8 +84,9 @@ export default function AdminGalleryPage() {
       toast.success("Photo updated");
       setEditingItem(null);
       load();
-    } catch {
-      toast.error("Update failed");
+    } catch (err: any) {
+      console.error(err);
+      toast.error(err.message || "Update failed");
     } finally {
       setSaving(false);
     }
@@ -98,8 +100,9 @@ export default function AdminGalleryPage() {
       toast.success("Photo deleted");
       setDeleteTarget(null);
       load();
-    } catch {
-      toast.error("Delete failed");
+    } catch (err: any) {
+      console.error(err);
+      toast.error(err.message || "Delete failed");
     } finally {
       setDeleting(false);
     }
