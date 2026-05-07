@@ -1,10 +1,10 @@
 // components/hero.tsx
 'use client';
 
-import { motion, useMotionValue, useTransform, type PanInfo } from 'framer-motion';
-import { useEffect, useState } from 'react';
 import photo8 from '@/public/images/gallery/photo8.png';
 import photo9 from '@/public/images/gallery/photo9.png';
+import { motion, useMotionValue, useTransform, type PanInfo } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
 interface CardRotateProps {
   children: React.ReactNode;
@@ -201,9 +201,9 @@ export default function Hero() {
   ];
 
   return (
-    <div className="min-h-screen bg-white pt-16 md:pt-0">
+    <div className="min-h-[70vh] md:min-h-screen bg-white pt-12 md:pt-0">
       <div className="w-full px-4 sm:px-8 md:px-12 lg:px-16">
-        <div className="flex flex-col lg:flex-row items-center lg:items-end lg:justify-between gap-6 lg:gap-16 py-10 lg:py-20">
+        <div className="flex flex-col lg:flex-row items-center lg:items-end lg:justify-between gap-6 lg:gap-16 py-6 lg:py-20">
           {/* Right Content - Card Stack */}
           <div className="flex justify-center lg:justify-end lg:pr-24 pb-4 lg:pb-0 order-1 lg:order-2 w-full lg:w-auto">
             <div className="w-64 h-80 sm:w-72 sm:h-96 md:w-72 md:h-[400px] lg:w-80 lg:h-[480px] xl:w-80 xl:h-[520px]">
