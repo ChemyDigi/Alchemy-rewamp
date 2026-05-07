@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import LenisProvider from "@/components/LenisProvider";
 import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
+import { headers } from "next/headers";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
@@ -35,18 +36,26 @@ export const metadata: Metadata = {
   manifest: "/site.webmanifest",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const headersList = await headers();
+  const pathname = headersList.get("x-pathname") ?? "";
+  const isAdmin = pathname.startsWith("/admin");
+
   return (
     <html lang="en" className={cn("h-full", "antialiased", seasonSans.variable, "font-sans", geist.variable)}>
       <body className="min-h-full flex flex-col selection:bg-[#E3791D] selection:text-white">
-        <LenisProvider>
-          <Header />
-          {children}
-        </LenisProvider>
+        {isAdmin ? (
+          children
+        ) : (
+          <LenisProvider>
+            <Header />
+            {children}
+          </LenisProvider>
+        )}
       </body>
     </html>
   );
