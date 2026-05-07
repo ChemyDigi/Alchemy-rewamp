@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import ScrollFillText from "../services-dm/ScrollFillText";
 
 export default function ServicesSection() {
   const [activeIndex, setActiveIndex] = useState<number | null>(0);
@@ -56,12 +57,8 @@ export default function ServicesSection() {
       </div>
 
       {/* Bottom Tagline */}
-      <div className="mt-20 text-center">
-        <p className="text-xl md:text-2xl text-gray-700 font-medium">
-          We craft <span className="font-bold">exceptional events</span> that leave lasting impressions
-          <br />
-          with creativity and care.
-        </p>
+      <div className="mt-20 pb-20 text-center">
+        <ScrollFillText text="We craft exceptional events that leave lasting impressions with creativity and care." />
       </div>
     </section>
   );
