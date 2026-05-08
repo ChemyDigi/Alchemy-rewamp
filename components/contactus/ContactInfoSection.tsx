@@ -162,16 +162,16 @@ export default function ContactInfoSection() {
                     <BorderBeam
                         duration={6}
                         size={400}
-                        colorFrom="#f28c28"
-                        colorTo="#ff4d4d"
+                        colorFrom="#ff8000"
+                        colorTo="#f82323"
                     />
                     <BorderBeam
                         duration={6}
                         delay={3}
                         size={400}
-                        borderWidth={2}
-                        colorFrom="#3b82f6"
-                        colorTo="#a855f7"
+                        borderWidth={1}
+                        colorFrom="#ff8000"
+                        colorTo="#f82323"
                         reverse
                     />
                 </div>

@@ -3,7 +3,14 @@
 
 import photo8 from '@/public/images/gallery/photo8.png';
 import photo9 from '@/public/images/gallery/photo9.png';
-import { motion, useMotionValue, useTransform, type PanInfo } from 'framer-motion';
+
+import {
+  motion,
+  useMotionValue,
+  useTransform,
+  type PanInfo
+} from 'framer-motion';
+
 import { useEffect, useState } from 'react';
 
 interface CardRotateProps {
@@ -13,14 +20,22 @@ interface CardRotateProps {
   disableDrag?: boolean;
 }
 
-function CardRotate({ children, onSendToBack, sensitivity, disableDrag = false }: CardRotateProps) {
+function CardRotate({
+  children,
+  onSendToBack,
+  sensitivity,
+  disableDrag = false
+}: CardRotateProps) {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
+
   const rotateX = useTransform(y, [-100, 100], [60, -60]);
   const rotateY = useTransform(x, [-100, 100], [-60, 60]);
 
-  function handleDragEnd(_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) {
-    // Only send to back if dragged left (negative x offset) and beyond sensitivity
+  function handleDragEnd(
+    _event: MouseEvent | TouchEvent | PointerEvent,
+    info: PanInfo
+  ) {
     if (info.offset.x < -sensitivity) {
       onSendToBack();
     } else {
@@ -31,7 +46,10 @@ function CardRotate({ children, onSendToBack, sensitivity, disableDrag = false }
 
   if (disableDrag) {
     return (
-      <motion.div className="absolute inset-0 cursor-pointer" style={{ x: 0, y: 0 }}>
+      <motion.div
+        className="absolute inset-0 cursor-pointer"
+        style={{ x: 0, y: 0 }}
+      >
         {children}
       </motion.div>
     );
@@ -86,56 +104,70 @@ function Stack({
     };
 
     checkMobile();
+
     window.addEventListener('resize', checkMobile);
+
     return () => window.removeEventListener('resize', checkMobile);
   }, [mobileBreakpoint]);
 
   const shouldDisableDrag = mobileClickOnly && isMobile;
   const shouldEnableClick = sendToBackOnClick || shouldDisableDrag;
 
-  const [stack, setStack] = useState<{ id: number; content: React.ReactNode }[]>(() => {
+  const [stack, setStack] = useState<
+    { id: number; content: React.ReactNode }[]
+  >(() => {
     if (cards.length) {
-      return cards.map((content, index) => ({ id: index + 1, content }));
-    } else {
-      return [
-        {
-          id: 1,
-          content: (
-            <img
-              src={photo8.src}
-              alt="photo8"
-              className="w-full h-full object-cover pointer-events-none bg-white"
-              style={{ backgroundColor: '#fff' }}
-            />
-          )
-        },
-        {
-          id: 2,
-          content: (
-            <img
-              src={photo9.src}
-              alt="photo9"
-              className="w-full h-full object-cover pointer-events-none bg-white"
-              style={{ backgroundColor: '#fff' }}
-            />
-          )
-        }
-      ];
+      return cards.map((content, index) => ({
+        id: index + 1,
+        content
+      }));
     }
+
+    return [
+      {
+        id: 1,
+        content: (
+          <img
+            src={photo8.src}
+            alt="photo8"
+            className="w-full h-full object-cover pointer-events-none bg-white"
+          />
+        )
+      },
+      {
+        id: 2,
+        content: (
+          <img
+            src={photo9.src}
+            alt="photo9"
+            className="w-full h-full object-cover pointer-events-none bg-white"
+          />
+        )
+      }
+    ];
   });
 
   useEffect(() => {
     if (cards.length) {
-      setStack(cards.map((content, index) => ({ id: index + 1, content })));
+      setStack(
+        cards.map((content, index) => ({
+          id: index + 1,
+          content
+        }))
+      );
     }
   }, [cards]);
 
   const sendToBack = (id: number) => {
     setStack(prev => {
       const newStack = [...prev];
+
       const index = newStack.findIndex(card => card.id === id);
+
       const [card] = newStack.splice(index, 1);
+
       newStack.unshift(card);
+
       return newStack;
     });
   };
@@ -144,6 +176,7 @@ function Stack({
     if (autoplay && stack.length > 1 && !isPaused) {
       const interval = setInterval(() => {
         const topCardId = stack[stack.length - 1].id;
+
         sendToBack(topCardId);
       }, autoplayDelay);
 
@@ -161,7 +194,10 @@ function Stack({
       onMouseLeave={() => pauseOnHover && setIsPaused(false)}
     >
       {stack.map((card, index) => {
-        const randomRotate = randomRotation ? Math.random() * 10 - 5 : 0;
+        const randomRotate = randomRotation
+          ? Math.random() * 10 - 5
+          : 0;
+
         return (
           <CardRotate
             key={card.id}
@@ -171,11 +207,18 @@ function Stack({
           >
             <motion.div
               className="rounded-2xl overflow-hidden w-full h-full shadow-xl bg-white"
-              style={{ backfaceVisibility: 'hidden', transformStyle: 'preserve-3d' }}
-              onClick={() => shouldEnableClick && sendToBack(card.id)}
+              style={{
+                backfaceVisibility: 'hidden',
+                transformStyle: 'preserve-3d'
+              }}
+              onClick={() =>
+                shouldEnableClick && sendToBack(card.id)
+              }
               animate={{
-                rotateZ: (stack.length - index - 1) * 4 + randomRotate,
-                scale: 1 + index * 0.06 - stack.length * 0.06,
+                rotateZ:
+                  (stack.length - index - 1) * 4 + randomRotate,
+                scale:
+                  1 + index * 0.06 - stack.length * 0.06,
                 transformOrigin: '90% 90%'
               }}
               initial={false}
@@ -195,18 +238,38 @@ function Stack({
 }
 
 export default function Hero() {
-  const images = [
-    photo8.src,
-    photo9.src
-  ];
+  const images = [photo8.src, photo9.src];
 
   return (
-    <div className="min-h-[70vh] md:min-h-screen bg-white pt-12 md:pt-0">
-      <div className="w-full px-4 sm:px-8 md:px-12 lg:px-16">
-        <div className="flex flex-col lg:flex-row items-center lg:items-end lg:justify-between gap-6 lg:gap-16 py-6 lg:py-20">
+    <div className="w-full bg-white overflow-hidden pt-20 md:pt-24 lg:pt-12">
+      <div className="w-full px-4 sm:px-8 md:px-10 lg:px-16">
+
+        <div className="flex flex-row items-start justify-between gap-8 md:gap-10 lg:gap-16 py-4 md:py-6 lg:py-20">
+
+          {/* Left Content */}
+          <div className="z-10 order-1 flex-1 text-left md:pt-16 lg:pt-0 lg:translate-y-[-1.5rem] lg:pb-2 xl:translate-y-[-2rem]">
+
+            <h1 className="text-[4rem] leading-[0.9] font-medium tracking-[-0.03em] text-black sm:text-[5rem] md:text-[5.2rem] lg:text-[7.5rem] xl:text-[8.5rem] 2xl:text-[9.5rem]">
+              Gallery
+            </h1>
+
+            <p className="mt-2 text-[1.5rem] font-normal uppercase tracking-[-0.01em] text-[#E3791D] sm:text-[1.8rem] md:text-[2rem] lg:text-[2.4rem] xl:text-[2.6rem]">
+              CREATIVE
+            </p>
+
+            <p className="text-[1.5rem] leading-snug font-normal uppercase tracking-[-0.01em] text-black sm:text-[1.8rem] md:text-[2rem] lg:text-[2.4rem] xl:text-[2.6rem]">
+              STORIES CAPTURED
+              <br />
+              WITH PURPOSE
+            </p>
+
+          </div>
+
           {/* Right Content - Card Stack */}
-          <div className="flex justify-center lg:justify-end lg:pr-24 pb-4 lg:pb-0 order-1 lg:order-2 w-full lg:w-auto">
-            <div className="w-64 h-80 sm:w-72 sm:h-96 md:w-72 md:h-[400px] lg:w-80 lg:h-[480px] xl:w-80 xl:h-[520px]">
+          <div className="flex justify-end order-2 shrink-0">
+
+            <div className="w-52 h-64 sm:w-64 sm:h-80 md:w-72 md:h-[400px] lg:w-80 lg:h-[480px] xl:w-80 xl:h-[520px]">
+
               <Stack
                 randomRotation={false}
                 sensitivity={200}
@@ -216,7 +279,7 @@ export default function Hero() {
                     key={i}
                     src={src}
                     alt={`card-${i + 1}`}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', backgroundColor: '#fff' }}
+                    className="w-full h-full object-cover bg-white"
                   />
                 ))}
                 autoplay={false}
@@ -225,22 +288,13 @@ export default function Hero() {
                 mobileClickOnly={true}
                 mobileBreakpoint={768}
               />
+
             </div>
+
           </div>
 
-          {/* Left Content */}
-          <div className="z-10 max-w-[620px] text-center lg:text-left lg:translate-y-[-1.5rem] lg:pb-2 xl:translate-y-[-2rem] mb-2 lg:mb-0 order-2 lg:order-1 w-full">
-            <h1 className="text-3xl leading-[0.95] font-medium tracking-[-0.03em] text-black sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl">
-              Gallery
-            </h1>
-            <p className="mt-2 text-sm font-normal uppercase tracking-[-0.01em] text-[#E3791D] sm:text-base md:text-lg lg:text-xl">
-              CREATIVE
-            </p>
-            <p className="text-sm leading-snug font-normal uppercase tracking-[-0.01em] text-black sm:text-base md:text-lg lg:text-xl">
-              STORIES CAPTURED WITH PURPOSE
-            </p>
-          </div>
         </div>
+
       </div>
     </div>
   );
