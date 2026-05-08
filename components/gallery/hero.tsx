@@ -5,15 +5,6 @@ import { motion, useMotionValue, useTransform, type PanInfo } from 'framer-motio
 import { useEffect, useState } from 'react';
 import { getGallery } from '@/lib/firestore';
 
-import {
-  motion,
-  useMotionValue,
-  useTransform,
-  type PanInfo
-} from 'framer-motion';
-
-import { useEffect, useState } from 'react';
-
 interface CardRotateProps {
   children: React.ReactNode;
   onSendToBack: () => void;
