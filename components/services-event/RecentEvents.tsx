@@ -64,15 +64,15 @@ export default function RecentEvents() {
             </div>
 
             {/* Event Text Content - inside the grey area */}
-            <div className="pt-12 md:pt-20 lg:pt-24 pb-8 lg:pb-14">
-              <AnimatePresence mode="wait">
+            <div className="pt-12 md:pt-20 lg:pt-24 pb-8 lg:pb-14 relative min-h-[200px]">
+              <AnimatePresence>
                 <motion.div
                   key={currentEvent.id}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.6, ease: "easeInOut" }}
-                  className="w-full max-w-md"
+                  className="w-full max-w-md absolute"
                 >
                   <h3 className="text-xl md:text-2xl lg:text-3xl font-semibold text-orange mb-5">
                     {currentEvent.title}
@@ -87,15 +87,18 @@ export default function RecentEvents() {
           </div>
 
           {/* Right Column: Overlapping Image */}
-          <div className="lg:pr-16 w-full">
-            <div className="relative w-full h-[250px] md:h-[320px] lg:h-[400px] rounded-[6px] overflow-hidden md:-mt-8 lg:-mt-12 mb-8 md:mb-12">
-              <AnimatePresence>
+          <div className="lg:pr-16 w-full pb-10">
+            <div className="relative w-full h-[250px] md:h-[320px] lg:h-[400px] rounded-[6px] overflow-hidden md:-mt-8 lg:-mt-12">
+              <AnimatePresence initial={false}>
                 <motion.div
                   key={currentEvent.id}
                   initial={{ opacity: 0, scale: 1.05 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0 }}
-                  transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}
+                  transition={{
+                    duration: 1.2,
+                    ease: [0.4, 0, 0.2, 1]
+                  }}
                   className="absolute inset-0"
                 >
                   <Image
