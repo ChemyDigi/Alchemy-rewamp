@@ -124,7 +124,7 @@ export async function getPublishedBlogs(): Promise<Blog[]> {
     const data = await response.json();
     if (!data.documents) return [];
     
-    const blogs = data.documents.map((doc: any) => {
+    const blogs: Blog[] = data.documents.map((doc: any) => {
       const id = doc.name.split('/').pop();
       const fields = doc.fields || {};
       return {
@@ -143,7 +143,7 @@ export async function getPublishedBlogs(): Promise<Blog[]> {
     });
 
     // Sort descending by date
-    blogs.sort((a, b) => {
+    blogs.sort((a: Blog, b: Blog) => {
       const timeA = a.createdAt?.seconds || 0;
       const timeB = b.createdAt?.seconds || 0;
       return timeB - timeA;

@@ -181,13 +181,13 @@ export default function AdminGalleryPage() {
                   /* Inline edit */
                   <div className="border border-[#e3791d]/40 rounded-xl p-3 space-y-3 bg-[#080818]">
                     <img
-                      src={editingItem.imageUrl}
+                      src={editingItem?.imageUrl}
                       alt=""
                       className="w-full h-28 object-cover rounded-lg"
                     />
                     <AdminInput
                       label="Title"
-                      value={editingItem.title ?? ""}
+                      value={editingItem?.title ?? ""}
                       onChange={(e) =>
                         setEditingItem((prev) => prev ? { ...prev, title: e.target.value } : prev)
                       }

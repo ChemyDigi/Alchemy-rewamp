@@ -113,29 +113,6 @@ function Stack({
     } else {
       return [];
     }
-
-    return [
-      {
-        id: 1,
-        content: (
-          <img
-            src={photo8.src}
-            alt="photo8"
-            className="w-full h-full object-cover pointer-events-none bg-white"
-          />
-        )
-      },
-      {
-        id: 2,
-        content: (
-          <img
-            src={photo9.src}
-            alt="photo9"
-            className="w-full h-full object-cover pointer-events-none bg-white"
-          />
-        )
-      }
-    ];
   });
 
   useEffect(() => {

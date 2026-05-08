@@ -157,18 +157,18 @@ export default function AdminTeamPage() {
                   <div className="border border-[#e3791d]/40 rounded-2xl p-4 space-y-3 bg-[#080818]">
                     <ImageUpload
                       label="Photo"
-                      value={editingMember.imageUrl}
+                      value={editingMember?.imageUrl ?? ""}
                       onChange={(url) => setEditingMember((p) => p ? { ...p, imageUrl: url } : p)}
                       onRemove={() => setEditingMember((p) => p ? { ...p, imageUrl: "" } : p)}
                     />
                     <AdminInput
                       label="Name"
-                      value={editingMember.name ?? ""}
+                      value={editingMember?.name ?? ""}
                       onChange={(e) => setEditingMember((p) => p ? { ...p, name: e.target.value } : p)}
                     />
                     <AdminInput
                       label="Role"
-                      value={editingMember.role ?? ""}
+                      value={editingMember?.role ?? ""}
                       onChange={(e) => setEditingMember((p) => p ? { ...p, role: e.target.value } : p)}
                     />
                     <div className="flex gap-2">
