@@ -101,9 +101,29 @@ export default function BlogForm({ initialData }: BlogFormProps) {
 
       {/* Dynamic Rich Text Preview */}
       <div 
-        className="max-w-3xl mx-auto prose prose-lg prose-orange max-w-none prose-img:rounded-xl prose-img:shadow-md"
+        className="max-w-3xl mx-auto prose prose-lg prose-orange max-w-none prose-img:rounded-xl prose-img:shadow-md blog-preview"
         dangerouslySetInnerHTML={{ __html: content || "<p class='text-gray-400 italic'>Content preview will appear here...</p>" }}
       />
+      <style jsx>{`
+        .blog-preview ul {
+          list-style-type: disc;
+          padding-left: 1.5rem;
+          margin-top: 1rem;
+          margin-bottom: 1rem;
+        }
+
+        .blog-preview ol {
+          list-style-type: decimal;
+          padding-left: 1.5rem;
+          margin-top: 1rem;
+          margin-bottom: 1rem;
+        }
+
+        .blog-preview li {
+          margin-top: 0.35rem;
+          margin-bottom: 0.35rem;
+        }
+      `}</style>
     </div>
   );
 

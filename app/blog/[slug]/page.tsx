@@ -70,7 +70,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 						)}
 
 						<div 
-							className="mx-auto mt-16 max-w-3xl px-4 prose prose-lg prose-orange max-w-none prose-img:rounded-2xl prose-img:shadow-xl"
+							className="mx-auto mt-16 max-w-3xl px-4 prose prose-lg prose-orange max-w-none prose-img:rounded-2xl prose-img:shadow-xl text-black"
 							dangerouslySetInnerHTML={{ __html: post.content || "" }}
 						/>
 					</article>
