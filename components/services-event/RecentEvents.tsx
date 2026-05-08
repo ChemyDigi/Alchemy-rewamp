@@ -57,28 +57,28 @@ export default function RecentEvents() {
           {/* Left Column: Heading and Text */}
           <div className="flex flex-col h-full lg:pl-16">
             {/* Title - stays on white, aligns with image top */}
-            <div className="h-[60px] md:h-[80px] lg:h-[100px] flex items-center">
-              <h2 className="text-2xl md:text-4xl lg:text-5xl font-extrabold uppercase tracking-tight text-black">
+            <div className="h-[60px] md:h-[80px] lg:h-[100px] flex items-center justify-center lg:justify-start">
+              <h2 className="text-2xl md:text-4xl lg:text-5xl font-extrabold uppercase tracking-tight text-black text-center lg:text-left">
                 OUR RECENT <span className="text-orange">EVENTS</span>
               </h2>
             </div>
 
             {/* Event Text Content - inside the grey area */}
-            <div className="pt-12 md:pt-20 lg:pt-24 pb-8 lg:pb-14 relative min-h-[200px]">
-              <AnimatePresence>
+            <div className="pt-12 md:pt-20 lg:pt-24 pb-8 lg:pb-14 flex flex-col items-center lg:items-start text-center lg:text-left">
+              <AnimatePresence mode="wait">
                 <motion.div
                   key={currentEvent.id}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.6, ease: "easeInOut" }}
-                  className="w-full max-w-md absolute"
+                  className="w-full max-w-md mx-auto lg:mx-0"
                 >
-                  <h3 className="text-xl md:text-2xl lg:text-3xl font-semibold text-orange mb-5">
+                  <h3 className="text-xl md:text-2xl lg:text-3xl font-semibold text-orange mb-5 text-center lg:text-left">
                     {currentEvent.title}
                   </h3>
 
-                  <p className="text-xs md:text-sm lg:text-base text-black font-normal leading-snug max-w-sm">
+                  <p className="text-xs md:text-sm lg:text-base text-black font-normal leading-snug max-w-sm mx-auto lg:mx-0 text-center lg:text-left">
                     {currentEvent.description}
                   </p>
                 </motion.div>
@@ -87,9 +87,9 @@ export default function RecentEvents() {
           </div>
 
           {/* Right Column: Overlapping Image */}
-          <div className="lg:pr-16 w-full pb-10">
-            <div className="relative w-full h-[250px] md:h-[320px] lg:h-[400px] rounded-[6px] overflow-hidden md:-mt-8 lg:-mt-12">
-              <AnimatePresence initial={false}>
+          <div className="lg:pr-16 w-full flex justify-center lg:block">
+            <div className="relative w-full max-w-[500px] lg:max-w-none h-[250px] md:h-[320px] lg:h-[400px] rounded-[6px] overflow-hidden md:-mt-8 lg:-mt-12 mb-8 md:mb-12">
+              <AnimatePresence>
                 <motion.div
                   key={currentEvent.id}
                   initial={{ opacity: 0, scale: 1.05 }}
