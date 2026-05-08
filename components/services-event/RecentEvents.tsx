@@ -47,13 +47,13 @@ export default function RecentEvents() {
   return (
     <section className="w-full bg-white px-4 md:px-8 lg:px-14 py-14 md:py-20 overflow-hidden">
       <div className="max-w-7xl mx-auto relative">
-        
+
         {/* Grey background area - positioned absolutely to allow overlap */}
-        <div className="absolute inset-x-0 bottom-0 top-[60px] md:top-[80px] lg:top-[100px] bg-[#f7f7f7] rounded-[4px] z-0" />
+        <div className="absolute inset-x-0 bottom-0 top-[60px] md:top-[80px] lg:top-[100px] bg-[#eeeeee] rounded-[4px] z-0" />
 
         {/* Content Grid - relative and z-10 to sit above the grey box */}
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
-          
+
           {/* Left Column: Heading and Text */}
           <div className="flex flex-col h-full lg:pl-16">
             {/* Title - stays on white, aligns with image top */}
@@ -64,7 +64,7 @@ export default function RecentEvents() {
             </div>
 
             {/* Event Text Content - inside the grey area */}
-            <div className="py-8 lg:py-14">
+            <div className="pt-12 md:pt-20 lg:pt-24 pb-8 lg:pb-14">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentEvent.id}
@@ -88,14 +88,14 @@ export default function RecentEvents() {
 
           {/* Right Column: Overlapping Image */}
           <div className="lg:pr-16 w-full">
-            <div className="relative w-full h-[250px] md:h-[320px] lg:h-[400px] rounded-[6px] overflow-hidden">
-              <AnimatePresence mode="wait">
+            <div className="relative w-full h-[250px] md:h-[320px] lg:h-[400px] rounded-[6px] overflow-hidden md:-mt-8 lg:-mt-12 mb-8 md:mb-12">
+              <AnimatePresence>
                 <motion.div
                   key={currentEvent.id}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
+                  initial={{ opacity: 0, scale: 1.05 }}
+                  animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0 }}
-                  transition={{ duration: 0.8, ease: "linear" }}
+                  transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}
                   className="absolute inset-0"
                 >
                   <Image
