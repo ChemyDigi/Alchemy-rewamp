@@ -1,8 +1,9 @@
 // components/hero.tsx
 'use client';
 
-import photo8 from '@/public/images/gallery/photo8.png';
-import photo9 from '@/public/images/gallery/photo9.png';
+import { motion, useMotionValue, useTransform, type PanInfo } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { getGallery } from '@/lib/firestore';
 
 import {
   motion,
@@ -117,10 +118,9 @@ function Stack({
     { id: number; content: React.ReactNode }[]
   >(() => {
     if (cards.length) {
-      return cards.map((content, index) => ({
-        id: index + 1,
-        content
-      }));
+      return cards.map((content, index) => ({ id: index + 1, content }));
+    } else {
+      return [];
     }
 
     return [
@@ -238,7 +238,14 @@ function Stack({
 }
 
 export default function Hero() {
-  const images = [photo8.src, photo9.src];
+  const [images, setImages] = useState<string[]>([]);
+
+  useEffect(() => {
+    getGallery().then(data => {
+      // Use the first 5 images for the hero stack
+      setImages(data.map(item => item.imageUrl).slice(0, 5));
+    });
+  }, []);
 
   return (
     <div className="w-full bg-white overflow-hidden pt-20 md:pt-24 lg:pt-12">

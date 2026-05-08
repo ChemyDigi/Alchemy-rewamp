@@ -1,8 +1,16 @@
 // hero.tsx (Blog page component)
 import Image from "next/image";
 import CardSwap, { Card } from "./CardSwap";
+import { Blog } from "@/lib/firestore";
+import Link from "next/link";
 
-export default function BlogHero() {
+interface BlogHeroProps {
+  posts: Blog[];
+}
+
+export default function BlogHero({ posts }: BlogHeroProps) {
+  const displayPosts = posts && posts.length > 0 ? posts.slice(0, 3) : null;
+
   return (
     <section className="min-h-screen w-full bg-white overflow-hidden">
       <div className="mx-auto flex min-h-screen w-full max-w-[1440px] flex-col justify-between pl-8 pt-16 pb-10 sm:pl-12 lg:flex-row lg:items-end lg:pl-20 lg:pt-12 lg:pb-14">
@@ -39,56 +47,37 @@ export default function BlogHero() {
               skewAmount={5}
               easing="elastic"
             >
-              {/* Card 1 */}
-              <Card customClass="overflow-hidden">
-                <div className="absolute inset-0">
-                  <Image 
-                    src="/images/blog/Blog1.jpg" 
-                    alt="Blog 1" 
-                    fill 
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
-                    <p className="text-sm uppercase tracking-wide text-[#FF6B35]">AI</p>
-                    <p className="text-lg font-semibold">The Impact of AI</p>
+              {displayPosts ? (
+                displayPosts.map((post) => (
+                  <Card key={post.id} customClass="overflow-hidden">
+                    <Link href={`/blog/${post.slug}`} className="absolute inset-0 z-10 block" />
+                    <div className="absolute inset-0">
+                      <Image 
+                        src={post.featuredImage || "/images/blog/Blog1.jpg"} 
+                        alt={post.title} 
+                        fill 
+                        className="object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                      <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
+                        <p className="text-sm uppercase tracking-wide text-[#FF6B35]">{post.subtitle || "Blog"}</p>
+                        <p className="text-lg font-semibold line-clamp-2">{post.title}</p>
+                      </div>
+                    </div>
+                  </Card>
+                ))
+              ) : (
+                <Card customClass="overflow-hidden">
+                  <div className="absolute inset-0">
+                    <div className="absolute inset-0 bg-slate-900" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
+                      <p className="text-sm uppercase tracking-wide text-[#FF6B35]">Check back later</p>
+                      <p className="text-lg font-semibold">No posts available yet</p>
+                    </div>
                   </div>
-                </div>
-              </Card>
-
-              {/* Card 2 */}
-              <Card customClass="overflow-hidden">
-                <div className="absolute inset-0">
-                  <Image 
-                    src="/images/home/event.jpg" 
-                    alt="Event" 
-                    fill 
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
-                    <p className="text-sm uppercase tracking-wide text-[#FF6B35]">Tech</p>
-                    <p className="text-lg font-semibold">Creative Summit 2025</p>
-                  </div>
-                </div>
-              </Card>
-
-              {/* Card 3 */}
-              <Card customClass="overflow-hidden">
-                <div className="absolute inset-0">
-                  <Image 
-                    src="/images/home/it.jpg" 
-                    alt="IT" 
-                    fill 
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
-                    <p className="text-sm uppercase tracking-wide text-[#FF6B35]">Cybersecurity</p>
-                    <p className="text-lg font-semibold">Innovation in Tech</p>
-                  </div>
-                </div>
-              </Card>
+                </Card>
+              )}
             </CardSwap>
           </div>
         </div>

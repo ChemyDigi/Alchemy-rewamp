@@ -1,10 +1,21 @@
 "use client";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { getHomeContent } from "@/lib/firestore";
 
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [watchReelUrl, setWatchReelUrl] = useState("/showreel.mp4");
+
+  useEffect(() => {
+    getHomeContent().then((data) => {
+      if (data?.watchReelUrl) {
+        setWatchReelUrl(data.watchReelUrl);
+      }
+    });
+  }, []);
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"],
@@ -53,7 +64,7 @@ export default function Hero() {
         {/* Showreel — plain video, no animation */}
         <div className="w-full rounded-2xl overflow-hidden aspect-video">
           <video
-            src="/showreel.mp4"
+            src={watchReelUrl}
             autoPlay
             muted
             loop
@@ -110,7 +121,7 @@ export default function Hero() {
               className="w-full h-full"
             >
               <video
-                src="/showreel.mp4"
+                src={watchReelUrl}
                 autoPlay
                 muted
                 loop
