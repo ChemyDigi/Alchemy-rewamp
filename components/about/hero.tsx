@@ -17,7 +17,7 @@ function ScrollFillText({ text }: { text: string }) {
     <p
       ref={ref}
      className="
-  mt-16 sm:mt-12 md:mt-10
+  mt-20 sm:mt-16 md:mt-10
   w-full max-w-[95%] sm:max-w-[90%] md:max-w-[700px] lg:max-w-[900px]
   font-medium
 
@@ -53,7 +53,7 @@ function ScrollFillText({ text }: { text: string }) {
 
 export default function AboutHero() {
   return (
-    <section className="w-full min-h-[80vh] md:min-h-screen flex items-start md:items-center bg-white pt-10 md:pt-0">
+    <section className="w-full min-h-[70vh] md:min-h-screen flex items-start md:items-center bg-white pt-16 md:pt-0">
       <div className="w-full px-12 md:px-16">
         <div className="max-w-[1200px]">
 
@@ -64,7 +64,8 @@ export default function AboutHero() {
     font-medium text-black
     leading-[0.88] tracking-[-0.03em]
 
-    text-center md:text-left
+    mt-[2cm] md:mt-0
+    text-left
     w-full
   "
           >
@@ -72,7 +73,7 @@ export default function AboutHero() {
           </h1>
 
           {/* SUB LABEL */}
-          <div className="mt-3">
+          <div className="mt-5 md:mt-3">
             <p className="text-xl sm:text-3xl lg:text-xl font-normal uppercase tracking-[-0.01em] text-orange-500">
               CREATIVE
             </p>

@@ -4,29 +4,27 @@ import Lanyard from "../ui/Lanyard";
 
 export default function Hero() {
     return (
-        <section className="relative min-h-screen bg-[#f5f5f5]">
+        <section className="relative min-h-[53vh] md:min-h-screen md:max-lg:portrait:min-h-fit bg-[#f5f5f5]">
 
-            {/* ================= MOBILE VIEW ================= */}
-            <div className="md:hidden flex flex-col items-center justify-center min-h-screen px-6 pt-20">
+            {/* Full-screen Lanyard layer */}
+            <div className="absolute inset-0 z-20 hidden md:landscape:block lg:block">
+                <Lanyard
+                    position={[0, 0, 25]}
+                    gravity={[0, -40, 0]}
+                    offset={[3, 0, 0]}
+                />
+            </div>
 
-                {/* Lanyard centered */}
-                <div className="w-full flex justify-center mb-10">
-                    <div className="w-[220px] h-[340px] relative">
-                        <Lanyard
-                            position={[0, 0, 20]}   // slightly closer for mobile
-                            gravity={[0, -30, 0]}  // softer swing
-                            offset={[0, 0, 0]}     // centered
-                        />
-                    </div>
-                </div>
+            {/* Main Hero Wrapper */}
+            <div className="relative max-w-[1600px] mx-auto min-h-[53vh] md:min-h-screen md:max-lg:portrait:min-h-fit px-12 md:px-16 pt-12 md:pt-116 md:max-lg:portrait:pt-20 md:max-lg:portrait:pb-12 z-10 pointer-events-none">
 
-                {/* Text BELOW (matches your image) */}
-                <div className="w-full text-left">
-                    <h1 className="text-5xl font-medium leading-tight text-black">
+                {/* LEFT CONTENT */}
+                <div className="z-10 mt-6 md:mt-auto md:max-lg:portrait:mt-0 max-w-[620px] mx-auto text-center md:text-left md:mx-0 md:max-lg:portrait:text-left md:max-lg:portrait:mx-0 pb-3 md:pb-8 md:max-lg:portrait:pb-0 lg:translate-y-[-1.5rem] lg:pb-2 xl:translate-y-[-2rem]">
+                    <h1 className="text-7xl leading-[0.88] font-medium tracking-[-0.03em] text-black md:text-9xl lg:text-[10.75rem] xl:text-[11.5rem] 2xl:text-[12.5rem] mt-[1cm] md:mt-0 mb-4 md:mb-[2cm] md:max-lg:portrait:mb-4">
                         Contact
                     </h1>
 
-                    <p className="mt-3 text-sm uppercase text-[var(--color-orange)]">
+                    <p className="mt-[1cm] md:mt-3 md:max-lg:portrait:mt-3 text-xl font-normal uppercase tracking-[-0.01em] text-[var(--color-orange)] sm:text-3xl lg:text-xl">
                         Say Hello
                     </p>
 
