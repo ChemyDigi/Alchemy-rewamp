@@ -43,11 +43,10 @@ export default function AdminBlogsPage() {
     }
   }
 
-  function formatDate(ts: { seconds: number } | undefined): string {
-    if (!ts) return "—";
-    return new Date(ts.seconds * 1000).toLocaleDateString("en-US", {
-      year: "numeric", month: "short", day: "numeric",
-    });
+  // Using string date directly now
+  function formatDate(d: string | undefined): string {
+    if (!d) return "—";
+    return d;
   }
 
   return (
@@ -113,7 +112,7 @@ export default function AdminBlogsPage() {
                         )}
                         <div className="min-w-0">
                           <p className="text-white text-sm font-medium truncate max-w-[200px]">{blog.title}</p>
-                          <p className="text-slate-500 text-xs truncate max-w-[200px]">/{blog.slug}</p>
+                          <p className="text-slate-500 text-xs truncate max-w-[200px]">{blog.subtitle || `/${blog.slug}`}</p>
                         </div>
                       </div>
                     </td>
@@ -129,7 +128,7 @@ export default function AdminBlogsPage() {
                     </td>
                     <td className="px-4 py-4 hidden lg:table-cell">
                       <span className="text-slate-500 text-sm">
-                        {formatDate(blog.createdAt as { seconds: number } | undefined)}
+                        {formatDate(blog.date)}
                       </span>
                     </td>
                     <td className="px-4 py-4">

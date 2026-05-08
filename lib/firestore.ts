@@ -17,21 +17,16 @@ import { db } from "./firebase";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
-export interface BlogSection {
-  heading: string;
-  description: string;
-  image?: string;
-}
-
 export interface Blog {
   id?: string;
   title: string;
   slug: string;
-  shortDescription: string;
+  subtitle?: string;
+  author?: string;
+  date?: string;
+  readTime?: string;
   featuredImage: string;
   content: string;
-  sections: BlogSection[];
-  galleryImages: string[];
   status: "draft" | "published";
   createdAt?: Timestamp;
   updatedAt?: Timestamp;
@@ -118,21 +113,55 @@ export async function getBlogs(): Promise<Blog[]> {
 }
 
 export async function getPublishedBlogs(): Promise<Blog[]> {
-  const q = query(
-    collection(db, "blogs"),
-    where("status", "==", "published"),
-    orderBy("createdAt", "desc")
-  );
-  const snapshot = await getDocs(q);
-  return snapshot.docs.map((d) => ({ id: d.id, ...d.data() } as Blog));
+  try {
+    const projectId = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
+    if (!projectId) return [];
+    
+    const url = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/blogs`;
+    const response = await fetch(url, { cache: 'no-store' });
+    
+    if (!response.ok) return [];
+    const data = await response.json();
+    if (!data.documents) return [];
+    
+    const blogs = data.documents.map((doc: any) => {
+      const id = doc.name.split('/').pop();
+      const fields = doc.fields || {};
+      return {
+        id,
+        title: fields.title?.stringValue || "",
+        slug: fields.slug?.stringValue || "",
+        subtitle: fields.subtitle?.stringValue || "",
+        author: fields.author?.stringValue || "",
+        date: fields.date?.stringValue || "",
+        readTime: fields.readTime?.stringValue || "",
+        featuredImage: fields.featuredImage?.stringValue || "",
+        content: fields.content?.stringValue || "",
+        status: fields.status?.stringValue || "draft",
+        createdAt: { seconds: new Date(doc.createTime || 0).getTime() / 1000 },
+      } as Blog;
+    });
+
+    // Sort descending by date
+    blogs.sort((a, b) => {
+      const timeA = a.createdAt?.seconds || 0;
+      const timeB = b.createdAt?.seconds || 0;
+      return timeB - timeA;
+    });
+
+    // In production, you might want to filter by status === "published" here, 
+    // but we will return all for now or just filter published.
+    return blogs.filter(b => b.status === "published");
+  } catch (error) {
+    console.error("REST API fetch error:", error);
+    return [];
+  }
 }
 
 export async function getBlogBySlug(slug: string): Promise<Blog | null> {
-  const q = query(collection(db, "blogs"), where("slug", "==", slug));
-  const snapshot = await getDocs(q);
-  if (snapshot.empty) return null;
-  const d = snapshot.docs[0];
-  return { id: d.id, ...d.data() } as Blog;
+  const blogs = await getPublishedBlogs();
+  const blog = blogs.find((b) => b.slug === slug);
+  return blog || null;
 }
 
 export async function getBlogById(id: string): Promise<Blog | null> {
