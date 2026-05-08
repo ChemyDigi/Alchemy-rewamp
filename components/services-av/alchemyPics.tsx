@@ -68,8 +68,8 @@ export default function AlchemyPics() {
 			</div>
 
 			<div className="w-full px-10 pb-10 pt-8 sm:px-10 md:px-20 lg:pb-16 lg:pt-12">
-				<Backlight blur={40} className="w-full">
-					<div className="mx-auto w-full max-w-[1400px] overflow-hidden rounded-[28px] bg-black shadow-[0_20px_80px_rgba(0,0,0,0.12)]">
+				<Backlight blur={16} className="w-full">
+					<div className="mx-auto w-full max-w-[1400px] overflow-hidden rounded-[28px] bg-black shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
 						<video
 							className="h-auto w-full object-cover"
 							src="/showreel.mp4"
