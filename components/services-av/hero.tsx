@@ -27,19 +27,19 @@ export default function ServicesSection() {
 
         {/* LEFT */}
         {/* LEFT */}
-        <div className="z-10 text-center lg:text-left mt-6 sm:mt-8 md:mt-12 lg:mt-16">
+<div className="z-10 text-center lg:text-left mt-6 sm:mt-8 md:mt-12 lg:mt-16">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight mb-6 text-black">
             PROFESSIONAL AUDIO & <br className="hidden sm:block" />
             VISUAL PRODUCTION
           </h1>
 
-          <p className="text-normal sm:text-base text-black/80 leading-relaxed mb-6 max-w-[550px] mx-auto lg:mx-0 lg:text-justify">
-            Bring your vision to life with our professional audio and visual production services. From high-quality videography to immersive sound and creative storytelling, we produce captivating content that leaves a lasting impression.
+          <p className="text-normal sm:text-base text-black leading-relaxed mb-6 max-w-[550px] mx-auto lg:mx-0 text-justify">
+            Transform ideas into powerful digital experiences with our full cycle audio and visual production services. From intuitive design to robust engineering, we craft solutions that elevate your brand and connect you with your audience.
           </p>
 
           {/* BUTTON → /contact */}
             <Link href="/contactus">
-              <button className="group mt-8 mx-auto sm:mx-0 bg-orange text-white h-[48px] pl-10 pr-10 rounded-full relative flex items-center overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-black min-w-[200px] hover:min-w-[260px]">
+                <button className="group mt-8 bg-orange text-white h-[56px] pl-8 pr-8 rounded-full relative flex items-center overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-black min-w-[200px] hover:min-w-[260px]">
 
                 <span className="text-base md:text-lg font-medium whitespace-nowrap">
                     GET IN TOUCH

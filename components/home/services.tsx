@@ -24,7 +24,7 @@ const services: Service[] = [
     count: "02",
     image: "/images/home/av.jpg",
     label: "AV Production",
-    link: "/services/av-production",
+    link: "/services-av",
   },
   {
     title: "Digital Marketing",

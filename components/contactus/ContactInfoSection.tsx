@@ -1,27 +1,27 @@
 "use client";
 
-import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
-import Link from "next/link";
 import { BorderBeam } from "@/components/ui/border-beam";
+import Link from "next/link";
+import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 
 export default function ContactInfoSection() {
     return (
-        <section className="w-full bg-white py-24 px-6 md:px-12 lg:px-20">
+        <section className="w-full bg-white py-1 md:py-24 px-6 md:px-12 lg:px-20 -mt-2 md:mt-0">
             <div className="max-w-[1500px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-start">
 
                 {/* LEFT SIDE */}
                 <div>
-                    <p className="text-[20px] text-[#5b5b5b] mb-8 font-light">
+                    <p className="text-[20px] text-[#5b5b5b] mb-8 font-light hidden md:block">
                         We’re here to help you grow
                     </p>
 
-                    <h2 className="text-[51\px] md:text-[50px] font-black leading-[0.95] uppercase tracking-tight text-black max-w-[620px]">
-                        WE’RE HERE TO <span className="text-[#f28c28]">HELP</span> YOU
+                    <h2 className="text-[36px] md:text-[50px] font-black leading-[0.95] uppercase tracking-tight text-black max-w-[620px]">
+                        WE'RE HERE TO <span className="text-[#f28c28]">HELP</span> YOU
                         <br />
                         GROW
                     </h2>
 
-                    <p className="mt-8 text-[20px] leading-[1.5] text-[#4f4f4f] max-w-[620px]">
+                    <p className="mt-6 md:mt-8 text-[16px] md:text-[20px] leading-[1.6] text-[#4f4f4f] max-w-[620px]">
                         At Alchemy, we turn your ideas into impactful digital
                         solutions and are always ready to help.
                     </p>
@@ -162,16 +162,16 @@ export default function ContactInfoSection() {
                     <BorderBeam
                         duration={6}
                         size={400}
-                        colorFrom="#f28c28"
-                        colorTo="#ff4d4d"
+                        colorFrom="#ff8000"
+                        colorTo="#f82323"
                     />
                     <BorderBeam
                         duration={6}
                         delay={3}
                         size={400}
-                        borderWidth={2}
-                        colorFrom="#3b82f6"
-                        colorTo="#a855f7"
+                        borderWidth={1}
+                        colorFrom="#ff8000"
+                        colorTo="#f82323"
                         reverse
                     />
                 </div>
