@@ -11,7 +11,6 @@ export default function VideoBlock() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
 
-  // 👇 Detect scroll into view
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -25,7 +24,6 @@ export default function VideoBlock() {
     return () => observer.disconnect();
   }, []);
 
-  // 👇 Auto play / pause
   useEffect(() => {
     if (!videoRef.current) return;
 
@@ -38,7 +36,6 @@ export default function VideoBlock() {
     }
   }, [isVisible]);
 
-  // 👇 Toggle play/pause
   const togglePlay = () => {
     if (!videoRef.current) return;
 
@@ -51,7 +48,6 @@ export default function VideoBlock() {
     }
   };
 
-  // 👇 Toggle sound
   const toggleMute = () => {
     if (!videoRef.current) return;
 
@@ -64,8 +60,8 @@ export default function VideoBlock() {
       ref={containerRef}
       className="w-full max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20"
     >
-      <Backlight blur={40} className="w-full">
-        <div className="relative rounded-xl sm:rounded-2xl overflow-hidden group w-full">
+      <Backlight blur={16} className="w-full">
+        <div className="relative rounded-xl sm:rounded-2xl overflow-hidden group w-full shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
 
           {/* VIDEO */}
           <video

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function ServicesSection() {
   const [activeIndex, setActiveIndex] = useState<number | null>(0);
@@ -32,26 +33,36 @@ export default function ServicesSection() {
             DEVELOPMENT
           </h1>
 
-          <p className="text-sm sm:text-base text-black/80 leading-relaxed mb-6 max-w-[550px] mx-auto lg:mx-0">
+          <p className="text-normal sm:text-base text-black/80 leading-relaxed mb-6 max-w-[550px] mx-auto lg:mx-0 lg:text-justify">
             Transform ideas into powerful digital experiences with our full cycle web and mobile development services. From intuitive design to robust engineering, we craft solutions that elevate your brand and connect you with your audience.
           </p>
 
-          <button className="bg-orange text-white text-sm px-6 py-3 rounded-full flex items-center gap-2 hover:bg-orange-600 transition font-bold mx-auto lg:mx-0">
-            GET IN TOUCH →
-          </button>
+          {/* BUTTON → /contact */}
+            <Link href="/contactus">
+              <button className="group mt-8 mx-auto sm:mx-0 bg-orange text-white h-[48px] pl-10 pr-10 rounded-full relative flex items-center overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-black min-w-[200px] hover:min-w-[260px]">
+
+                <span className="text-base md:text-lg font-medium whitespace-nowrap">
+                    GET IN TOUCH
+                </span>
+
+                <span className="absolute right-6 text-2xl translate-x-4 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500">
+                    →
+                </span>
+                </button>
+            </Link>
         </div>
 
         {/* RIGHT IMAGE */}
    
-<div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[650px] -mt-6 sm:-mt-8 md:-mt-10 lg:-mt-12">
-  <Image
-    src="/images/services-it/hero.png"
-    alt="hero"
-    fill
-    className="object-contain"
-    priority
-  />
-</div>
+        <div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[650px] -mt-6 sm:-mt-8 md:-mt-10 lg:-mt-12">
+          <Image
+            src="/images/services-it/hero.png"
+            alt="hero"
+            fill
+            className="object-contain"
+            priority
+          />
+        </div>
 
       </div>
 

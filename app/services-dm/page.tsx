@@ -4,6 +4,8 @@ import Hero from '@/components/services-dm/Front';
 import ScrollFillText from "@/components/services-dm/ScrollFillText";
 import Work from "@/components/services-dm/Work";
 import Video from "@/components/services-dm/Video";
+import Services from "@/components/services-dm/Services";
+import ClientCarousel from "@/components/services-dm/ClientCarousel";
 
 export default function Home() {
     return (
@@ -13,7 +15,9 @@ export default function Home() {
             <Hero />
             <ScrollFillText text="We craft stories, not just campaigns. We build connections, not just clicks." />
             <Video />
+            <Services/>
             <Work/>
+            <ClientCarousel/>
             <Footer />
         </main>
     );
