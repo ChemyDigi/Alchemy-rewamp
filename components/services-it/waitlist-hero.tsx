@@ -118,8 +118,8 @@ export const WaitlistHero = () => {
     "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
     "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
     "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/graphql/graphql-plain.svg",
-    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg",
-    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-original.svg",
+    // "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg",
     "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg",
     "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
   ]
@@ -248,7 +248,7 @@ export const WaitlistHero = () => {
                   <img
                     src={logo}
                     alt={`Tech logo ${index}`}
-                    className="w-full h-full object-contain opacity-30"
+                    className="w-full h-full object-contain opacity-60"
                   />
                 </div>
               )
@@ -276,7 +276,7 @@ export const WaitlistHero = () => {
                   <img
                     src={logo}
                     alt={`Tech logo ${index}`}
-                    className="w-full h-full object-contain opacity-40"
+                    className="w-full h-full object-contain opacity-70"
                   />
                 </div>
               )
@@ -304,7 +304,7 @@ export const WaitlistHero = () => {
                   <img
                     src={logo}
                     alt={`Tech logo ${index}`}
-                    className="w-full h-full object-contain opacity-50"
+                    className="w-full h-full object-contain opacity-80"
                   />
                 </div>
               )

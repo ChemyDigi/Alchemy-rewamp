@@ -95,7 +95,10 @@ export default function RecentEvents() {
                   initial={{ opacity: 0, scale: 1.05 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0 }}
-                  transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}
+                  transition={{
+                    duration: 1.2,
+                    ease: [0.4, 0, 0.2, 1]
+                  }}
                   className="absolute inset-0"
                 >
                   <Image
