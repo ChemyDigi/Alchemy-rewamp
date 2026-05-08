@@ -41,7 +41,7 @@ export default function CreativeAgencySection() {
   };
 
   return (
-    <section className="w-full overflow-hidden bg-white py-10 md:py-12">
+    <section className="w-full overflow-hidden bg-white pt-20 pb-10 md:pt-28 md:pb-12">
       <div className="mx-auto flex max-w-[1700px] flex-col gap-8">
         {/* Top Content */}
         <div className="flex flex-col justify-between gap-8 px-5 md:flex-row md:items-start md:px-10">
