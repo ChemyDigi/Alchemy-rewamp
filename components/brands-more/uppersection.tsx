@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import uppersectionData from "@/data/brand.json";
 
 interface BrandDetails {
@@ -24,36 +25,45 @@ interface Props {
   brandSlug?: string;
 }
 
+function ScrollFillText({ text }: { text: string }) {
+  const ref = useRef<HTMLParagraphElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start 95%", "end 5%"], // smoother + longer scroll range
+  });
+
+  const words = text.split(" ");
+
+  return (
+    <p
+      ref={ref}
+      className="text-[15px] md:text-[24px] leading-relaxed font-medium"
+    >
+      {words.map((word, i) => {
+        const start = i / words.length;
+        const end = start + 0.08; // 👈 overlap = smoother wave
+
+        const color = useTransform(
+          scrollYProgress,
+          [start, end],
+          ["#949494", "#000000"]
+        );
+
+        return (
+          <motion.span key={i} style={{ color }}>
+            {word}{" "}
+          </motion.span>
+        );
+      })}
+    </p>
+  );
+}
+
 export default function BrandsMore({ brandSlug = "tommee-tippee" }: Props) {
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const textRef = useRef<HTMLParagraphElement>(null);
-  
   const brandData = uppersectionData.brands.find(
     (brand: BrandData) => brand.slug === brandSlug
   );
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (textRef.current) {
-        const rect = textRef.current.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
-        
-        const visiblePart = Math.max(0, Math.min(1, 
-          (windowHeight - rect.top) / (windowHeight + rect.height)
-        ));
-        
-        const progress = Math.min(1, Math.max(0, visiblePart * 1.5));
-        setScrollProgress(progress);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    handleScroll();
-    
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const words = brandData?.introduction.split(" ") || [];
 
   if (!brandData) {
     return <div>Brand not found</div>;
@@ -87,28 +97,7 @@ export default function BrandsMore({ brandSlug = "tommee-tippee" }: Props) {
         
         <div>
           <p className="text-base text-orange mb-4">Introduction</p>
-
-          <p 
-            ref={textRef} 
-            className="text-[15px] md:text-[24px] leading-relaxed font-medium"
-          >
-            {words.map((word, index) => {
-              const wordIndex = index / words.length;
-              const isFilled = wordIndex <= scrollProgress;
-              
-              return (
-                <span
-                  key={index}
-                  className="transition-colors duration-300"
-                  style={{
-                    color: isFilled ? "#000000" : "#949494",
-                  }}
-                >
-                  {word}{" "}
-                </span>
-              );
-            })}
-          </p>
+          <ScrollFillText text={brandData.introduction} />
         </div>
 
         <div>

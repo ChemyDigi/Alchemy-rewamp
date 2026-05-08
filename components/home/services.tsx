@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
 import Link from "next/link"
 
 type Service = {
@@ -45,6 +45,12 @@ const services: Service[] = [
 export default function Services() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
   const [isDesktop, setIsDesktop] = useState(false)
+  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 })
+  const [isCursorVisible, setIsCursorVisible] = useState(false)
+  const sectionRef = useRef<HTMLElement>(null)
+  const targetPos = useRef({ x: 0, y: 0 })
+  const currentPos = useRef({ x: 0, y: 0 })
+  const rafId = useRef<number | null>(null)
 
   useEffect(() => {
     const checkScreen = () => {
@@ -57,6 +63,47 @@ export default function Services() {
     return () => window.removeEventListener("resize", checkScreen)
   }, [])
 
+  // RAF lerp loop — runs only while cursor is visible
+  useEffect(() => {
+    if (!isCursorVisible) {
+      if (rafId.current !== null) cancelAnimationFrame(rafId.current)
+      return
+    }
+
+    const LERP = 0.12
+
+    const loop = () => {
+      const dx = targetPos.current.x - currentPos.current.x
+      const dy = targetPos.current.y - currentPos.current.y
+
+      if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
+        currentPos.current.x += dx * LERP
+        currentPos.current.y += dy * LERP
+        setCursorPos({ x: currentPos.current.x, y: currentPos.current.y })
+      }
+
+      rafId.current = requestAnimationFrame(loop)
+    }
+
+    rafId.current = requestAnimationFrame(loop)
+    return () => {
+      if (rafId.current !== null) cancelAnimationFrame(rafId.current)
+    }
+  }, [isCursorVisible])
+
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLElement>) => {
+    const rect = sectionRef.current?.getBoundingClientRect()
+    if (rect) {
+      targetPos.current = { x: e.clientX - rect.left, y: e.clientY - rect.top }
+    }
+  }, [])
+
+  const handleSectionEnter = () => setIsCursorVisible(true)
+  const handleSectionLeave = () => {
+    setIsCursorVisible(false)
+    if (isDesktop) setActiveIndex(null)
+  }
+
   const handleEnter = (index: number) => {
     if (isDesktop) setActiveIndex(index)
   }
@@ -66,8 +113,59 @@ export default function Services() {
   }
 
   return (
-    <section className="w-full pt-4 pb-8 px-6 md:px-10 lg:px-16 bg-white">
-      
+    <section
+      ref={sectionRef}
+      className="w-full pt-4 pb-8 px-6 md:px-10 lg:px-16 bg-white relative"
+      style={{ cursor: "none" }}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleSectionEnter}
+      onMouseLeave={handleSectionLeave}
+    >
+      {/* Custom Cursor */}
+      <div
+        style={{
+          position: "absolute",
+          left: cursorPos.x,
+          top: cursorPos.y,
+          transform: "translate(-50%, -50%)",
+          pointerEvents: "none",
+          zIndex: 9999,
+          opacity: isCursorVisible ? 1 : 0,
+          transition: "opacity 200ms ease",
+        }}
+      >
+        {/* Outer circle */}
+        <div
+          style={{
+            width: 52,
+            height: 52,
+            borderRadius: "50%",
+            backgroundColor: "#E3791D",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            boxShadow: "0 4px 16px rgba(227,121,29,0.45)",
+          }}
+        >
+          {/* Arrow SVG */}
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M4 10H16M16 10L11 5M16 10L11 15"
+              stroke="#ffffff"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </div>
+      </div>
+
       {/* Heading */}
       <div className="mb-10">
         <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold text-black">
@@ -80,7 +178,7 @@ export default function Services() {
 
       {/* Container */}
       <div className="bg-gray-100 rounded-3xl p-4 md:p-10 lg:p-20">
-        <div className="max-w-4xl mx-auto" onMouseLeave={handleLeave}>
+        <div className="max-w-4xl mx-auto">
           {services.map((service, index) => {
             const isActive = activeIndex === index
 

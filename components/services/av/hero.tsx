@@ -27,14 +27,14 @@ export default function ServicesSection() {
 
         {/* LEFT */}
         {/* LEFT */}
-<div className="z-10 text-center lg:text-left mt-6 sm:mt-8 md:mt-12 lg:mt-16">
+        <div className="z-10 text-center lg:text-left mt-6 sm:mt-8 md:mt-12 lg:mt-16">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight mb-6 text-black">
-            CUSTOM WEB & MOBILE <br className="hidden sm:block" />
-            DEVELOPMENT
+            PROFESSIONAL AUDIO & <br className="hidden sm:block" />
+            VISUAL PRODUCTION
           </h1>
 
           <p className="text-normal sm:text-base text-black/80 leading-relaxed mb-6 max-w-[550px] mx-auto lg:mx-0 lg:text-justify">
-            Transform ideas into powerful digital experiences with our full cycle web and mobile development services. From intuitive design to robust engineering, we craft solutions that elevate your brand and connect you with your audience.
+            Bring your vision to life with our professional audio and visual production services. From high-quality videography to immersive sound and creative storytelling, we produce captivating content that leaves a lasting impression.
           </p>
 
           {/* BUTTON → /contact */}
@@ -56,7 +56,7 @@ export default function ServicesSection() {
    
         <div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[650px] -mt-6 sm:-mt-8 md:-mt-10 lg:-mt-12">
           <Image
-            src="/images/services-it/hero.png"
+            src="/images/services/AV/AVHero.jpeg"
             alt="hero"
             fill
             className="object-contain"

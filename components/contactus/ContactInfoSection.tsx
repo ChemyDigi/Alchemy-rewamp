@@ -2,6 +2,8 @@
 
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import Link from "next/link";
+import { BorderBeam } from "@/components/ui/border-beam";
+
 export default function ContactInfoSection() {
     return (
         <section className="w-full bg-white py-24 px-6 md:px-12 lg:px-20">
@@ -97,7 +99,7 @@ export default function ContactInfoSection() {
                 </div>
 
                 {/* RIGHT SIDE FORM */}
-                <div className="bg-[#faf9f9] rounded-[26px] p-8 md:p-12 shadow-sm">
+                <div className="relative bg-[#faf9f9] rounded-[26px] p-8 md:p-12 shadow-sm overflow-hidden">
 
                     <h2 className="text-[48px] md:text-[50px] font-black text-black leading-none">
                         Get in Touch
@@ -155,6 +157,23 @@ export default function ContactInfoSection() {
                             </button>
                         </Link>
                     </form>
+
+                    {/* BorderBeam effects */}
+                    <BorderBeam
+                        duration={6}
+                        size={400}
+                        colorFrom="#f28c28"
+                        colorTo="#ff4d4d"
+                    />
+                    <BorderBeam
+                        duration={6}
+                        delay={3}
+                        size={400}
+                        borderWidth={2}
+                        colorFrom="#3b82f6"
+                        colorTo="#a855f7"
+                        reverse
+                    />
                 </div>
             </div>
         </section>
