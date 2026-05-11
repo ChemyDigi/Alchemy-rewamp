@@ -74,7 +74,7 @@ export default function AboutHero() {
 
           {/* SUB LABEL */}
           <div className="mt-5 md:mt-3">
-            <p className="text-xl sm:text-3xl lg:text-xl font-normal uppercase tracking-[-0.01em] text-orange-500">
+            <p className="text-xl sm:text-3xl lg:text-xl font-normal uppercase tracking-[-0.01em] text-orange">
               CREATIVE
             </p>
             <p className="text-xl sm:text-3xl lg:text-xl leading-none font-normal uppercase tracking-[-0.01em] text-gray-500">

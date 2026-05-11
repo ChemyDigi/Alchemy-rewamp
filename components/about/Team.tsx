@@ -50,7 +50,7 @@ export default function TeamSection() {
         <div className="mb-16">
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight">
             <span className="text-black">PEOPLE OF </span>
-            <span className="text-orange-500">ALCHEMY</span>
+            <span className="text-orange">ALCHEMY</span>
           </h2>
 
           <p className="text-gray-500 mt-3 text-lg">
@@ -72,7 +72,7 @@ export default function TeamSection() {
                 />
               </div>
 
-              <p className="mt-4 text-orange-500 font-semibold text-lg">
+              <p className="mt-4 text-orange font-semibold text-lg">
                 {m.name}
               </p>
               <p className="text-gray-500 text-sm">{m.role}</p>
@@ -117,7 +117,7 @@ export default function TeamSection() {
                   />
                 </div>
 
-                <p className="mt-4 text-orange-500 font-semibold text-lg">
+                <p className="mt-4 text-orange font-semibold text-lg">
                   {m.name}
                 </p>
                 <p className="text-gray-500 text-sm">{m.role}</p>
