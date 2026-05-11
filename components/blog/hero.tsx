@@ -20,11 +20,11 @@ export default function BlogHero({ posts }: BlogHeroProps) {
             Blog
           </h1>
 
-          <p className="mt-3 text-xl font-normal uppercase tracking-[-0.01em] text-[#FF6B35] sm:text-3xl lg:text-xl">
+          <p className="mt-3 text-xl font-normal uppercase tracking-[-0.01em] text-orange sm:text-3xl lg:text-xl">
             Insight
           </p>
           <p className="text-xl leading-none font-normal uppercase tracking-[-0.01em] text-black sm:text-3xl lg:text-xl">
-            Driven By Impact.
+            Driven By Impact
           </p>
         </div>
 
