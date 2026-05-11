@@ -16,6 +16,7 @@ interface ServiceEditorProps {
   defaultTitle: string;
   backHref?: string;
   showDMPosts?: boolean;
+  projectLabel?: string;
 }
 
 function generateId(): string {
@@ -30,7 +31,7 @@ const emptyProject = (): Project => ({
   images: [],
 });
 
-export default function ServiceEditor({ slug, defaultTitle, backHref = "/admin/services", showDMPosts = false }: ServiceEditorProps) {
+export default function ServiceEditor({ slug, defaultTitle, backHref = "/admin/services", showDMPosts = false, projectLabel = "Project" }: ServiceEditorProps) {
   const [title, setTitle] = useState(defaultTitle);
   const [description, setDescription] = useState("");
   const [heroImage, setHeroImage] = useState("");
@@ -122,7 +123,7 @@ export default function ServiceEditor({ slug, defaultTitle, backHref = "/admin/s
     <>
       <PageHeader
         title={`Manage: ${defaultTitle}`}
-        description="Edit service content and manage projects"
+        description={`Edit service content and manage ${projectLabel.toLowerCase()}s`}
         action={
           <div className="flex items-center gap-3">
             <Link href={backHref} className="flex items-center gap-2 text-slate-400 hover:text-white text-sm transition-colors">
@@ -158,10 +159,10 @@ export default function ServiceEditor({ slug, defaultTitle, backHref = "/admin/s
           />
         </AdminCard>
 
-        {/* Projects */}
+        {/* Projects / Custom Label */}
         <AdminCard>
           <div className="flex items-center justify-between mb-5">
-            <h2 className="text-white font-semibold text-sm uppercase tracking-wider">Projects</h2>
+            <h2 className="text-white font-semibold text-sm uppercase tracking-wider">{projectLabel}s</h2>
             <AdminButton
               variant="secondary"
               size="sm"
@@ -172,15 +173,15 @@ export default function ServiceEditor({ slug, defaultTitle, backHref = "/admin/s
               }}
             >
               <Plus size={13} />
-              Add Project
+              Add {projectLabel}
             </AdminButton>
           </div>
 
           {projects.length === 0 ? (
             <EmptyState
               icon={<FolderOpen size={24} />}
-              title="No projects yet"
-              description="Add your first project for this service"
+              title={`No ${projectLabel.toLowerCase()}s yet`}
+              description={`Add your first ${projectLabel.toLowerCase()} for this service`}
               action={
                 <AdminButton variant="secondary" size="sm" onClick={() => {
                   const p = emptyProject();
@@ -188,7 +189,7 @@ export default function ServiceEditor({ slug, defaultTitle, backHref = "/admin/s
                   setExpandedProject(p.id);
                 }}>
                   <Plus size={13} />
-                  Add Project
+                  Add {projectLabel}
                 </AdminButton>
               }
             />
@@ -203,7 +204,7 @@ export default function ServiceEditor({ slug, defaultTitle, backHref = "/admin/s
                   >
                     <div className="flex-1 min-w-0">
                       <p className="text-white text-sm font-medium truncate">
-                        {project.title || "Untitled Project"}
+                        {project.title || `Untitled ${projectLabel}`}
                       </p>
                       {project.category && (
                         <p className="text-slate-600 text-xs">{project.category}</p>
@@ -222,10 +223,10 @@ export default function ServiceEditor({ slug, defaultTitle, backHref = "/admin/s
                     <div className="border-t border-[#1a1a35] bg-[#080818] p-4 space-y-4">
                       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                         <AdminInput
-                          label="Project Title"
+                          label={`${projectLabel} Title`}
                           value={project.title}
                           onChange={(e) => updateProject(project.id, "title", e.target.value)}
-                          placeholder="e.g. Brand Identity Redesign"
+                          placeholder={`e.g. ${projectLabel} Title`}
                         />
                         <AdminInput
                           label="Category"
@@ -239,12 +240,12 @@ export default function ServiceEditor({ slug, defaultTitle, backHref = "/admin/s
                         value={project.description}
                         onChange={(e) => updateProject(project.id, "description", e.target.value)}
                         rows={3}
-                        placeholder="Project description…"
+                        placeholder={`${projectLabel} description…`}
                       />
                       {/* Project Images */}
                       <div>
                         <div className="flex items-center justify-between mb-2">
-                          <label className="text-slate-400 text-sm font-medium">Project Images</label>
+                          <label className="text-slate-400 text-sm font-medium">{projectLabel} Images</label>
                           <div className="relative">
                             <AdminButton type="button" variant="ghost" size="sm" onClick={() => document.getElementById(`project-img-upload-${project.id}`)?.click()}>
                               <Plus size={12} />
@@ -373,8 +374,8 @@ export default function ServiceEditor({ slug, defaultTitle, backHref = "/admin/s
 
       <ConfirmDialog
         open={deleteProject !== null}
-        title="Delete Project"
-        message="Delete this project? This cannot be undone."
+        title={`Delete ${projectLabel}`}
+        message={`Delete this ${projectLabel.toLowerCase()}? This cannot be undone.`}
         onConfirm={() => {
           if (deleteProject) {
             setProjects((ps) => ps.filter((p) => p.id !== deleteProject));

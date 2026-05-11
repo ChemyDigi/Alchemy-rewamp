@@ -4,43 +4,60 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const events = [
-  {
-    id: 1,
-    title: "Qatar Charity",
-    description:
-      "Delivered global humanitarian and development initiatives supporting vulnerable communities through sustainable programs",
-    image: "/images/services-event/qatar-charity.png",
-    link: "#",
-  },
-  {
-    id: 2,
-    title: "Datadog Integration",
-    description:
-      "Successfully implemented comprehensive monitoring and observability solutions for large-scale enterprise infrastructures",
-    image: "/images/services-event/datadog.jpeg",
-    link: "#",
-  },
-  {
-    id: 3,
-    title: "Mobile Solutions",
-    description:
-      "Crafting cutting-edge mobile experiences that connect users with seamless digital services and intuitive interfaces",
-    image: "/images/services-event/datadog1.jpeg",
-    link: "#",
-  },
-];
+import { getServiceBySlug } from "@/lib/firestore";
+
+
 
 export default function RecentEvents() {
+  const [events, setEvents] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
+    getServiceBySlug("event-management").then((data) => {
+      if (data && data.projects && data.projects.length > 0) {
+        const mappedEvents = data.projects.map((p, i) => ({
+          id: p.id || i,
+          title: p.title || "Untitled Event",
+          description: p.description || "",
+          image: p.images?.[0] || "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7", 
+          link: "#",
+        }));
+        setEvents(mappedEvents);
+      }
+      setLoading(false);
+    }).catch(() => {
+      setLoading(false);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (events.length === 0) return;
     const timer = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % events.length);
     }, 5000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [events.length]);
+
+  if (loading) {
+    return (
+      <section className="w-full bg-white px-4 md:px-8 lg:px-14 py-14 md:py-20 overflow-hidden flex items-center justify-center min-h-[500px]">
+        <div className="w-8 h-8 border-2 border-orange border-t-transparent rounded-full animate-spin" />
+      </section>
+    );
+  }
+
+  if (events.length === 0) {
+    return (
+      <section className="w-full bg-white px-4 md:px-8 lg:px-14 py-14 md:py-20 overflow-hidden flex items-center justify-center min-h-[500px]">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-slate-400 mb-2">No Recent Events</h2>
+          <p className="text-slate-500">Please add events in the admin panel to display them here.</p>
+        </div>
+      </section>
+    );
+  }
 
   const currentEvent = events[currentIndex];
 
