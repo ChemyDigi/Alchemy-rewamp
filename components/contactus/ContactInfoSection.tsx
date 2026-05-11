@@ -16,7 +16,7 @@ export default function ContactInfoSection() {
                     </p>
 
                     <h2 className="text-[36px] md:text-[50px] font-black leading-[0.95] uppercase tracking-tight text-black max-w-[620px]">
-                        WE'RE HERE TO <span className="text-[#f28c28]">HELP</span> YOU
+                        WE'RE HERE TO <span className="text-orange">HELP</span> YOU
                         <br />
                         GROW
                     </h2>
