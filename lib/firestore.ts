@@ -94,6 +94,13 @@ export interface Project {
   createdAt?: Timestamp;
 }
 
+export interface DMPost {
+  id: string;
+  imageUrl: string;
+  alt: string;
+  aspect: "square" | "tall";
+}
+
 export interface Service {
   id?: string;
   slug: string;
@@ -101,6 +108,7 @@ export interface Service {
   description: string;
   heroImage: string;
   projects: Project[];
+  dmPosts?: DMPost[];
   updatedAt?: Timestamp;
 }
 

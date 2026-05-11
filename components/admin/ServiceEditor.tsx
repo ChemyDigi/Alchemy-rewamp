@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getServiceBySlug, upsertService, Service, Project } from "@/lib/firestore";
+import { getServiceBySlug, upsertService, Service, Project, DMPost } from "@/lib/firestore";
 import { PageHeader, AdminCard, AdminButton, AdminInput, AdminTextarea, EmptyState } from "@/components/admin/AdminUI";
 import ImageUpload from "@/components/admin/ImageUpload";
 import ConfirmDialog from "@/components/admin/ConfirmDialog";
@@ -15,6 +15,7 @@ interface ServiceEditorProps {
   slug: string;
   defaultTitle: string;
   backHref?: string;
+  showDMPosts?: boolean;
 }
 
 function generateId(): string {
@@ -29,15 +30,17 @@ const emptyProject = (): Project => ({
   images: [],
 });
 
-export default function ServiceEditor({ slug, defaultTitle, backHref = "/admin/services" }: ServiceEditorProps) {
+export default function ServiceEditor({ slug, defaultTitle, backHref = "/admin/services", showDMPosts = false }: ServiceEditorProps) {
   const [title, setTitle] = useState(defaultTitle);
   const [description, setDescription] = useState("");
   const [heroImage, setHeroImage] = useState("");
   const [projects, setProjects] = useState<Project[]>([]);
+  const [dmPosts, setDmPosts] = useState<DMPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [deleteProject, setDeleteProject] = useState<string | null>(null);
   const [expandedProject, setExpandedProject] = useState<string | null>(null);
+  const [deleteDMPost, setDeleteDMPost] = useState<string | null>(null);
 
   useEffect(() => {
     getServiceBySlug(slug).then((data) => {
@@ -46,6 +49,7 @@ export default function ServiceEditor({ slug, defaultTitle, backHref = "/admin/s
         setDescription(data.description || "");
         setHeroImage(data.heroImage || "");
         setProjects(data.projects || []);
+        setDmPosts(data.dmPosts || []);
       }
       setLoading(false);
     });
@@ -54,7 +58,7 @@ export default function ServiceEditor({ slug, defaultTitle, backHref = "/admin/s
   async function handleSave() {
     setSaving(true);
     try {
-      const payload: Service = { slug, title, description, heroImage, projects };
+      const payload: Service = { slug, title, description, heroImage, projects, dmPosts };
       await upsertService(payload);
       toast.success("Service updated");
     } catch {
@@ -84,6 +88,26 @@ export default function ServiceEditor({ slug, defaultTitle, backHref = "/admin/s
     setProjects((ps) =>
       ps.map((p) => p.id === projectId ? { ...p, images: p.images.filter((_, i) => i !== imgIdx) } : p)
     );
+  }
+
+  async function addDMPostImage(file: File) {
+    try {
+      const url = await uploadToCloudinary(file);
+      const newPost: DMPost = {
+        id: generateId(),
+        imageUrl: url,
+        alt: "Digital Marketing Post",
+        aspect: "tall"
+      };
+      setDmPosts((prev) => [...prev, newPost]);
+      toast.success("Post image added");
+    } catch {
+      toast.error("Image upload failed");
+    }
+  }
+
+  function updateDMPost(id: string, field: keyof DMPost, value: string) {
+    setDmPosts((prev) => prev.map((p) => p.id === id ? { ...p, [field]: value } : p));
   }
 
   if (loading) {
@@ -221,12 +245,13 @@ export default function ServiceEditor({ slug, defaultTitle, backHref = "/admin/s
                       <div>
                         <div className="flex items-center justify-between mb-2">
                           <label className="text-slate-400 text-sm font-medium">Project Images</label>
-                          <label className="cursor-pointer">
-                            <AdminButton type="button" variant="ghost" size="sm" onClick={() => {}}>
+                          <div className="relative">
+                            <AdminButton type="button" variant="ghost" size="sm" onClick={() => document.getElementById(`project-img-upload-${project.id}`)?.click()}>
                               <Plus size={12} />
                               Add Image
                             </AdminButton>
                             <input
+                              id={`project-img-upload-${project.id}`}
                               type="file"
                               accept="image/*"
                               className="hidden"
@@ -236,7 +261,7 @@ export default function ServiceEditor({ slug, defaultTitle, backHref = "/admin/s
                                 e.target.value = "";
                               }}
                             />
-                          </label>
+                          </div>
                         </div>
                         {project.images.length === 0 ? (
                           <p className="text-slate-600 text-xs">No images yet</p>
@@ -264,6 +289,79 @@ export default function ServiceEditor({ slug, defaultTitle, backHref = "/admin/s
           )}
         </AdminCard>
 
+        {/* DM Posts (optional) */}
+        {showDMPosts && (
+          <AdminCard>
+            <div className="flex items-center justify-between mb-5">
+              <h2 className="text-white font-semibold text-sm uppercase tracking-wider">Digital Marketing Posts (Work Section)</h2>
+              <div className="relative">
+                <AdminButton type="button" variant="secondary" size="sm" onClick={() => document.getElementById('dm-post-img-upload')?.click()}>
+                  <Plus size={13} />
+                  Add Post Image
+                </AdminButton>
+                <input
+                  id="dm-post-img-upload"
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) addDMPostImage(file);
+                    e.target.value = "";
+                  }}
+                />
+              </div>
+            </div>
+
+            {dmPosts.length === 0 ? (
+              <EmptyState
+                icon={<FolderOpen size={24} />}
+                title="No posts yet"
+                description="Upload images to display in the WORK section columns."
+              />
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {dmPosts.map((post) => (
+                  <div key={post.id} className="border border-[#1a1a35] rounded-xl overflow-hidden bg-[#080818] p-3 flex flex-col gap-3">
+                    <div className="relative group rounded-lg overflow-hidden border border-[#1a1a35] aspect-square">
+                      <img src={post.imageUrl} alt={post.alt} className="w-full h-full object-cover" />
+                      <button
+                        onClick={() => setDeleteDMPost(post.id)}
+                        className="absolute top-2 right-2 w-7 h-7 bg-red-500/80 hover:bg-red-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
+                        <Trash2 size={14} className="text-white" />
+                      </button>
+                    </div>
+                    <div className="space-y-2">
+                      <div>
+                        <label className="block text-xs font-medium text-slate-400 mb-1">Alt Text</label>
+                        <input
+                          type="text"
+                          value={post.alt}
+                          onChange={(e) => updateDMPost(post.id, "alt", e.target.value)}
+                          className="w-full bg-[#111122] text-sm text-white rounded border border-[#1a1a35] px-2 py-1 focus:outline-none focus:border-[#e3791d]"
+                          placeholder="Image alt text"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-medium text-slate-400 mb-1">Aspect Ratio</label>
+                        <select
+                          value={post.aspect}
+                          onChange={(e) => updateDMPost(post.id, "aspect", e.target.value)}
+                          className="w-full bg-[#111122] text-sm text-white rounded border border-[#1a1a35] px-2 py-1 focus:outline-none focus:border-[#e3791d]"
+                        >
+                          <option value="tall">Tall</option>
+                          <option value="square">Square</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </AdminCard>
+        )}
+
         {/* Save */}
         <div className="flex gap-3 pb-6">
           <AdminButton variant="primary" size="lg" onClick={handleSave} loading={saving}>
@@ -284,6 +382,19 @@ export default function ServiceEditor({ slug, defaultTitle, backHref = "/admin/s
           }
         }}
         onCancel={() => setDeleteProject(null)}
+      />
+
+      <ConfirmDialog
+        open={deleteDMPost !== null}
+        title="Delete Post"
+        message="Delete this post image? This cannot be undone."
+        onConfirm={() => {
+          if (deleteDMPost) {
+            setDmPosts((prev) => prev.filter((p) => p.id !== deleteDMPost));
+            setDeleteDMPost(null);
+          }
+        }}
+        onCancel={() => setDeleteDMPost(null)}
       />
     </>
   );
