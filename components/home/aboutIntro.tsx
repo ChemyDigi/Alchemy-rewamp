@@ -45,14 +45,15 @@ export default function AboutIntro() {
 							</p>
 
 							<div className="mt-6">
-								<Link
-									href="/about"
-									className="group inline-flex items-center rounded-full bg-white px-6 py-2.5 text-orange text-sm"
-								>
-									Curious Who We Are ?
-									<span className="ml-2 opacity-0 group-hover:opacity-100 transition">
-										<ArrowRight size={18} />
-									</span>
+								<Link href="/about">
+									<button className="group bg-white text-orange h-[48px] pl-6 pr-6 rounded-full relative flex items-center overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] min-w-[200px] hover:min-w-[240px]">
+										<span className="text-sm font-medium whitespace-nowrap">
+											Curious Who We Are ?
+										</span>
+										<span className="absolute right-5 translate-x-4 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500">
+											<ArrowRight size={18} />
+										</span>
+									</button>
 								</Link>
 							</div>
 						</div>
@@ -68,14 +69,15 @@ export default function AboutIntro() {
 							</p>
 
 							<div className="mt-6">
-								<Link
-									href="/about"
-									className="group inline-flex items-center rounded-full bg-white px-6 py-2.5 text-orange"
-								>
-									Curious Who We Are ?
-									<span className="ml-2 opacity-0 group-hover:opacity-100 transition">
-										<ArrowRight size={18} />
-									</span>
+								<Link href="/about">
+									<button className="group bg-white text-orange h-[50px] pl-6 pr-6 rounded-full relative flex items-center overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] min-w-[210px] hover:min-w-[250px]">
+										<span className="text-base font-medium whitespace-nowrap">
+											Curious Who We Are ?
+										</span>
+										<span className="absolute right-5 translate-x-4 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500">
+											<ArrowRight size={20} />
+										</span>
+									</button>
 								</Link>
 							</div>
 						</div>
@@ -105,14 +107,15 @@ export default function AboutIntro() {
 							</p>
 
 							<div className="mt-8 flex justify-end lg:mt-6 lg:mr-4">
-								<Link
-									href="/about"
-									className="group inline-flex items-center rounded-full bg-white px-6 py-3 text-orange"
-								>
-									Curious Who We Are ?
-									<span className="ml-2 opacity-0 group-hover:opacity-100 transition">
-										<ArrowRight size={20} />
-									</span>
+								<Link href="/about">
+									<button className="group bg-white text-orange h-[56px] pl-8 pr-8 rounded-full relative flex items-center overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] min-w-[250px] hover:min-w-[290px]">
+										<span className="text-base md:text-lg font-medium whitespace-nowrap">
+											Curious Who We Are ?
+										</span>
+										<span className="absolute right-6 translate-x-4 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500">
+											<ArrowRight size={22} />
+										</span>
+									</button>
 								</Link>
 							</div>
 						</div>
