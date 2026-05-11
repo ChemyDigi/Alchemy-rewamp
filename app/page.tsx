@@ -18,19 +18,18 @@ export default function Home() {
       {/* ── Trusted-by / Partners section ── */}
       <style>{`
         @media (max-width: 767px) {
-          #clients-section   { padding: 48px 24px !important; }
           #clients-inner     { flex-direction: column !important; gap: 32px !important; }
           #clients-text      { flex: unset !important; width: 100% !important; }
           #clients-logo      { flex: unset !important; width: 100% !important; max-height: 380px !important; }
         }
       `}</style>
-      <section id="clients-section" style={{ background: "#ffffffff", padding: "90px 48px" }}>
+      <section id="clients-section" className="w-full py-16 md:py-24 px-6 md:px-10 lg:px-16 bg-white">
         <div id="clients-inner" style={{
-          maxWidth: "1200px", margin: "0 auto",
-          display: "flex", gap: "80px", alignItems: "center",
+          maxWidth: "1400px",
+          display: "flex", gap: "80px", alignItems: "center", justifyContent: "space-between"
         }}>
           {/* Left: Text */}
-          <div id="clients-text" style={{ flex: "0 0 360px" }}>
+          <div id="clients-text" style={{ flex: "0 0 480px" }}>
             <span style={{
               display: "inline-flex", alignItems: "center", gap: "6px",
               padding: "5px 14px", background: "#fff",
@@ -41,18 +40,14 @@ export default function Home() {
             }}>
 
             </span>
-            <h2 style={{
-              fontSize: "clamp(30px, 3vw, 44px)", fontWeight: 800,
-              lineHeight: 1.12, color: "#0f0f0f", marginBottom: "20px",
-              letterSpacing: "-0.02em",
+            <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold text-black uppercase" style={{
+              marginBottom: "20px",
             }}>
-              Trusted by{" "}
-              <span style={{ color: "#f97316" }}>40+</span>
-              <br />leading brands
+              <span style={{ whiteSpace: "nowrap" }}>TRUSTED BY <span className="text-orange">40+</span></span>
+              <br />BRANDS
             </h2>
-            <p style={{
-              fontSize: "15px", color: "#6b7280",
-              lineHeight: 1.85, maxWidth: "300px", marginBottom: "36px",
+            <p className="text-[#505050] mt-2 text-sm md:text-lg lg:text-2xl" style={{
+              maxWidth: "300px", marginBottom: "36px",
             }}>
               From creative production to digital marketing, we deliver
               measurable results for Sri Lanka&rsquo;s top companies.
@@ -61,7 +56,8 @@ export default function Home() {
 
           {/* Right: Circular animated logo cluster */}
           <div id="clients-logo" style={{
-            flex: 1,
+            width: "100%",
+            maxWidth: "760px",
             aspectRatio: "1 / 1",
             maxHeight: "540px",
             position: "relative",
