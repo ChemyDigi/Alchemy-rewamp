@@ -26,7 +26,7 @@ const events = [
     title: "Mobile Solutions",
     description:
       "Crafting cutting-edge mobile experiences that connect users with seamless digital services and intuitive interfaces",
-    image: "/images/services-event/phone.jpeg",
+    image: "/images/services-event/datadog1.jpeg",
     link: "#",
   },
 ];
