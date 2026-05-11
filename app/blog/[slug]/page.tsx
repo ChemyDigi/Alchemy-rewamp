@@ -27,7 +27,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 	return (
 		<>
 			<Navbar />
-			<main className="w-full bg-white py-14 sm:py-16 mt-20">
+			<main className="w-full bg-white py-14 sm:py-16"> {/* Removed mt-20 */}
 				<div className="mx-auto w-full max-w-[1440px] px-6 sm:px-10 lg:px-16">
 					<Link
 						href="/blog"
