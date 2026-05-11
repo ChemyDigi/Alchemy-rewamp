@@ -78,7 +78,7 @@ export default function AboutHero() {
               CREATIVE
             </p>
             <p className="text-xl sm:text-3xl lg:text-xl leading-none font-normal uppercase tracking-[-0.01em] text-gray-500">
-              FORCE BUILT ON PURPOSE.
+              FORCE BUILT ON PURPOSE
             </p>
           </div>
 
