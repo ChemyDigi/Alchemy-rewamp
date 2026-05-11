@@ -65,7 +65,7 @@ export default function Navbar() {
 
                 {/* ORANGE (default) */}
                 <span
-                  className={`${poppins.className} absolute text-orange-500 text-[36px] font-[700]
+                  className={`${poppins.className} absolute text-orange text-[36px] font-[700]
       transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]
       translate-y-0 group-hover:-translate-y-[120%]`}
                 >
@@ -173,7 +173,7 @@ export default function Navbar() {
             {/* LOGO */}
             <Link href="/">
               <div className="h-[50px] w-[50px] bg-black rounded-[14px] flex items-center justify-center shrink-0">
-                <span className={`${poppins.className} text-orange-500 text-[26px] font-[700]`}>
+                <span className={`${poppins.className} text-orange text-[26px] font-[700]`}>
                   a
                 </span>
               </div>
