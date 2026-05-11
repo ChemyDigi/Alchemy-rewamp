@@ -85,12 +85,6 @@ export default function PanoramicCarousel() {
     return () => window.removeEventListener('resize', updateResponsiveValues);
   }, []);
 
-  /**
-   * updateSlides: Rotates carousel continuously based on drag distance
-   * - Calculates rotation based on drag pixels (smoother than discrete steps)
-   * - Updates activeIndex based on closest card to center
-   * - Can be called with immediate=true for real-time dragging
-   */
   function updateSlides(rotationDelta: number, immediate: boolean = false) {
     if (!immediate && isTweening.current) return;
     if (!immediate) isTweening.current = true;
@@ -98,28 +92,26 @@ export default function PanoramicCarousel() {
     // Update current rotation offset
     currentRotation.current += rotationDelta;
 
-    if (immediate) {
-      setRotations((prev) => prev.map((r) => r + rotationDelta));
-      return;
-    }
+    const newRotations = activeCards.map((_, i) => (i * -ANGLE) + currentRotation.current);
 
     let closestIndex = 0;
-
-    setRotations((prev) => {
-      const updated = prev.map((r) => r + rotationDelta);
-
-      // Find which card is closest to center (0 degrees) after rotation
-      let minDiff = Infinity;
-      updated.forEach((r, i) => {
-        const diff = Math.abs(r % 360);
-        if (diff < minDiff) {
-          minDiff = diff;
-          closestIndex = i;
-        }
-      });
-
-      return updated;
+    let minDiff = Infinity;
+    
+    newRotations.forEach((r, i) => {
+      let diff = Math.abs(r % 360);
+      if (diff > 180) diff = 360 - diff;
+      if (diff < minDiff) {
+        minDiff = diff;
+        closestIndex = i;
+      }
     });
+
+    setRotations(newRotations);
+
+    if (immediate) {
+      setActiveIndex(closestIndex);
+      return;
+    }
 
     setTimeout(() => {
       setActiveIndex(closestIndex);
@@ -134,8 +126,10 @@ export default function PanoramicCarousel() {
       updateSlides(delta);
     } else {
       const closestIndex = rotations.reduce((bestIndex, r, i) => {
-        const diff = Math.abs(r % 360);
-        const bestDiff = Math.abs(rotations[bestIndex] % 360);
+        let diff = Math.abs(r % 360);
+        if (diff > 180) diff = 360 - diff;
+        let bestDiff = Math.abs(rotations[bestIndex] % 360);
+        if (bestDiff > 180) bestDiff = 360 - bestDiff;
         return diff < bestDiff ? i : bestIndex;
       }, 0);
       setActiveIndex(closestIndex);
@@ -148,101 +142,36 @@ export default function PanoramicCarousel() {
   const dragStart = useRef<{ x: number } | null>(null);
   // Track if currently dragging for visual feedback
   const isDragging = useRef(false);
+  const [isDraggingState, setIsDraggingState] = useState(false);
 
-  /**
-   * Setup drag/swipe handlers for continuous carousel movement
-   * - Mouse drag: Click and drag horizontally (real-time rotation)
-   * - Touch swipe: Swipe on mobile/touch devices (real-time rotation)
-   * - Smooth continuous movement while dragging
-   */
-  useEffect(() => {
-    const el = stageRef.current;
-    if (!el) return;
+  const handlePointerDown = (e: React.PointerEvent) => {
+    dragStart.current = { x: e.clientX };
+    isDragging.current = true;
+    setIsDraggingState(true);
+    e.currentTarget.setPointerCapture(e.pointerId);
+  };
 
-    // MOUSE EVENTS
-    const onMouseDown = (e: MouseEvent) => {
+  const handlePointerMove = (e: React.PointerEvent) => {
+    if (!isDragging.current || !dragStart.current) return;
+
+    const dx = e.clientX - dragStart.current.x;
+    const rotationDelta = (-dx / 100) * ANGLE;
+
+    if (Math.abs(rotationDelta) > 0.1) {
+      updateSlides(rotationDelta, true);
       dragStart.current = { x: e.clientX };
-      isDragging.current = true;
-    };
+    }
+  };
 
-    const onMouseMove = (e: MouseEvent) => {
-      if (!isDragging.current || !dragStart.current) return;
-
-      // Calculate current drag distance from start
-      const dx = e.clientX - dragStart.current.x;
-
-      // Convert drag distance to rotation (100px drag = ~30° rotation)
-      // Negative sign so dragging left rotates left, dragging right rotates right
-      const rotationDelta = (-dx / 100) * ANGLE;
-
-      // Update carousel in real-time while dragging (immediate mode)
-      if (Math.abs(rotationDelta) > 0.1) {
-        updateSlides(rotationDelta, true);
-        // Reset drag start for incremental dragging
-        dragStart.current = { x: e.clientX };
-      }
-    };
-
-    const onMouseUp = (e: MouseEvent) => {
-      if (isDragging.current) {
-        snapToNearestCard();
-      }
-      dragStart.current = null;
-      isDragging.current = false;
-    };
-
-    // TOUCH EVENTS (Mobile/Tablet)
-    const onTouchStart = (e: TouchEvent) => {
-      dragStart.current = { x: e.touches[0].clientX };
-      isDragging.current = true;
-    };
-
-    const onTouchMove = (e: TouchEvent) => {
-      if (!isDragging.current || !dragStart.current) return;
-
-      // Calculate current drag distance from start
-      const dx = e.touches[0].clientX - dragStart.current.x;
-
-      // Convert drag distance to rotation (100px drag = ~30° rotation)
-      // Negative sign so dragging left rotates left, dragging right rotates right
-      const rotationDelta = (-dx / 100) * ANGLE;
-
-      // Update carousel in real-time while dragging (immediate mode)
-      if (Math.abs(rotationDelta) > 0.1) {
-        updateSlides(rotationDelta, true);
-        // Reset drag start for incremental dragging
-        dragStart.current = { x: e.touches[0].clientX };
-      }
-    };
-
-    const onTouchEnd = (e: TouchEvent) => {
-      if (isDragging.current) {
-        snapToNearestCard();
-      }
-      dragStart.current = null;
-      isDragging.current = false;
-    };
-
-    // Attach event listeners
-    el.addEventListener("mousedown", onMouseDown);
-    el.addEventListener("mousemove", onMouseMove);
-    window.addEventListener("mouseup", onMouseUp);
-
-    el.addEventListener("touchstart", onTouchStart);
-    el.addEventListener("touchmove", onTouchMove);
-    window.addEventListener("touchend", onTouchEnd);
-
-    // Cleanup event listeners on unmount
-    return () => {
-      el.removeEventListener("mousedown", onMouseDown);
-      el.removeEventListener("mousemove", onMouseMove);
-      window.removeEventListener("mouseup", onMouseUp);
-
-      el.removeEventListener("touchstart", onTouchStart);
-      el.removeEventListener("touchmove", onTouchMove);
-      window.removeEventListener("touchend", onTouchEnd);
-    };
-  }, []);
+  const handlePointerUpOrLeave = (e: React.PointerEvent) => {
+    if (isDragging.current) {
+      snapToNearestCard();
+    }
+    dragStart.current = null;
+    isDragging.current = false;
+    setIsDraggingState(false);
+    e.currentTarget.releasePointerCapture(e.pointerId);
+  };
 
   if (activeCards.length === 0) {
     return null; // Return nothing if no projects are configured
@@ -313,11 +242,15 @@ export default function PanoramicCarousel() {
             - Draggable on both desktop and mobile */}
         <div
           ref={stageRef}
-          className="relative w-full h-full flex items-center justify-center cursor-grab active:cursor-grabbing select-none"
+          className={`relative w-full h-full flex items-center justify-center select-none touch-pan-y ${isDraggingState ? "cursor-grabbing" : "cursor-grab"}`}
           style={{
             perspective: perspective,
             transformStyle: "preserve-3d",
           }}
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerUpOrLeave}
+          onPointerCancel={handlePointerUpOrLeave}
         >
           {/* CARD ELEMENTS - Each card rotates around Z-axis
               - On mobile: Show only active card, larger size
@@ -354,9 +287,10 @@ export default function PanoramicCarousel() {
                   transformOrigin: `50% 50% ${originZ}px`,
                   // rotateY creates the carousel effect, translateX shifts carousel left for centering
                   transform: `rotateY(${rotations[i]}deg) translateX(-1px)`,
-                  // Ultra-smooth animation for real-time dragging response
-                  transition:
-                    "transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1)",
+                  // Disable transition while dragging for real-time response
+                  transition: isDraggingState
+                    ? "none"
+                    : "transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1)",
                   // Hide cards facing away from viewport
                   backfaceVisibility: "hidden",
                 }}
