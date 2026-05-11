@@ -1,5 +1,8 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { getServiceBySlug, DMPost } from "@/lib/firestore";
+
 // ─── Placeholder image data ───────────────────────────────────────────────────
 const col1: ImageItem[] = [
   { src: "/images/posts/1 (1).jpg", alt: "Squib skincare tins", aspect: "tall" },
@@ -123,6 +126,40 @@ function InfiniteColumn({
 
 // ─── Main Section ─────────────────────────────────────────────────────────────
 export default function WorkSection() {
+  const [posts, setPosts] = useState<ImageItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getServiceBySlug("digital-marketing").then((data) => {
+      if (data && data.dmPosts && data.dmPosts.length > 0) {
+        // Map DMPost to ImageItem format
+        const fetchedPosts: ImageItem[] = data.dmPosts.map((p) => ({
+          src: p.imageUrl,
+          alt: p.alt || "Work post",
+          aspect: p.aspect,
+        }));
+        setPosts(fetchedPosts);
+      }
+      setLoading(false);
+    }).catch(() => {
+      setLoading(false);
+    });
+  }, []);
+
+  // Fallback to placeholders if no data
+  const finalCol1 = posts.length > 0 ? posts.filter((_, i) => i % 4 === 0) : col1;
+  const finalCol2 = posts.length > 0 ? posts.filter((_, i) => i % 4 === 1) : col2;
+  const finalCol3 = posts.length > 0 ? posts.filter((_, i) => i % 4 === 2) : col3;
+  const finalCol4 = posts.length > 0 ? posts.filter((_, i) => i % 4 === 3) : col4;
+
+  if (loading) {
+    return (
+      <section className="relative w-full bg-[#0e0b09] min-h-[700px] flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-[#e3791d] border-t-transparent rounded-full animate-spin" />
+      </section>
+    );
+  }
+
   return (
     <section className="relative w-full bg-[#0e0b09] overflow-hidden flex flex-col md:block md:h-[120vh] md:min-h-[700px] md:items-center md:justify-center">
 
@@ -159,13 +196,15 @@ export default function WorkSection() {
 
       {/* Columns - Desktop: absolute, Mobile: static flow below WORK text */}
       <div className="md:absolute md:inset-0 flex flex-col md:flex-row gap-10 md:gap-32 px-0 md:px-8 z-10 overflow-hidden md:top-0 pb-10 md:pb-0">
-        <InfiniteColumn images={col1} direction="up" speed={35} mobileDirection="right" />
-        <InfiniteColumn images={col2} direction="down" speed={40} mobileDirection="left" />
-        <InfiniteColumn images={col3} direction="up" speed={38} mobileDirection="right" />
+        {finalCol1.length > 0 && <InfiniteColumn images={finalCol1} direction="up" speed={35} mobileDirection="right" />}
+        {finalCol2.length > 0 && <InfiniteColumn images={finalCol2} direction="down" speed={40} mobileDirection="left" />}
+        {finalCol3.length > 0 && <InfiniteColumn images={finalCol3} direction="up" speed={38} mobileDirection="right" />}
         {/* Hide 4th column on mobile only */}
-        <div className="hidden md:block">
-          <InfiniteColumn images={col4} direction="down" speed={35} mobileDirection="left" />
-        </div>
+        {finalCol4.length > 0 && (
+          <div className="hidden md:block">
+            <InfiniteColumn images={finalCol4} direction="down" speed={35} mobileDirection="left" />
+          </div>
+        )}
       </div>
     </section>
   );
