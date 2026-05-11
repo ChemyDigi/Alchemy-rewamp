@@ -48,6 +48,9 @@ function ScrollFillText({
 }
 
 export default function AlchemyRecords() {
+	// Extract YouTube video ID from the URL
+	const youtubeVideoId = "L9rqEEdpOXo";
+
 	return (
 		<section className="w-full bg-white overflow-hidden">
 			<div className="flex w-full flex-col items-start px-10 py-1 sm:px-10 md:px-20 lg:py-2">
@@ -71,13 +74,15 @@ export default function AlchemyRecords() {
 			<div className="w-full px-10 pb-10 pt-8 sm:px-10 md:px-20 lg:pb-16 lg:pt-12">
 				<Backlight blur={16} className="w-full">
 					<div className="mx-auto w-full max-w-[1400px] overflow-hidden rounded-[28px] bg-black shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
-						<video
-							className="h-auto w-full object-cover"
-							src="/showreel.mp4"
-							controls
-							playsInline
-							preload="metadata"
-						/>
+						<div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
+							<iframe
+								className="absolute top-0 left-0 w-full h-full"
+								src={`https://www.youtube.com/embed/${youtubeVideoId}?autoplay=0&rel=0&modestbranding=1&start=71`}
+								title="Alchemy Records Showreel"
+								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+								allowFullScreen
+							/>
+						</div>
 					</div>
 				</Backlight>
 			</div>
