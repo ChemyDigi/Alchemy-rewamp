@@ -1,9 +1,13 @@
-// components/hero.tsx
-'use client';
+"use client";
 
-import { motion, useMotionValue, useTransform, type PanInfo } from 'framer-motion';
-import { useEffect, useState } from 'react';
-import { getGallery } from '@/lib/firestore';
+import {
+  motion,
+  useMotionValue,
+  useTransform,
+  type PanInfo
+} from "framer-motion";
+import { useEffect, useState } from "react";
+import { getGallery } from "@/lib/firestore";
 
 interface CardRotateProps {
   children: React.ReactNode;
@@ -54,7 +58,7 @@ function CardRotate({
       drag
       dragConstraints={{ top: 0, right: 0, bottom: 0, left: 0 }}
       dragElastic={0.6}
-      whileTap={{ cursor: 'grabbing' }}
+      whileTap={{ cursor: "grabbing" }}
       onDragEnd={handleDragEnd}
     >
       {children}
@@ -97,9 +101,9 @@ function Stack({
 
     checkMobile();
 
-    window.addEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
 
-    return () => window.removeEventListener('resize', checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, [mobileBreakpoint]);
 
   const shouldDisableDrag = mobileClickOnly && isMobile;
@@ -109,7 +113,10 @@ function Stack({
     { id: number; content: React.ReactNode }[]
   >(() => {
     if (cards.length) {
-      return cards.map((content, index) => ({ id: index + 1, content }));
+      return cards.map((content, index) => ({
+        id: index + 1,
+        content
+      }));
     } else {
       return [];
     }
@@ -176,8 +183,8 @@ function Stack({
             <motion.div
               className="rounded-2xl overflow-hidden w-full h-full shadow-xl bg-white"
               style={{
-                backfaceVisibility: 'hidden',
-                transformStyle: 'preserve-3d'
+                backfaceVisibility: "hidden",
+                transformStyle: "preserve-3d"
               }}
               onClick={() =>
                 shouldEnableClick && sendToBack(card.id)
@@ -187,11 +194,11 @@ function Stack({
                   (stack.length - index - 1) * 4 + randomRotate,
                 scale:
                   1 + index * 0.06 - stack.length * 0.06,
-                transformOrigin: '90% 90%'
+                transformOrigin: "90% 90%"
               }}
               initial={false}
               transition={{
-                type: 'spring',
+                type: "spring",
                 stiffness: animationConfig.stiffness,
                 damping: animationConfig.damping
               }}
@@ -210,41 +217,56 @@ export default function Hero() {
 
   useEffect(() => {
     getGallery().then(data => {
-      // Use the first 5 images for the hero stack
       setImages(data.map(item => item.imageUrl).slice(0, 5));
     });
   }, []);
 
   return (
-    <div className="w-full bg-white overflow-hidden pt-20 md:pt-24 lg:pt-12">
-      <div className="w-full px-4 sm:px-8 md:px-10 lg:px-16">
+    <section className="relative min-h-[60vh] md:min-h-screen bg-white overflow-hidden">
 
-        <div className="flex flex-row items-start justify-between gap-8 md:gap-10 lg:gap-16 py-4 md:py-6 lg:py-20">
+      <div className="relative max-w-[1600px] mx-auto min-h-[60vh] md:min-h-screen px-6 sm:px-8 md:px-16 pt-24 md:pt-32 lg:pt-20 pb-10 md:pb-16">
 
-          {/* Left Content */}
-          <div className="z-10 order-1 flex-1 text-left md:pt-16 lg:pt-0 lg:translate-y-[-1.5rem] lg:pb-2 xl:translate-y-[-2rem]">
+        <div className="flex flex-col lg:flex-row items-center lg:items-center justify-between gap-12 lg:gap-20 h-full">
 
-            <h1 className="text-[4rem] leading-[0.9] font-medium tracking-[-0.03em] text-black sm:text-[5rem] md:text-[5.2rem] lg:text-[7.5rem] xl:text-[8.5rem] 2xl:text-[9.5rem]">
-              Gallery
-            </h1>
+          {/* LEFT CONTENT */}
+<div className="z-10 mt-auto max-w-[620px] pt-10 lg:pt-20 pb-8 lg:translate-y-[3rem] xl:translate-y-[4rem] max-sm:mt-0 max-sm:pt-20">
+          <h1 className="text-7xl leading-[0.88] font-medium tracking-[-0.03em] text-black sm:text-8xl md:text-9xl lg:text-[10.75rem] xl:text-[11.5rem] 2xl:text-[12.5rem]">
+            Gallery
+          </h1>
 
-            <p className="mt-2 text-[1.5rem] font-normal uppercase tracking-[-0.01em] text-[#E3791D] sm:text-[1.8rem] md:text-[2rem] lg:text-[2.4rem] xl:text-[2.6rem]">
-              CREATIVE
-            </p>
+          <p className="mt-3 text-xl font-normal uppercase tracking-[-0.01em] text-[#FF6B35] sm:text-3xl lg:text-xl">
+            Creative
+          </p>
+          <p className="text-xl leading-none font-normal uppercase tracking-[-0.01em] text-black sm:text-3xl lg:text-xl">
+            Stories Captured
+    <br />
+    With Purpose
+          </p>
+        </div>
+          {/* RIGHT CONTENT */}
+          <div className="relative w-full lg:w-auto flex justify-center lg:justify-end lg:-ml-40 xl:-ml-52">
 
-            <p className="text-[1.5rem] leading-snug font-normal uppercase tracking-[-0.01em] text-black sm:text-[1.8rem] md:text-[2rem] lg:text-[2.4rem] xl:text-[2.6rem]">
-              STORIES CAPTURED
-              <br />
-              WITH PURPOSE
-            </p>
+            <div
+  className="
+    w-[80vw]
+    h-[118vw]
 
-          </div>
+    max-w-[350px]
+    max-h-[500px]
 
-          {/* Right Content - Card Stack */}
-          <div className="flex justify-end order-2 shrink-0">
+    sm:w-[390px]
+    sm:h-[520px]
 
-            <div className="w-52 h-64 sm:w-64 sm:h-80 md:w-72 md:h-[400px] lg:w-80 lg:h-[480px] xl:w-80 xl:h-[520px]">
+    md:w-[370px]
+    md:h-[500px]
 
+    lg:w-[360px]
+    lg:h-[500px]
+
+    xl:w-[400px]
+    xl:h-[560px]
+  "
+>
               <Stack
                 randomRotation={false}
                 sensitivity={200}
@@ -271,6 +293,10 @@ export default function Hero() {
         </div>
 
       </div>
-    </div>
+
+      {/* Bottom Fade */}
+      <div className="absolute bottom-0 left-0 w-full h-20 md:h-40 bg-gradient-to-t from-white to-transparent pointer-events-none" />
+
+    </section>
   );
 }
