@@ -1,12 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
-import { getServiceBySlug } from "@/lib/firestore";
-
-
 
 export default function RecentEvents() {
   const [events, setEvents] = useState<any[]>([]);
@@ -14,21 +9,52 @@ export default function RecentEvents() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    getServiceBySlug("event-management").then((data) => {
-      if (data && data.projects && data.projects.length > 0) {
-        const mappedEvents = data.projects.map((p, i) => ({
-          id: p.id || i,
-          title: p.title || "Untitled Event",
-          description: p.description || "",
-          image: p.images?.[0] || "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7", 
-          link: "#",
-        }));
+    const projectId = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
+    if (!projectId) { setLoading(false); return; }
+
+    const url = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/services`;
+
+    fetch(url, { cache: "no-store" })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("REST API services response:", data);
+        if (!data.documents) { setLoading(false); return; }
+
+        // Find the event-management document
+        const doc = data.documents.find((d: any) => {
+          const fields = d.fields || {};
+          return fields.slug?.stringValue === "event-management";
+        });
+
+        if (!doc) { console.log("No event-management doc found"); setLoading(false); return; }
+
+        const fields = doc.fields || {};
+        console.log("Found doc fields:", fields);
+
+        // Parse the projects array from Firestore typed format
+        const rawProjects = fields.projects?.arrayValue?.values || [];
+        console.log("Raw projects:", rawProjects);
+
+        const mappedEvents = rawProjects.map((item: any, i: number) => {
+          const f = item.mapValue?.fields || {};
+          const imagesArr = f.images?.arrayValue?.values || [];
+          return {
+            id: f.id?.stringValue || String(i),
+            title: f.title?.stringValue || "Untitled Event",
+            description: f.description?.stringValue || "",
+            image: imagesArr[0]?.stringValue || "",
+            link: "#",
+          };
+        });
+
+        console.log("Mapped events:", mappedEvents);
         setEvents(mappedEvents);
-      }
-      setLoading(false);
-    }).catch(() => {
-      setLoading(false);
-    });
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("REST API fetch error:", err);
+        setLoading(false);
+      });
   }, []);
 
   useEffect(() => {
@@ -118,13 +144,17 @@ export default function RecentEvents() {
                   }}
                   className="absolute inset-0"
                 >
-                  <Image
-                    src={currentEvent.image}
-                    alt={currentEvent.title}
-                    fill
-                    className="object-cover"
-                    priority
-                  />
+                  {currentEvent.image ? (
+                    <img
+                      src={currentEvent.image}
+                      alt={currentEvent.title}
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 w-full h-full bg-gray-200 flex items-center justify-center">
+                      <span className="text-gray-400 text-sm">No image</span>
+                    </div>
+                  )}
                 </motion.div>
               </AnimatePresence>
             </div>
