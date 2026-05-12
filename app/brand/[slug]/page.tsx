@@ -2,7 +2,6 @@ import Navbar from "@/components/Navbar";
 import BrandsMore from "@/components/brands-more/uppersection";
 import Gallery from "@/components/brands-more/gallery";
 import Footer from "@/components/Footer";
-import { getPublishedBrands } from "@/lib/firestore-brands";
 
 interface PageProps {
   params: {
@@ -23,16 +22,13 @@ export default function BrandPage({ params }: PageProps) {
   );
 }
 
-// Generate static paths for published brands
+// Generate static paths for your brands (optional but recommended)
 export async function generateStaticParams() {
-  try {
-    const brands = await getPublishedBrands();
-    return brands.map((brand) => ({
-      slug: brand.slug,
-    }));
-  } catch (error) {
-    console.error("Error generating static params:", error);
-    // Return empty array if fetch fails, pages will be generated on-demand
-    return [];
-  }
+  // You can fetch this from your JSON file
+  // For now, hardcode your brands
+  return [
+    { slug: 'tommee-tippee' },
+    { slug: 'another-brand' },
+    // Add more brands as you have them
+  ];
 }

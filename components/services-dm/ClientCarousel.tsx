@@ -1,41 +1,34 @@
 "use client";
 
 import Image from "next/image";
-import { Plus } from "lucide-react";
-import { useRef, useState, useEffect } from "react";
-import Link from "next/link";
-import { Brand } from "@/types/brand";
-import { getPublishedBrands } from "@/lib/firestore-brands";
+import { ArrowUpRight, ChevronLeft, ChevronRight, Plus } from "lucide-react";
+import { useRef } from "react";
+
+const cards = [
+  {
+    id: 1,
+    image: "/images/dm/client1.png",
+  },
+  {
+    id: 2,
+    image: "/images/dm/client2.png",
+  },
+  {
+    id: 3,
+    image: "/images/dm/client3.jpeg",
+  },
+  {
+    id: 4,
+    image: "/images/dm/client4.png",
+  },
+  {
+    id: 5,
+    image: "/images/dm/client3.jpeg",
+  },
+];
 
 export default function CreativeAgencySection() {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [brands, setBrands] = useState<Brand[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchBrands = async () => {
-      try {
-        setIsLoading(true);
-        setError(null);
-        // Fetch featured brands first, then all published brands
-        const data = await getPublishedBrands();
-        // Sort featured brands to the front
-        const sorted = data.sort((a, b) => {
-          if (a.featured === b.featured) return 0;
-          return a.featured ? -1 : 1;
-        });
-        setBrands(sorted);
-      } catch (err) {
-        console.error("Error fetching brands:", err);
-        setError("Failed to load brands. Please try again.");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchBrands();
-  }, []);
 
   const scroll = (direction: "left" | "right") => {
     if (!scrollRef.current) return;
@@ -94,63 +87,33 @@ export default function CreativeAgencySection() {
                 display: none;
               }
             `}</style>
+            
+            {cards.map((card) => (
+              <div
+                key={card.id}
+                className="group relative h-[300px] w-[240px] min-w-[240px] overflow-hidden rounded-[24px] bg-white sm:h-[360px] sm:w-[300px] sm:min-w-[300px] lg:h-[410px] lg:w-[340px] lg:min-w-[340px]"
+              >
+                <Image
+                  src={card.image}
+                  alt={`agency image ${card.id}`}
+                  fill
+                  priority
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  sizes="(max-width: 768px) 240px, (max-width: 1024px) 300px, 340px"
+                />
 
-            {/* Loading State */}
-            {isLoading && (
-              <>
-                {[1, 2, 3, 4].map((i) => (
-                  <div
-                    key={`skeleton-${i}`}
-                    className="h-[300px] w-[240px] min-w-[240px] rounded-[24px] bg-gray-300 animate-pulse sm:h-[360px] sm:w-[300px] sm:min-w-[300px] lg:h-[410px] lg:w-[340px] lg:min-w-[340px]"
+                {/* Plus Icon */}
+                <button className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/20 backdrop-blur-md transition-all duration-300 hover:rotate-90">
+                  <Plus
+                    className="h-6 w-6 text-[#111111]"
+                    strokeWidth={2.3}
                   />
-                ))}
-              </>
-            )}
+                </button>
 
-            {/* Error State */}
-            {error && !isLoading && (
-              <div className="flex items-center justify-center w-full px-5 py-10">
-                <p className="text-red-500 text-center">{error}</p>
+                {/* Soft Overlay */}
+                <div className="absolute inset-0 bg-black/0 transition-all duration-500 group-hover:bg-black/[0.03]" />
               </div>
-            )}
-
-            {/* Empty State */}
-            {!isLoading && !error && brands.length === 0 && (
-              <div className="flex items-center justify-center w-full px-5 py-10">
-                <p className="text-gray-500 text-center">No brands available yet.</p>
-              </div>
-            )}
-
-            {/* Brands Cards */}
-            {!isLoading &&
-              !error &&
-              brands.map((brand) => (
-                <Link
-                  href={`/brand/${brand.slug}`}
-                  key={brand.id}
-                  className="group relative h-[300px] w-[240px] min-w-[240px] overflow-hidden rounded-[24px] bg-white sm:h-[360px] sm:w-[300px] sm:min-w-[300px] lg:h-[410px] lg:w-[340px] lg:min-w-[340px]"
-                >
-                  <Image
-                    src={brand.thumbnailImage || brand.logoImage}
-                    alt={brand.brandName}
-                    fill
-                    priority
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    sizes="(max-width: 768px) 240px, (max-width: 1024px) 300px, 340px"
-                  />
-
-                  {/* Plus Icon */}
-                  <button className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/20 backdrop-blur-md transition-all duration-300 hover:rotate-90">
-                    <Plus
-                      className="h-6 w-6 text-[#111111]"
-                      strokeWidth={2.3}
-                    />
-                  </button>
-
-                  {/* Soft Overlay */}
-                  <div className="absolute inset-0 bg-black/0 transition-all duration-500 group-hover:bg-black/[0.03]" />
-                </Link>
-              ))}
+            ))}
           </div>
         </div>
       </div>
