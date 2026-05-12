@@ -16,6 +16,7 @@ import {
   X,
   ChevronRight,
   Layers,
+  Tag,
 } from "lucide-react";
 
 interface NavItem {
@@ -29,6 +30,7 @@ const navItems: NavItem[] = [
   { label: "Dashboard", href: "/admin/dashboard", icon: <LayoutDashboard size={18} /> },
   { label: "Blogs", href: "/admin/blogs", icon: <FileText size={18} /> },
   { label: "Gallery", href: "/admin/gallery", icon: <Images size={18} /> },
+  { label: "Brands", href: "/admin/brands", icon: <Tag size={18} /> },
   { label: "Team", href: "/admin/team", icon: <Users size={18} /> },
   { label: "Home Page", href: "/admin/home", icon: <Home size={18} /> },
   {

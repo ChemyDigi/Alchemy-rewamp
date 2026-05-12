@@ -4,14 +4,14 @@ import Gallery from "@/components/brands-more/gallery";
 import Footer from "@/components/Footer";
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
-export default function BrandPage({ params }: PageProps) {
-  const { slug } = params;
-  
+export default async function BrandPage({ params }: PageProps) {
+  const { slug } = await params;
+
   return (
     <main className="min-h-screen bg-bg text-gray">
       <Navbar />

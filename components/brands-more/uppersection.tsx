@@ -1,15 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import uppersectionData from "@/data/brand.json";
-
-interface BrandDetails {
-  brandName: string;
-  timeFrame: string;
-  role: string;
-}
+import { db } from "@/lib/firebase";
+import { collection, query, where, getDocs } from "firebase/firestore";
 
 interface BrandData {
   id: string;
@@ -18,7 +13,12 @@ interface BrandData {
   brandName: string;
   bornYear: string;
   introduction: string;
-  details: BrandDetails;
+  subImages?: string[];
+  details: {
+    brandName: string;
+    timeFrame: string;
+    role: string;
+  };
 }
 
 interface Props {
@@ -30,7 +30,7 @@ function ScrollFillText({ text }: { text: string }) {
 
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start 95%", "end 5%"], // smoother + longer scroll range
+    offset: ["start 95%", "end 5%"],
   });
 
   const words = text.split(" ");
@@ -42,7 +42,7 @@ function ScrollFillText({ text }: { text: string }) {
     >
       {words.map((word, i) => {
         const start = i / words.length;
-        const end = start + 0.08; // 👈 overlap = smoother wave
+        const end = start + 0.08;
 
         const color = useTransform(
           scrollYProgress,
@@ -61,17 +61,47 @@ function ScrollFillText({ text }: { text: string }) {
 }
 
 export default function BrandsMore({ brandSlug = "tommee-tippee" }: Props) {
-  const brandData = uppersectionData.brands.find(
-    (brand: BrandData) => brand.slug === brandSlug
-  );
+  const [brandData, setBrandData] = useState<BrandData | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const q = query(
+          collection(db, "brands"),
+          where("slug", "==", brandSlug)
+        );
+        const snap = await getDocs(q);
+        if (!snap.empty) {
+          const d = snap.docs[0];
+          setBrandData({ id: d.id, ...d.data() } as BrandData);
+        }
+      } catch (err) {
+        console.error("Failed to load brand:", err);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, [brandSlug]);
+
+  if (loading) {
+    return (
+      <section className="w-full bg-white py-12 md:py-16 px-4 flex justify-center">
+        <div className="w-8 h-8 border-2 border-orange border-t-transparent rounded-full animate-spin mt-10" />
+      </section>
+    );
+  }
 
   if (!brandData) {
-    return <div>Brand not found</div>;
+    return (
+      <section className="w-full bg-white py-12 md:py-16 px-4 md:px-8 lg:px-16">
+        <p className="text-center text-gray-400 py-20">Brand not found</p>
+      </section>
+    );
   }
 
   return (
     <section className="w-full bg-white py-12 md:py-16 px-4 md:px-8 lg:px-16">
-      
       {/* TOP IMAGE */}
       <div className="w-full max-w-6xl mx-auto rounded-2xl overflow-hidden">
         <div className="relative w-full h-[220px] sm:h-[300px] md:h-[400px] lg:h-[560px]">
@@ -81,6 +111,7 @@ export default function BrandsMore({ brandSlug = "tommee-tippee" }: Props) {
             fill
             className="object-cover"
             priority
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1152px"
           />
 
           <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8 text-white">
@@ -94,7 +125,6 @@ export default function BrandsMore({ brandSlug = "tommee-tippee" }: Props) {
 
       {/* CONTENT */}
       <div className="max-w-6xl mx-auto mt-10 md:mt-14 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
-        
         <div>
           <p className="text-base text-orange mb-4">Introduction</p>
           <ScrollFillText text={brandData.introduction} />
@@ -104,7 +134,6 @@ export default function BrandsMore({ brandSlug = "tommee-tippee" }: Props) {
           <p className="text-base text-orange mb-4">Details</p>
 
           <div className="border-t border-[#747474]">
-            
             <div className="flex justify-between py-4 border-b border-[#747474] text-base font-medium">
               <span className="text-[#949494]">Brand Name</span>
               <span className="text-black">{brandData.details.brandName}</span>
@@ -117,14 +146,10 @@ export default function BrandsMore({ brandSlug = "tommee-tippee" }: Props) {
 
             <div className="flex justify-between py-4 text-base font-medium">
               <span className="text-[#949494]">Role</span>
-              <span className="text-black">
-                {brandData.details.role}
-              </span>
+              <span className="text-black">{brandData.details.role}</span>
             </div>
-
           </div>
         </div>
-
       </div>
     </section>
   );
