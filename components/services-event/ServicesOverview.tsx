@@ -75,7 +75,7 @@ export default function ServicesSection() {
 
 <p className="text-sm sm:text-[15px] text-black leading-relaxed max-w-md">
   Our focus is on delivering seamless, engaging, and beautifully curated events
-  tailored to your vision, audience, and goals — ensuring every moment feels
+  tailored to your vision, audience, and goals ensuring every moment feels
   memorable and meaningful.
 </p>
         </div>
