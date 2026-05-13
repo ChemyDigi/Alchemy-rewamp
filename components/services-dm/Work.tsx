@@ -37,19 +37,19 @@ interface ImageItem {
 
 // ─── Card ────────────────────────────────────────────────────────────────────
 function Card({ item }: { item: ImageItem }) {
-  const heightClass =
-    item.aspect === "tall"
-      ? "h-48 md:h-60 lg:h-72"
-      : "h-40 md:h-52 lg:h-50";
+  // Use aspect-ratio containers so the full image is always visible.
+  // 1080x1350 posts are 4:5 (tall). Square posts use 1:1.
+  const aspectClass =
+    item.aspect === "tall" ? "aspect-[4/5]" : "aspect-square";
 
   return (
     <div
-      className={`relative w-full ${heightClass} rounded-xl overflow-hidden flex-shrink-0 bg-neutral-800 transition-transform duration-300 hover:scale-105`}
+      className={`relative w-full ${aspectClass} rounded-xl overflow-hidden flex-shrink-0 bg-neutral-800 transition-transform duration-300 hover:scale-105`}
     >
       <img
         src={item.src}
         alt={item.alt}
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-contain"
         loading="lazy"
       />
     </div>
