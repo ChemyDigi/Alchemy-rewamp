@@ -43,7 +43,6 @@ export default function AdminBlogsPage() {
     }
   }
 
-  // Using string date directly now
   function formatDate(d: string | undefined): string {
     if (!d) return "—";
     return d;
@@ -71,7 +70,7 @@ export default function AdminBlogsPage() {
           </div>
         ) : blogs.length === 0 ? (
           <EmptyState
-            icon={<FileText size={28} />}
+            icon={<FileText size={26} />}
             title="No blogs yet"
             description="Create your first blog post to get started"
             action={
@@ -84,54 +83,54 @@ export default function AdminBlogsPage() {
             }
           />
         ) : (
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto -mx-5 lg:-mx-6">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-[#1a1a35]">
-                  <th className="text-left text-slate-500 text-xs font-semibold uppercase tracking-wider px-4 py-3">Title</th>
-                  <th className="text-left text-slate-500 text-xs font-semibold uppercase tracking-wider px-4 py-3 hidden md:table-cell">Status</th>
-                  <th className="text-left text-slate-500 text-xs font-semibold uppercase tracking-wider px-4 py-3 hidden lg:table-cell">Created</th>
-                  <th className="text-right text-slate-500 text-xs font-semibold uppercase tracking-wider px-4 py-3">Actions</th>
+                <tr className="border-b border-gray-100">
+                  <th className="text-left text-gray-400 text-xs font-semibold uppercase tracking-wider px-5 lg:px-6 py-3">Title</th>
+                  <th className="text-left text-gray-400 text-xs font-semibold uppercase tracking-wider px-4 py-3 hidden md:table-cell">Status</th>
+                  <th className="text-left text-gray-400 text-xs font-semibold uppercase tracking-wider px-4 py-3 hidden lg:table-cell">Date</th>
+                  <th className="text-right text-gray-400 text-xs font-semibold uppercase tracking-wider px-5 lg:px-6 py-3">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#1a1a35]">
+              <tbody className="divide-y divide-gray-50">
                 {blogs.map((blog) => (
-                  <tr key={blog.id} className="hover:bg-[#080818] transition-colors">
-                    <td className="px-4 py-4">
+                  <tr key={blog.id} className="hover:bg-gray-50 transition-colors group">
+                    <td className="px-5 lg:px-6 py-4">
                       <div className="flex items-center gap-3">
                         {blog.featuredImage ? (
                           <img
                             src={blog.featuredImage}
                             alt=""
-                            className="w-10 h-10 rounded-lg object-cover flex-shrink-0"
+                            className="w-10 h-10 rounded-xl object-cover flex-shrink-0 border border-gray-100"
                           />
                         ) : (
-                          <div className="w-10 h-10 bg-[#12122a] rounded-lg flex items-center justify-center flex-shrink-0">
-                            <FileText size={14} className="text-slate-600" />
+                          <div className="w-10 h-10 bg-gray-50 border border-gray-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <FileText size={14} className="text-gray-300" />
                           </div>
                         )}
                         <div className="min-w-0">
-                          <p className="text-white text-sm font-medium truncate max-w-[200px]">{blog.title}</p>
-                          <p className="text-slate-500 text-xs truncate max-w-[200px]">{blog.subtitle || `/${blog.slug}`}</p>
+                          <p className="text-gray-800 text-sm font-semibold truncate max-w-[200px]">{blog.title}</p>
+                          <p className="text-gray-400 text-xs truncate max-w-[200px]">{blog.subtitle || `/${blog.slug}`}</p>
                         </div>
                       </div>
                     </td>
                     <td className="px-4 py-4 hidden md:table-cell">
                       <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold
                         ${blog.status === "published"
-                          ? "bg-emerald-500/10 text-emerald-400"
-                          : "bg-slate-500/10 text-slate-400"}`}
+                          ? "bg-emerald-50 text-emerald-600 border border-emerald-100"
+                          : "bg-gray-100 text-gray-500 border border-gray-200"}`}
                       >
                         {blog.status === "published" ? <Eye size={11} /> : <EyeOff size={11} />}
                         {blog.status === "published" ? "Published" : "Draft"}
                       </span>
                     </td>
                     <td className="px-4 py-4 hidden lg:table-cell">
-                      <span className="text-slate-500 text-sm">
+                      <span className="text-gray-400 text-sm">
                         {formatDate(blog.date)}
                       </span>
                     </td>
-                    <td className="px-4 py-4">
+                    <td className="px-5 lg:px-6 py-4">
                       <div className="flex items-center justify-end gap-2">
                         <Link href={`/admin/blogs/${blog.id}`}>
                           <AdminButton variant="ghost" size="sm">
@@ -143,7 +142,7 @@ export default function AdminBlogsPage() {
                           variant="ghost"
                           size="sm"
                           onClick={() => setDeleteTarget(blog)}
-                          className="text-red-400 hover:bg-red-500/10"
+                          className="!text-gray-300 hover:!text-red-500 hover:!bg-red-50"
                         >
                           <Trash2 size={13} />
                         </AdminButton>

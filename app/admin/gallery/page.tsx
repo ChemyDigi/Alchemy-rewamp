@@ -66,7 +66,6 @@ export default function AdminGalleryPage() {
       setShowForm(false);
       load();
     } catch (err: any) {
-      console.error(err);
       toast.error(err.message || "Failed to add photo");
     } finally {
       setSaving(false);
@@ -85,7 +84,6 @@ export default function AdminGalleryPage() {
       setEditingItem(null);
       load();
     } catch (err: any) {
-      console.error(err);
       toast.error(err.message || "Update failed");
     } finally {
       setSaving(false);
@@ -101,7 +99,6 @@ export default function AdminGalleryPage() {
       setDeleteTarget(null);
       load();
     } catch (err: any) {
-      console.error(err);
       toast.error(err.message || "Delete failed");
     } finally {
       setDeleting(false);
@@ -123,11 +120,14 @@ export default function AdminGalleryPage() {
 
       {/* Add Form */}
       {showForm && (
-        <AdminCard className="mb-6">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-white font-semibold">Add New Photo</h3>
-            <button onClick={() => setShowForm(false)} className="text-slate-500 hover:text-white">
-              <X size={16} />
+        <AdminCard className="mb-5">
+          <div className="flex items-center justify-between mb-5">
+            <h3 className="text-gray-800 font-semibold">Add New Photo</h3>
+            <button
+              onClick={() => setShowForm(false)}
+              className="text-gray-300 hover:text-gray-600 p-1.5 rounded-lg hover:bg-gray-100 transition-colors"
+            >
+              <X size={15} />
             </button>
           </div>
           <div className="space-y-4 max-w-md">
@@ -163,7 +163,7 @@ export default function AdminGalleryPage() {
           </div>
         ) : items.length === 0 ? (
           <EmptyState
-            icon={<Images size={28} />}
+            icon={<Images size={24} />}
             title="No photos yet"
             description="Upload your first gallery photo"
             action={
@@ -174,16 +174,16 @@ export default function AdminGalleryPage() {
             }
           />
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
             {items.map((item) => (
               <div key={item.id} className="group relative">
                 {editingItem?.id === item.id ? (
                   /* Inline edit */
-                  <div className="border border-[#e3791d]/40 rounded-xl p-3 space-y-3 bg-[#080818]">
+                  <div className="border-2 border-[#e3791d]/30 rounded-xl p-3 space-y-3 bg-orange-50/50">
                     <img
                       src={editingItem?.imageUrl}
                       alt=""
-                      className="w-full h-28 object-cover rounded-lg"
+                      className="w-full h-28 object-cover rounded-lg border border-gray-100"
                     />
                     <AdminInput
                       label="Title"
@@ -202,30 +202,30 @@ export default function AdminGalleryPage() {
                     </div>
                   </div>
                 ) : (
-                  <div className="rounded-xl overflow-hidden border border-[#1a1a35] hover:border-[#e3791d]/30 transition-all">
+                  <div className="rounded-xl overflow-hidden border border-gray-100 hover:border-gray-200 hover:shadow-md transition-all duration-200 bg-white">
                     <div className="relative">
                       <img
                         src={item.imageUrl}
                         alt={item.title}
-                        className="w-full h-36 object-cover"
+                        className="w-full h-32 object-cover"
                       />
-                      <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
                         <button
                           onClick={() => openEdit(item)}
-                          className="w-8 h-8 bg-[#e3791d] rounded-lg flex items-center justify-center text-white hover:bg-[#cc6a18] transition-colors"
+                          className="w-8 h-8 bg-white rounded-lg flex items-center justify-center text-gray-700 hover:bg-gray-100 transition-colors shadow-md"
                         >
                           <Pencil size={13} />
                         </button>
                         <button
                           onClick={() => setDeleteTarget(item)}
-                          className="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center text-white hover:bg-red-600 transition-colors"
+                          className="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center text-white hover:bg-red-600 transition-colors shadow-md"
                         >
                           <Trash2 size={13} />
                         </button>
                       </div>
                     </div>
-                    <div className="px-2.5 py-2 bg-[#0f0f22]">
-                      <p className="text-slate-300 text-xs truncate">{item.title}</p>
+                    <div className="px-2.5 py-2">
+                      <p className="text-gray-600 text-xs truncate font-medium">{item.title}</p>
                     </div>
                   </div>
                 )}

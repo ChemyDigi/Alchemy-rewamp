@@ -7,7 +7,7 @@ import ImageUpload from "@/components/admin/ImageUpload";
 import ConfirmDialog from "@/components/admin/ConfirmDialog";
 import { uploadToCloudinary } from "@/lib/cloudinary";
 import toast from "react-hot-toast";
-import { Plus, Trash2, X, Save, FolderOpen } from "lucide-react";
+import { Plus, Trash2, X, Save, FolderOpen, ChevronDown, ChevronUp, ImageIcon, Tag } from "lucide-react";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
@@ -114,7 +114,10 @@ export default function ServiceEditor({ slug, defaultTitle, backHref = "/admin/s
   if (loading) {
     return (
       <div className="flex items-center justify-center py-24">
-        <div className="w-8 h-8 border-2 border-[#e3791d] border-t-transparent rounded-full animate-spin" />
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-8 h-8 border-2 border-[#e3791d] border-t-transparent rounded-full animate-spin" />
+          <p className="text-gray-400 text-sm">Loading...</p>
+        </div>
       </div>
     );
   }
@@ -126,31 +129,55 @@ export default function ServiceEditor({ slug, defaultTitle, backHref = "/admin/s
         description={`Edit service content and manage ${projectLabel.toLowerCase()}s`}
         action={
           <div className="flex items-center gap-3">
-            <Link href={backHref} className="flex items-center gap-2 text-slate-400 hover:text-white text-sm transition-colors">
+            <Link
+              href={backHref}
+              className="flex items-center gap-2 text-gray-400 hover:text-gray-700 text-sm font-medium transition-colors px-3 py-2 rounded-xl hover:bg-gray-100"
+            >
               <ArrowLeft size={14} />
               Back
             </Link>
             <AdminButton variant="primary" size="md" onClick={handleSave} loading={saving}>
               <Save size={15} />
-              Save
+              Save Changes
             </AdminButton>
           </div>
         }
       />
 
-      <div className="space-y-6 max-w-4xl">
+      <div className="space-y-5 max-w-4xl">
         {/* Service Info */}
         <AdminCard>
-          <h2 className="text-white font-semibold text-sm uppercase tracking-wider mb-4">Service Info</h2>
+          <div className="flex items-center gap-2 mb-5">
+            <div className="w-7 h-7 bg-orange-50 rounded-lg flex items-center justify-center">
+              <Tag size={14} className="text-[#e3791d]" />
+            </div>
+            <h2 className="text-gray-800 font-semibold text-sm">Service Info</h2>
+          </div>
           <div className="space-y-4">
-            <AdminInput label="Service Title" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Service title…" />
-            <AdminTextarea label="Service Description" value={description} onChange={(e) => setDescription(e.target.value)} rows={4} placeholder="Describe this service…" />
+            <AdminInput
+              label="Service Title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Service title…"
+            />
+            <AdminTextarea
+              label="Service Description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              rows={4}
+              placeholder="Describe this service…"
+            />
           </div>
         </AdminCard>
 
         {/* Hero Image */}
         <AdminCard>
-          <h2 className="text-white font-semibold text-sm uppercase tracking-wider mb-4">Hero Image</h2>
+          <div className="flex items-center gap-2 mb-5">
+            <div className="w-7 h-7 bg-blue-50 rounded-lg flex items-center justify-center">
+              <ImageIcon size={14} className="text-blue-500" />
+            </div>
+            <h2 className="text-gray-800 font-semibold text-sm">Hero Image</h2>
+          </div>
           <ImageUpload
             value={heroImage}
             onChange={setHeroImage}
@@ -162,7 +189,17 @@ export default function ServiceEditor({ slug, defaultTitle, backHref = "/admin/s
         {/* Projects / Custom Label */}
         <AdminCard>
           <div className="flex items-center justify-between mb-5">
-            <h2 className="text-white font-semibold text-sm uppercase tracking-wider">{projectLabel}s</h2>
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 bg-purple-50 rounded-lg flex items-center justify-center">
+                <FolderOpen size={14} className="text-purple-500" />
+              </div>
+              <h2 className="text-gray-800 font-semibold text-sm">{projectLabel}s</h2>
+              {projects.length > 0 && (
+                <span className="bg-gray-100 text-gray-500 text-xs font-semibold px-2 py-0.5 rounded-full">
+                  {projects.length}
+                </span>
+              )}
+            </div>
             <AdminButton
               variant="secondary"
               size="sm"
@@ -179,7 +216,7 @@ export default function ServiceEditor({ slug, defaultTitle, backHref = "/admin/s
 
           {projects.length === 0 ? (
             <EmptyState
-              icon={<FolderOpen size={24} />}
+              icon={<FolderOpen size={22} />}
               title={`No ${projectLabel.toLowerCase()}s yet`}
               description={`Add your first ${projectLabel.toLowerCase()} for this service`}
               action={
@@ -194,33 +231,41 @@ export default function ServiceEditor({ slug, defaultTitle, backHref = "/admin/s
               }
             />
           ) : (
-            <div className="space-y-3">
-              {projects.map((project) => (
-                <div key={project.id} className="border border-[#1a1a35] rounded-xl overflow-hidden">
+            <div className="space-y-2">
+              {projects.map((project, idx) => (
+                <div key={project.id} className="border border-gray-100 rounded-xl overflow-hidden shadow-sm">
                   {/* Accordion header */}
                   <div
-                    className="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-[#080818] transition-colors"
+                    className="flex items-center gap-3 px-4 py-3.5 cursor-pointer hover:bg-gray-50 transition-colors bg-white"
                     onClick={() => setExpandedProject(expandedProject === project.id ? null : project.id)}
                   >
+                    <div className="w-7 h-7 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0 text-gray-500 text-xs font-bold">
+                      {idx + 1}
+                    </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-white text-sm font-medium truncate">
+                      <p className="text-gray-800 text-sm font-semibold truncate">
                         {project.title || `Untitled ${projectLabel}`}
                       </p>
                       {project.category && (
-                        <p className="text-slate-600 text-xs">{project.category}</p>
+                        <p className="text-gray-400 text-xs mt-0.5">{project.category}</p>
                       )}
                     </div>
-                    <button
-                      onClick={(e) => { e.stopPropagation(); setDeleteProject(project.id); }}
-                      className="text-slate-500 hover:text-red-400 transition-colors p-1"
-                    >
-                      <Trash2 size={13} />
-                    </button>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={(e) => { e.stopPropagation(); setDeleteProject(project.id); }}
+                        className="text-gray-300 hover:text-red-400 transition-colors p-1.5 rounded-lg hover:bg-red-50"
+                      >
+                        <Trash2 size={13} />
+                      </button>
+                      <div className="text-gray-300">
+                        {expandedProject === project.id ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                      </div>
+                    </div>
                   </div>
 
                   {/* Accordion body */}
                   {expandedProject === project.id && (
-                    <div className="border-t border-[#1a1a35] bg-[#080818] p-4 space-y-4">
+                    <div className="border-t border-gray-100 bg-gray-50 p-5 space-y-4">
                       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                         <AdminInput
                           label={`${projectLabel} Title`}
@@ -244,10 +289,15 @@ export default function ServiceEditor({ slug, defaultTitle, backHref = "/admin/s
                       />
                       {/* Project Images */}
                       <div>
-                        <div className="flex items-center justify-between mb-2">
-                          <label className="text-slate-400 text-sm font-medium">{projectLabel} Images</label>
+                        <div className="flex items-center justify-between mb-3">
+                          <label className="text-gray-600 text-sm font-medium">{projectLabel} Images</label>
                           <div className="relative">
-                            <AdminButton type="button" variant="ghost" size="sm" onClick={() => document.getElementById(`project-img-upload-${project.id}`)?.click()}>
+                            <AdminButton
+                              type="button"
+                              variant="secondary"
+                              size="sm"
+                              onClick={() => document.getElementById(`project-img-upload-${project.id}`)?.click()}
+                            >
                               <Plus size={12} />
                               Add Image
                             </AdminButton>
@@ -265,15 +315,17 @@ export default function ServiceEditor({ slug, defaultTitle, backHref = "/admin/s
                           </div>
                         </div>
                         {project.images.length === 0 ? (
-                          <p className="text-slate-600 text-xs">No images yet</p>
+                          <div className="border-2 border-dashed border-gray-200 rounded-xl p-6 text-center">
+                            <p className="text-gray-400 text-xs">No images yet — click &ldquo;Add Image&rdquo; to upload</p>
+                          </div>
                         ) : (
                           <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
                             {project.images.map((url, i) => (
-                              <div key={i} className="relative group rounded-lg overflow-hidden border border-[#1a1a35]">
+                              <div key={i} className="relative group rounded-xl overflow-hidden border border-gray-200 shadow-sm">
                                 <img src={url} alt="" className="w-full h-20 object-cover" />
                                 <button
                                   onClick={() => removeProjectImage(project.id, i)}
-                                  className="absolute top-1 right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                                  className="absolute top-1.5 right-1.5 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all shadow-md"
                                 >
                                   <X size={10} className="text-white" />
                                 </button>
@@ -294,11 +346,29 @@ export default function ServiceEditor({ slug, defaultTitle, backHref = "/admin/s
         {showDMPosts && (
           <AdminCard>
             <div className="flex items-center justify-between mb-5">
-              <h2 className="text-white font-semibold text-sm uppercase tracking-wider">Digital Marketing Posts (Work Section)</h2>
+              <div className="flex items-center gap-2">
+                <div className="w-7 h-7 bg-emerald-50 rounded-lg flex items-center justify-center">
+                  <ImageIcon size={14} className="text-emerald-500" />
+                </div>
+                <div>
+                  <h2 className="text-gray-800 font-semibold text-sm">Work Section Posts</h2>
+                  <p className="text-gray-400 text-xs mt-0.5">Images displayed in the WORK columns</p>
+                </div>
+                {dmPosts.length > 0 && (
+                  <span className="bg-gray-100 text-gray-500 text-xs font-semibold px-2 py-0.5 rounded-full ml-1">
+                    {dmPosts.length}
+                  </span>
+                )}
+              </div>
               <div className="relative">
-                <AdminButton type="button" variant="secondary" size="sm" onClick={() => document.getElementById('dm-post-img-upload')?.click()}>
+                <AdminButton
+                  type="button"
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => document.getElementById('dm-post-img-upload')?.click()}
+                >
                   <Plus size={13} />
-                  Add Post Image
+                  Add Post
                 </AdminButton>
                 <input
                   id="dm-post-img-upload"
@@ -316,40 +386,40 @@ export default function ServiceEditor({ slug, defaultTitle, backHref = "/admin/s
 
             {dmPosts.length === 0 ? (
               <EmptyState
-                icon={<FolderOpen size={24} />}
+                icon={<ImageIcon size={22} />}
                 title="No posts yet"
                 description="Upload images to display in the WORK section columns."
               />
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {dmPosts.map((post) => (
-                  <div key={post.id} className="border border-[#1a1a35] rounded-xl overflow-hidden bg-[#080818] p-3 flex flex-col gap-3">
-                    <div className="relative group rounded-lg overflow-hidden border border-[#1a1a35] aspect-square">
-                      <img src={post.imageUrl} alt={post.alt} className="w-full h-full object-cover" />
+                  <div key={post.id} className="border border-gray-100 rounded-xl overflow-hidden bg-white shadow-sm">
+                    <div className="relative group aspect-square overflow-hidden bg-gray-50">
+                      <img src={post.imageUrl} alt={post.alt} className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
                       <button
                         onClick={() => setDeleteDMPost(post.id)}
-                        className="absolute top-2 right-2 w-7 h-7 bg-red-500/80 hover:bg-red-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                        className="absolute top-2 right-2 w-8 h-8 bg-red-500 hover:bg-red-600 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all shadow-lg"
                       >
                         <Trash2 size={14} className="text-white" />
                       </button>
                     </div>
-                    <div className="space-y-2">
+                    <div className="p-3 space-y-2.5">
                       <div>
-                        <label className="block text-xs font-medium text-slate-400 mb-1">Alt Text</label>
+                        <label className="block text-xs font-semibold text-gray-500 mb-1.5">Alt Text</label>
                         <input
                           type="text"
                           value={post.alt}
                           onChange={(e) => updateDMPost(post.id, "alt", e.target.value)}
-                          className="w-full bg-[#111122] text-sm text-white rounded border border-[#1a1a35] px-2 py-1 focus:outline-none focus:border-[#e3791d]"
+                          className="w-full bg-gray-50 border border-gray-200 text-sm text-gray-700 rounded-lg px-3 py-2 focus:outline-none focus:border-[#e3791d] focus:ring-1 focus:ring-orange-100 transition-all"
                           placeholder="Image alt text"
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-medium text-slate-400 mb-1">Aspect Ratio</label>
+                        <label className="block text-xs font-semibold text-gray-500 mb-1.5">Aspect Ratio</label>
                         <select
                           value={post.aspect}
                           onChange={(e) => updateDMPost(post.id, "aspect", e.target.value)}
-                          className="w-full bg-[#111122] text-sm text-white rounded border border-[#1a1a35] px-2 py-1 focus:outline-none focus:border-[#e3791d]"
+                          className="w-full bg-gray-50 border border-gray-200 text-sm text-gray-700 rounded-lg px-3 py-2 focus:outline-none focus:border-[#e3791d] focus:ring-1 focus:ring-orange-100 transition-all"
                         >
                           <option value="tall">Tall</option>
                           <option value="square">Square</option>
@@ -364,7 +434,8 @@ export default function ServiceEditor({ slug, defaultTitle, backHref = "/admin/s
         )}
 
         {/* Save */}
-        <div className="flex gap-3 pb-6">
+        <div className="flex items-center justify-between gap-3 pb-6 pt-2 border-t border-gray-100">
+          <p className="text-gray-400 text-xs">All changes are saved to Firestore</p>
           <AdminButton variant="primary" size="lg" onClick={handleSave} loading={saving}>
             <Save size={15} />
             Save Service
