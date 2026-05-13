@@ -229,25 +229,25 @@ export default function Hero() {
         <div className="flex flex-col lg:flex-row items-center lg:items-center justify-between gap-12 lg:gap-20 h-full">
 
           {/* LEFT CONTENT */}
-<div className="z-10 mt-auto max-w-[620px] pt-10 lg:pt-20 pb-8 lg:translate-y-[3rem] xl:translate-y-[4rem] max-sm:mt-0 max-sm:pt-20">
-          <h1 className="text-7xl leading-[0.88] font-medium tracking-[-0.03em] text-black sm:text-8xl md:text-9xl lg:text-[10.75rem] xl:text-[11.5rem] 2xl:text-[12.5rem]">
-            Gallery
-          </h1>
+          <div className="z-10 mt-auto max-w-[620px] pt-10 lg:pt-20 pb-8 lg:translate-y-[3rem] xl:translate-y-[4rem] max-sm:mt-0 max-sm:pt-20">
+            <h1 className="text-7xl leading-[0.88] font-medium tracking-[-0.03em] text-black sm:text-8xl md:text-9xl lg:text-[10.75rem] xl:text-[11.5rem] 2xl:text-[12.5rem]">
+              Gallery
+            </h1>
 
-          <p className="mt-3 text-xl font-normal uppercase tracking-[-0.01em] text-orange sm:text-3xl lg:text-xl">
-            Creative
-          </p>
-          <p className="text-xl leading-none font-normal uppercase tracking-[-0.01em] text-black sm:text-3xl lg:text-xl">
-            Stories Captured
-    <br />
-    With Purpose
-          </p>
-        </div>
+            <p className="mt-3 text-xl font-normal uppercase tracking-[-0.01em] text-orange sm:text-3xl lg:text-xl">
+              Creative
+            </p>
+            <p className="text-xl leading-none font-normal uppercase tracking-[-0.01em] text-black sm:text-3xl lg:text-xl">
+              Stories Captured
+              <br />
+              With Purpose
+            </p>
+          </div>
           {/* RIGHT CONTENT */}
-          <div className="relative w-full lg:w-auto flex justify-center lg:justify-end lg:-ml-40 xl:-ml-52">
+          <div className="relative w-full lg:w-auto flex justify-center lg:justify-end lg:-translate-x-16 xl:-translate-x-24">
 
             <div
-  className="
+              className="
     w-[80vw]
     h-[118vw]
 
@@ -266,7 +266,7 @@ export default function Hero() {
     xl:w-[400px]
     xl:h-[560px]
   "
->
+            >
               <Stack
                 randomRotation={false}
                 sensitivity={200}
