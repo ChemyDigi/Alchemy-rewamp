@@ -175,13 +175,13 @@ export default function ITServicePage() {
                 >
                   {/* Accordion header */}
                   <div
-                    className="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-[#080818] transition-colors"
+                    className="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-black transition-colors"
                     onClick={() =>
                       setExpandedProject(expandedProject === project.id ? null : project.id)
                     }
                   >
                     <div className="flex-1 min-w-0">
-                      <p className="text-white text-sm font-medium truncate">
+                      <p className="text-black text-sm font-medium truncate">
                         {project.title || "Untitled Project"}
                       </p>
                       {project.category && (
