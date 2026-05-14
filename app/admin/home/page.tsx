@@ -109,7 +109,7 @@ export default function AdminHomePage() {
       {/* Trusted Logos */}
       <AdminCard className="mb-6">
         <div className="flex items-center justify-between mb-5">
-          <h2 className="text-white font-semibold">Trusted Company Logos</h2>
+          <h2 className="text-gray-900 font-semibold">Trusted Company Logos</h2>
           <div className="flex gap-2">
             <AdminButton variant="secondary" size="sm" onClick={() => setTrustedLogos((t) => [...t, emptyTrustedLogo()])}>
               <Plus size={13} />
@@ -127,10 +127,10 @@ export default function AdminHomePage() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {trustedLogos.map((logo, idx) => (
-              <div key={idx} className="bg-[#080818] border border-[#1a1a35] rounded-xl p-4 space-y-3">
+              <div key={idx} className="bg-gray-50 border border-gray-200 rounded-xl p-4 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-slate-500 text-xs font-semibold uppercase tracking-wider">Logo {idx + 1}</span>
-                  <button onClick={() => setDeleteTrustedLogo(idx)} className="text-slate-500 hover:text-red-400 transition-colors">
+                  <span className="text-gray-500 text-xs font-semibold uppercase tracking-wider">Logo {idx + 1}</span>
+                  <button onClick={() => setDeleteTrustedLogo(idx)} className="text-gray-400 hover:text-red-500 transition-colors">
                     <X size={15} />
                   </button>
                 </div>
@@ -149,7 +149,7 @@ export default function AdminHomePage() {
       {/* Latest Projects Carousel */}
       <AdminCard className="mb-6">
         <div className="flex items-center justify-between mb-5">
-          <h2 className="text-white font-semibold">Latest Projects (Carousel)</h2>
+          <h2 className="text-gray-900 font-semibold">Latest Projects (Carousel)</h2>
           <div className="flex gap-2">
             <AdminButton variant="secondary" size="sm" onClick={() => setCarouselProjects((c) => [...c, emptyCarouselProject()])}>
               <Plus size={13} />
@@ -167,10 +167,10 @@ export default function AdminHomePage() {
         ) : (
           <div className="space-y-4">
             {carouselProjects.map((item, idx) => (
-              <div key={idx} className="bg-[#080818] border border-[#1a1a35] rounded-xl p-4">
+              <div key={idx} className="bg-gray-50 border border-gray-200 rounded-xl p-4">
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-slate-500 text-xs font-semibold uppercase tracking-wider">Project {idx + 1}</span>
-                  <button onClick={() => setDeleteCarouselProject(idx)} className="text-slate-500 hover:text-red-400 transition-colors">
+                  <span className="text-gray-500 text-xs font-semibold uppercase tracking-wider">Project {idx + 1}</span>
+                  <button onClick={() => setDeleteCarouselProject(idx)} className="text-gray-400 hover:text-red-500 transition-colors">
                     <X size={15} />
                   </button>
                 </div>

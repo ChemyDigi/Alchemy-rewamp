@@ -40,7 +40,6 @@ const navItems: NavItem[] = [
     icon: <Layers size={17} />,
     children: [
       { label: "IT Solutions", href: "/admin/services/it" },
-      { label: "AV Production", href: "/admin/services/av-production" },
       { label: "Digital Marketing", href: "/admin/services/digital-marketing" },
       { label: "Event Management", href: "/admin/services/event-management" },
     ],
@@ -231,10 +230,6 @@ export default function AdminShellLayout({
               <span className="text-gray-800 font-semibold text-sm">{currentLabel}</span>
             </div>
             <div className="ml-auto flex items-center gap-3">
-              <div className="flex items-center gap-2 bg-emerald-50 border border-emerald-100 text-emerald-600 text-xs font-semibold px-3 py-1.5 rounded-full">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
-                Live
-              </div>
             </div>
           </header>
 

@@ -110,8 +110,8 @@ export default function AdminTeamPage() {
       {showForm && (
         <AdminCard className="mb-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-white font-semibold">Add Team Member</h3>
-            <button onClick={() => setShowForm(false)} className="text-slate-500 hover:text-white">
+            <h3 className="text-gray-900 font-semibold">Add Team Member</h3>
+            <button onClick={() => setShowForm(false)} className="text-gray-400 hover:text-gray-700">
               <X size={16} />
             </button>
           </div>
@@ -154,7 +154,7 @@ export default function AdminTeamPage() {
             {members.map((member) => (
               <div key={member.id}>
                 {editingMember?.id === member.id ? (
-                  <div className="border border-[#e3791d]/40 rounded-2xl p-4 space-y-3 bg-[#080818]">
+                  <div className="border border-orange-200 rounded-2xl p-4 space-y-3 bg-orange-50">
                     <ImageUpload
                       label="Photo"
                       value={editingMember?.imageUrl ?? ""}
@@ -177,13 +177,13 @@ export default function AdminTeamPage() {
                     </div>
                   </div>
                 ) : (
-                  <div className="bg-[#080818] border border-[#1a1a35] rounded-2xl overflow-hidden hover:border-[#e3791d]/20 transition-all group">
+                  <div className="bg-white border border-gray-100 rounded-2xl overflow-hidden hover:border-[#e3791d]/30 hover:shadow-md shadow-sm transition-all group">
                     <div className="relative">
                       {member.imageUrl ? (
                         <img src={member.imageUrl} alt={member.name} className="w-full h-44 object-cover" />
                       ) : (
-                        <div className="w-full h-44 bg-[#12122a] flex items-center justify-center">
-                          <User size={40} className="text-slate-700" />
+                        <div className="w-full h-44 bg-gray-50 flex items-center justify-center">
+                          <User size={40} className="text-gray-300" />
                         </div>
                       )}
                       <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
@@ -202,8 +202,8 @@ export default function AdminTeamPage() {
                       </div>
                     </div>
                     <div className="px-4 py-3">
-                      <p className="text-white font-semibold text-sm">{member.name}</p>
-                      <p className="text-slate-500 text-xs mt-0.5">{member.role}</p>
+                      <p className="text-gray-900 font-semibold text-sm">{member.name}</p>
+                      <p className="text-gray-500 text-xs mt-0.5">{member.role}</p>
                     </div>
                   </div>
                 )}

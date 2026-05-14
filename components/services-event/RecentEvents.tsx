@@ -101,7 +101,7 @@ export default function RecentEvents() {
           <div className="flex flex-col h-full lg:pl-16">
             {/* Title - stays on white, aligns with image top */}
             <div className="h-[60px] md:h-[80px] lg:h-[100px] flex items-center justify-center lg:justify-start">
-              <h2 className="text-2xl md:text-4xl lg:text-5xl font-extrabold uppercase tracking-tight text-black text-center lg:text-left">
+              <h2 className="text-2xl md:text-4xl lg:text-5xl font-semibold uppercase tracking-tight text-black text-center lg:text-left">
                 OUR RECENT <span className="text-orange">EVENTS</span>
               </h2>
             </div>

@@ -129,7 +129,7 @@ export default function ITServicePage() {
         {/* Projects */}
         <AdminCard>
           <div className="flex items-center justify-between mb-5">
-            <h2 className="text-white font-semibold text-sm uppercase tracking-wider">
+            <h2 className="text-gray-900 font-semibold text-sm uppercase tracking-wider">
               Projects
             </h2>
             <AdminButton
@@ -171,21 +171,21 @@ export default function ITServicePage() {
               {projects.map((project) => (
                 <div
                   key={project.id}
-                  className="border border-[#1a1a35] rounded-xl overflow-hidden"
+                  className="border border-gray-200 rounded-xl overflow-hidden bg-white shadow-sm"
                 >
                   {/* Accordion header */}
                   <div
-                    className="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-black transition-colors"
+                    className="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-gray-50 transition-colors"
                     onClick={() =>
                       setExpandedProject(expandedProject === project.id ? null : project.id)
                     }
                   >
                     <div className="flex-1 min-w-0">
-                      <p className="text-black text-sm font-medium truncate">
+                      <p className="text-gray-900 text-sm font-semibold truncate">
                         {project.title || "Untitled Project"}
                       </p>
                       {project.category && (
-                        <p className="text-slate-600 text-xs">{project.category}</p>
+                        <p className="text-gray-500 text-xs mt-0.5">{project.category}</p>
                       )}
                     </div>
                     <button
@@ -201,7 +201,7 @@ export default function ITServicePage() {
 
                   {/* Accordion body */}
                   {expandedProject === project.id && (
-                    <div className="border-t border-[#1a1a35] bg-[#080818] p-4 space-y-4">
+                    <div className="border-t border-gray-200 bg-gray-50 p-4 space-y-4">
                       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                         <AdminInput
                           label="Project Title"
@@ -220,7 +220,7 @@ export default function ITServicePage() {
                       {/* Project Images */}
                       <div>
                         <div className="flex items-center justify-between mb-2">
-                          <label className="text-slate-400 text-sm font-medium">
+                          <label className="text-gray-600 text-sm font-medium">
                             Project Images
                           </label>
                           <button
@@ -229,7 +229,7 @@ export default function ITServicePage() {
                               const input = document.getElementById(`img-upload-${project.id}`) as HTMLInputElement;
                               input?.click();
                             }}
-                            className="flex items-center gap-1 text-xs text-slate-400 hover:text-white border border-[#1a1a35] hover:border-[#e3791d] rounded-lg px-3 py-1.5 transition-all"
+                            className="flex items-center gap-1 text-xs text-gray-500 hover:text-gray-900 border border-gray-200 bg-white hover:border-[#e3791d] rounded-lg px-3 py-1.5 transition-all shadow-sm"
                           >
                             <Plus size={12} />
                             Add Image
@@ -247,13 +247,13 @@ export default function ITServicePage() {
                           />
                         </div>
                         {project.images.length === 0 ? (
-                          <p className="text-slate-600 text-xs">No images yet</p>
+                          <p className="text-gray-400 text-xs">No images yet</p>
                         ) : (
                           <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
                             {project.images.map((url, i) => (
                               <div
                                 key={i}
-                                className="relative group rounded-lg overflow-hidden border border-[#1a1a35]"
+                                className="relative group rounded-lg overflow-hidden border border-gray-200 shadow-sm"
                               >
                                 <img src={url} alt="" className="w-full h-20 object-cover" />
                                 <button

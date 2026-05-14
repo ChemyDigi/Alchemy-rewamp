@@ -146,45 +146,6 @@ export default function ServiceEditor({ slug, defaultTitle, backHref = "/admin/s
 
       <div className="space-y-5 max-w-4xl">
         {/* Service Info */}
-        <AdminCard>
-          <div className="flex items-center gap-2 mb-5">
-            <div className="w-7 h-7 bg-orange-50 rounded-lg flex items-center justify-center">
-              <Tag size={14} className="text-[#e3791d]" />
-            </div>
-            <h2 className="text-gray-800 font-semibold text-sm">Service Info</h2>
-          </div>
-          <div className="space-y-4">
-            <AdminInput
-              label="Service Title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="Service title…"
-            />
-            <AdminTextarea
-              label="Service Description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              rows={4}
-              placeholder="Describe this service…"
-            />
-          </div>
-        </AdminCard>
-
-        {/* Hero Image */}
-        <AdminCard>
-          <div className="flex items-center gap-2 mb-5">
-            <div className="w-7 h-7 bg-blue-50 rounded-lg flex items-center justify-center">
-              <ImageIcon size={14} className="text-blue-500" />
-            </div>
-            <h2 className="text-gray-800 font-semibold text-sm">Hero Image</h2>
-          </div>
-          <ImageUpload
-            value={heroImage}
-            onChange={setHeroImage}
-            onRemove={() => setHeroImage("")}
-            label=""
-          />
-        </AdminCard>
 
         {/* Projects / Custom Label */}
         <AdminCard>

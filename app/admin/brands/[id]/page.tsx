@@ -209,7 +209,7 @@ export default function BrandEditorPage() {
         <div className="lg:col-span-2 space-y-6">
           {/* Hero image */}
           <AdminCard>
-            <p className="text-white font-semibold mb-4">Hero Image</p>
+            <p className="text-gray-900 font-semibold mb-4">Hero Image</p>
             <ImageUpload
               value={form.heroImage}
               onChange={(url) => setField("heroImage", url)}
@@ -222,7 +222,7 @@ export default function BrandEditorPage() {
           <AdminCard>
             <div className="flex items-center justify-between mb-4">
               <div>
-                <p className="text-white font-semibold">Gallery Images</p>
+                <p className="text-gray-900 font-semibold">Gallery Images</p>
                 <p className="text-slate-500 text-xs mt-0.5">
                   Up to 5 images shown in the brand gallery
                 </p>
@@ -261,7 +261,7 @@ export default function BrandEditorPage() {
         <div className="space-y-6">
           {/* Basic info */}
           <AdminCard>
-            <p className="text-white font-semibold mb-4">Basic Info</p>
+            <p className="text-gray-900 font-semibold mb-4">Basic Info</p>
             <div className="space-y-4">
               <AdminInput
                 label="Brand Name"
@@ -271,15 +271,15 @@ export default function BrandEditorPage() {
               />
 
               <div className="space-y-1.5">
-                <label className="block text-slate-400 text-sm font-medium">
+                <label className="block text-gray-600 text-sm font-medium">
                   Slug (URL)
                 </label>
-                <div className="flex items-center rounded-lg border border-[#1a1a35] bg-[#080818] overflow-hidden focus-within:border-[#e3791d]/60">
-                  <span className="text-slate-600 text-sm px-3 border-r border-[#1a1a35] py-2.5">
+                <div className="flex items-center rounded-xl border border-gray-200 bg-white overflow-hidden focus-within:border-[#e3791d] focus-within:ring-2 focus-within:ring-orange-100 transition-all">
+                  <span className="text-gray-500 text-sm px-3 border-r border-gray-200 py-2.5 bg-gray-50">
                     /brand/
                   </span>
                   <input
-                    className="flex-1 bg-transparent px-3 py-2.5 text-white text-sm placeholder-slate-600 focus:outline-none"
+                    className="flex-1 bg-transparent px-3 py-2.5 text-gray-900 text-sm placeholder-gray-400 focus:outline-none"
                     placeholder="my-brand-name"
                     value={form.slug}
                     onChange={(e) => {
@@ -288,7 +288,7 @@ export default function BrandEditorPage() {
                     }}
                   />
                 </div>
-                <p className="text-slate-600 text-xs">
+                <p className="text-gray-400 text-xs">
                   Auto-generated from name. Edit to customise.
                 </p>
               </div>
@@ -304,7 +304,7 @@ export default function BrandEditorPage() {
 
           {/* Introduction */}
           <AdminCard>
-            <p className="text-white font-semibold mb-4">Introduction</p>
+            <p className="text-gray-900 font-semibold mb-4">Introduction</p>
             <AdminTextarea
               label="Brand introduction paragraph"
               placeholder="Write a compelling introduction for this brand..."
@@ -316,7 +316,7 @@ export default function BrandEditorPage() {
 
           {/* Details */}
           <AdminCard>
-            <p className="text-white font-semibold mb-4">Details Panel</p>
+            <p className="text-gray-900 font-semibold mb-4">Details Panel</p>
             <div className="space-y-4">
               <AdminInput
                 label="Brand Name (display)"

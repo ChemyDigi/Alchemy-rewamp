@@ -10,13 +10,7 @@ const services = [
     icon: <Cpu size={22} />,
     href: "/admin/services/it",
   },
-  {
-    slug: "av-production",
-    label: "AV Production",
-    description: "Manage AV production content and projects",
-    icon: <Camera size={22} />,
-    href: "/admin/services/av-production",
-  },
+
   {
     slug: "digital-marketing",
     label: "Digital Marketing",
@@ -43,16 +37,16 @@ export default function ServicesIndexPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {services.map((service) => (
           <Link key={service.slug} href={service.href}>
-            <AdminCard className="hover:border-[#e3791d]/30 hover:bg-[#0f0f22] transition-all cursor-pointer group">
+            <AdminCard className="hover:border-[#e3791d]/50 hover:bg-orange-50 transition-all cursor-pointer group">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-[#e3791d]/10 rounded-xl flex items-center justify-center text-[#e3791d] flex-shrink-0 group-hover:bg-[#e3791d]/20 transition-colors">
                   {service.icon}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-white font-semibold text-base">{service.label}</p>
-                  <p className="text-slate-500 text-sm">{service.description}</p>
+                  <p className="text-gray-900 font-semibold text-base">{service.label}</p>
+                  <p className="text-gray-500 text-sm">{service.description}</p>
                 </div>
-                <ArrowRight size={16} className="text-slate-600 group-hover:text-[#e3791d] transition-colors flex-shrink-0" />
+                <ArrowRight size={16} className="text-gray-300 group-hover:text-[#e3791d] transition-colors flex-shrink-0" />
               </div>
             </AdminCard>
           </Link>

@@ -111,25 +111,6 @@ export default function AdminDashboardPage() {
           ))}
         </div>
       </AdminCard>
-
-      {/* Info Box */}
-      <AdminCard>
-        <h2 className="text-gray-800 font-semibold text-base mb-3">Firestore Collections</h2>
-        <p className="text-gray-400 text-sm leading-relaxed mb-4">
-          Make sure you have created the required Firestore collections and set the proper security rules.
-        </p>
-        <div className="bg-gray-50 border border-gray-100 rounded-xl p-4">
-          <p className="text-gray-700 font-semibold text-xs uppercase tracking-wider mb-3">Required collections</p>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-            {["blogs", "gallery", "team", "homeContent", "services"].map((col) => (
-              <div key={col} className="flex items-center gap-2 bg-white border border-gray-100 rounded-lg px-3 py-2">
-                <div className="w-1.5 h-1.5 bg-[#e3791d] rounded-full flex-shrink-0" />
-                <span className="text-gray-600 text-xs font-mono font-medium">{col}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </AdminCard>
     </div>
   );
 }

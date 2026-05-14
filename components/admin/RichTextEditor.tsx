@@ -46,8 +46,8 @@ const MenuBar = ({ editor }: { editor: any }) => {
       title={title}
       className={`p-2 rounded-lg transition-colors flex items-center justify-center ${
         isActive 
-          ? "bg-[#e3791d] text-white" 
-          : "text-slate-400 hover:text-white hover:bg-[#2a2a45]"
+          ? "bg-[#e3791d] text-white shadow-sm" 
+          : "text-gray-500 hover:text-gray-900 hover:bg-gray-200"
       }`}
     >
       <Icon size={16} />
@@ -87,7 +87,7 @@ const MenuBar = ({ editor }: { editor: any }) => {
   };
 
   return (
-    <div className="flex flex-wrap items-center gap-1 p-2 border-b border-[#1a1a35] bg-[#0f0f22] rounded-t-xl sticky top-0 z-10">
+    <div className="flex flex-wrap items-center gap-1 p-2 border-b border-gray-200 bg-gray-50 rounded-t-xl sticky top-0 z-10">
       <ActionButton
         onClick={() => editor.chain().focus().toggleBold().run()}
         isActive={editor.isActive("bold")}
@@ -113,7 +113,7 @@ const MenuBar = ({ editor }: { editor: any }) => {
         title="Inline Code"
       />
       
-      <div className="w-[1px] h-6 bg-[#2a2a45] mx-1" />
+      <div className="w-[1px] h-6 bg-gray-200 mx-1" />
       
       <ActionButton
         onClick={() => editor.chain().focus().setParagraph().run()}
@@ -140,7 +140,7 @@ const MenuBar = ({ editor }: { editor: any }) => {
         title="Heading 3"
       />
 
-      <div className="w-[1px] h-6 bg-[#2a2a45] mx-1" />
+      <div className="w-[1px] h-6 bg-gray-200 mx-1" />
 
       <ActionButton
         onClick={() => editor.chain().focus().toggleBulletList().run()}
@@ -161,7 +161,7 @@ const MenuBar = ({ editor }: { editor: any }) => {
         title="Blockquote"
       />
       
-      <div className="w-[1px] h-6 bg-[#2a2a45] mx-1" />
+      <div className="w-[1px] h-6 bg-gray-200 mx-1" />
 
       <ActionButton
         onClick={addImage}
@@ -170,7 +170,7 @@ const MenuBar = ({ editor }: { editor: any }) => {
         title="Insert Image"
       />
 
-      <div className="w-[1px] h-6 bg-[#2a2a45] mx-1" />
+      <div className="w-[1px] h-6 bg-gray-200 mx-1" />
 
       <ActionButton
         onClick={() => editor.chain().focus().undo().run()}
@@ -206,13 +206,13 @@ export default function RichTextEditor({ content, onChange }: RichTextEditorProp
     },
     editorProps: {
       attributes: {
-        class: "prose prose-invert prose-orange max-w-none min-h-[400px] p-4 lg:p-6 focus:outline-none",
+        class: "prose prose-orange max-w-none min-h-[400px] p-4 lg:p-6 focus:outline-none text-gray-900",
       },
     },
   });
 
   return (
-    <div className="border border-[#1a1a35] rounded-xl bg-[#080818] overflow-hidden flex flex-col">
+    <div className="border border-gray-200 rounded-xl bg-white overflow-hidden flex flex-col">
       <MenuBar editor={editor} />
       <div className="flex-1 overflow-y-auto max-h-[700px] custom-scrollbar">
         <EditorContent editor={editor} />
@@ -224,7 +224,7 @@ export default function RichTextEditor({ content, onChange }: RichTextEditorProp
         .ProseMirror p.is-editor-empty:first-child::before {
           content: attr(data-placeholder);
           float: left;
-          color: #64748b;
+          color: #94a3b8;
           pointer-events: none;
           height: 0;
         }
@@ -249,6 +249,7 @@ export default function RichTextEditor({ content, onChange }: RichTextEditorProp
           font-weight: 700;
           margin-top: 2rem;
           margin-bottom: 1rem;
+          color: #111827;
         }
         .ProseMirror h2 {
           font-size: 1.875rem;
@@ -256,6 +257,7 @@ export default function RichTextEditor({ content, onChange }: RichTextEditorProp
           font-weight: 600;
           margin-top: 1.5rem;
           margin-bottom: 0.75rem;
+          color: #111827;
         }
         .ProseMirror h3 {
           font-size: 1.5rem;
@@ -263,25 +265,28 @@ export default function RichTextEditor({ content, onChange }: RichTextEditorProp
           font-weight: 600;
           margin-top: 1.25rem;
           margin-bottom: 0.5rem;
+          color: #111827;
         }
         .ProseMirror blockquote {
           border-left-width: 4px;
           border-color: #e3791d;
           padding-left: 1rem;
           font-style: italic;
-          color: #94a3b8;
+          color: #475569;
           margin-top: 1rem;
           margin-bottom: 1rem;
         }
         .ProseMirror code {
-          background-color: #1e293b;
+          background-color: #f1f5f9;
+          color: #0f172a;
           padding: 0.2rem 0.4rem;
           border-radius: 0.25rem;
           font-size: 0.875em;
         }
         .ProseMirror pre {
-          background-color: #0f172a;
-          color: #e2e8f0;
+          background-color: #f8fafc;
+          color: #0f172a;
+          border: 1px solid #e2e8f0;
           padding: 1rem;
           border-radius: 0.5rem;
           overflow-x: auto;

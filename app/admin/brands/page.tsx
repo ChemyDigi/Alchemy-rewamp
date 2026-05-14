@@ -102,7 +102,7 @@ export default function BrandsAdminPage() {
           {brands.map((brand) => (
             <AdminCard key={brand.id} className="flex flex-col gap-4">
               {/* Hero preview */}
-              <div className="relative w-full h-36 rounded-xl overflow-hidden bg-[#12122a]">
+              <div className="relative w-full h-36 rounded-xl overflow-hidden bg-gray-50">
                 {brand.heroImage ? (
                   <img
                     src={brand.heroImage}
@@ -110,7 +110,7 @@ export default function BrandsAdminPage() {
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <div className="flex items-center justify-center h-full text-slate-600 text-sm">
+                  <div className="flex items-center justify-center h-full text-gray-400 text-sm">
                     No hero image
                   </div>
                 )}
@@ -118,17 +118,17 @@ export default function BrandsAdminPage() {
 
               {/* Info */}
               <div className="flex-1">
-                <p className="text-white font-semibold text-base">{brand.brandName}</p>
-                <p className="text-slate-500 text-xs mt-0.5">/{brand.slug}</p>
+                <p className="text-gray-900 font-semibold text-base">{brand.brandName}</p>
+                <p className="text-gray-500 text-xs mt-0.5">/{brand.slug}</p>
                 {brand.introduction && (
-                  <p className="text-slate-400 text-xs mt-2 line-clamp-2">
+                  <p className="text-gray-500 text-xs mt-2 line-clamp-2">
                     {brand.introduction}
                   </p>
                 )}
               </div>
 
               {/* Actions */}
-              <div className="flex items-center gap-2 pt-2 border-t border-[#1a1a35]">
+              <div className="flex items-center gap-2 pt-2 border-t border-gray-100">
                 <Link href={`/admin/brands/${brand.id}`} className="flex-1">
                   <AdminButton variant="secondary" size="sm" className="w-full">
                     <Pencil size={13} />

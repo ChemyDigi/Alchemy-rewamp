@@ -3,10 +3,10 @@
 import { useState } from "react";
 import { Blog, createBlog, updateBlog } from "@/lib/firestore";
 import ImageUpload from "@/components/admin/ImageUpload";
-import { AdminInput, AdminSelect, AdminButton } from "@/components/admin/AdminUI";
+import { AdminInput, AdminSelect, AdminButton, AdminCard } from "@/components/admin/AdminUI";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { Columns, Monitor } from "lucide-react";
+import { Columns, Monitor, FileText, ImageIcon, AlignLeft } from "lucide-react";
 import RichTextEditor from "./RichTextEditor";
 
 interface BlogFormProps {
@@ -110,11 +110,11 @@ export default function BlogForm({ initialData }: BlogFormProps) {
   return (
     <div className="relative pb-24">
       <div className="flex items-center justify-between mb-6">
-        <div className="flex bg-[#0f0f22] p-1 rounded-lg border border-[#1a1a35]">
+        <div className="flex bg-gray-100 p-1 rounded-lg border border-gray-200">
           <button
             type="button"
             onClick={() => setPreviewMode(false)}
-            className={`px-4 py-2 text-sm font-medium rounded-md transition-colors flex items-center gap-2 ${!previewMode ? "bg-[#e3791d] text-white" : "text-slate-400 hover:text-white"}`}
+            className={`px-4 py-2 text-sm font-medium rounded-md transition-colors flex items-center gap-2 ${!previewMode ? "bg-[#e3791d] text-white shadow-sm" : "text-gray-500 hover:text-gray-800"}`}
           >
             <Columns size={16} />
             Editor
@@ -122,7 +122,7 @@ export default function BlogForm({ initialData }: BlogFormProps) {
           <button
             type="button"
             onClick={() => setPreviewMode(true)}
-            className={`px-4 py-2 text-sm font-medium rounded-md transition-colors flex items-center gap-2 ${previewMode ? "bg-[#e3791d] text-white" : "text-slate-400 hover:text-white"}`}
+            className={`px-4 py-2 text-sm font-medium rounded-md transition-colors flex items-center gap-2 ${previewMode ? "bg-[#e3791d] text-white shadow-sm" : "text-gray-500 hover:text-gray-800"}`}
           >
             <Monitor size={16} />
             Preview
@@ -141,8 +141,13 @@ export default function BlogForm({ initialData }: BlogFormProps) {
           <form id="blog-form" onSubmit={handleSubmit} className="space-y-6">
             
             {/* Metadata */}
-            <div className="bg-[#0f0f22] border border-[#1a1a35] rounded-2xl p-5 lg:p-6 space-y-4">
-              <h2 className="text-white font-semibold text-sm uppercase tracking-wider">Blog Metadata</h2>
+            <AdminCard className="space-y-4">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-7 h-7 bg-orange-50 rounded-lg flex items-center justify-center">
+                  <FileText size={14} className="text-[#e3791d]" />
+                </div>
+                <h2 className="text-gray-800 font-semibold text-sm">Blog Metadata</h2>
+              </div>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <AdminInput label="Title *" placeholder="Enter title…" value={title} onChange={(e) => handleTitleChange(e.target.value)} />
                 <AdminInput label="Slug *" placeholder="url-friendly-slug" value={slug} onChange={(e) => setSlug(slugify(e.target.value))} />
@@ -160,41 +165,49 @@ export default function BlogForm({ initialData }: BlogFormProps) {
                   { value: "published", label: "Published" },
                 ]}
               />
-            </div>
+            </AdminCard>
 
             {/* Featured Image */}
-            <div className="bg-[#0f0f22] border border-[#1a1a35] rounded-2xl p-5 lg:p-6">
-              <h2 className="text-white font-semibold text-sm uppercase tracking-wider mb-4">Featured Image</h2>
+            <AdminCard>
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-7 h-7 bg-blue-50 rounded-lg flex items-center justify-center">
+                  <ImageIcon size={14} className="text-blue-500" />
+                </div>
+                <h2 className="text-gray-800 font-semibold text-sm">Featured Image</h2>
+              </div>
               <ImageUpload
                 value={featuredImage}
                 onChange={setFeaturedImage}
                 onRemove={() => setFeaturedImage("")}
                 label=""
               />
-            </div>
+            </AdminCard>
 
             {/* Rich Text Editor */}
-            <div className="bg-[#0f0f22] border border-[#1a1a35] rounded-2xl p-5 lg:p-6 space-y-4">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-white font-semibold text-sm uppercase tracking-wider">Content</h2>
+            <AdminCard className="space-y-4">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-7 h-7 bg-purple-50 rounded-lg flex items-center justify-center">
+                  <AlignLeft size={14} className="text-purple-500" />
+                </div>
+                <h2 className="text-gray-800 font-semibold text-sm">Content</h2>
               </div>
               
               <RichTextEditor 
                 content={content} 
                 onChange={setContent} 
               />
-            </div>
+            </AdminCard>
           </form>
         </div>
 
         {/* PREVIEW COLUMN */}
         <div className={`${!previewMode ? "hidden lg:block lg:sticky lg:top-6 lg:h-[calc(100vh-6rem)] lg:overflow-y-auto custom-scrollbar" : ""}`}>
-          <div className="bg-[#0f0f22] border border-[#1a1a35] rounded-2xl overflow-hidden shadow-2xl relative">
-            <div className="bg-[#1a1a35] px-4 py-2 flex items-center gap-2 border-b border-[#2a2a45]">
-              <div className="w-3 h-3 rounded-full bg-red-500" />
-              <div className="w-3 h-3 rounded-full bg-yellow-500" />
-              <div className="w-3 h-3 rounded-full bg-green-500" />
-              <span className="text-xs text-slate-400 font-medium ml-2">Live Preview</span>
+          <div className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm relative">
+            <div className="bg-gray-50 px-4 py-2 flex items-center gap-2 border-b border-gray-100">
+              <div className="w-3 h-3 rounded-full bg-red-400" />
+              <div className="w-3 h-3 rounded-full bg-yellow-400" />
+              <div className="w-3 h-3 rounded-full bg-green-400" />
+              <span className="text-xs text-gray-400 font-medium ml-2">Live Preview</span>
             </div>
             <div className="h-full bg-white max-h-screen overflow-y-auto">
                {renderPreview()}

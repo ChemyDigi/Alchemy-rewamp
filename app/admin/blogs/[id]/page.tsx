@@ -47,7 +47,7 @@ export default function EditBlogPage({ params }: { params: Promise<{ id: string 
         action={
           <Link
             href="/admin/blogs"
-            className="flex items-center gap-2 text-slate-400 hover:text-white text-sm transition-colors"
+            className="flex items-center gap-2 text-gray-500 hover:text-gray-900 text-sm transition-colors"
           >
             <ArrowLeft size={14} />
             Back to Blogs
