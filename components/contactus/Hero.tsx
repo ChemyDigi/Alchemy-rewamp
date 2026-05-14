@@ -24,10 +24,10 @@ export default function Hero() {
                         Contact
                     </h1>
 
-                    <p className="mt-0 md:mt-1 md:max-lg:portrait:mt-3 text-xl font-normal uppercase tracking-[-0.01em] text-[var(--color-orange)] sm:text-3xl lg:text-xl">
+                    <p className=" ml-5 mt-0 md:mt-1 md:max-lg:portrait:mt-3 text-xl font-normal uppercase tracking-[-0.01em] text-[var(--color-orange)] sm:text-3xl lg:text-xl">
                         Say Hello
                     </p>
-                    <p className="text-xl leading-none font-normal uppercase tracking-[-0.01em] text-black sm:text-3xl lg:text-xl">
+                    <p className=" ml-5 text-xl leading-none font-normal uppercase tracking-[-0.01em] text-black sm:text-3xl lg:text-xl">
                         We&apos;re Ready When You Are
                     </p>
                 </div>

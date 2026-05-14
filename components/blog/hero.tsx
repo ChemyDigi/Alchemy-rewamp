@@ -13,24 +13,24 @@ export default function BlogHero({ posts }: BlogHeroProps) {
 
   return (
     <section className="min-h-screen w-full bg-white overflow-hidden">
-      <div className="mx-auto flex min-h-screen w-full max-w-[1440px] flex-col justify-between pl-8 pt-16 pb-10 sm:pl-12 lg:flex-row lg:items-end lg:pl-20 lg:pt-12 lg:pb-14">
+      <div className="mx-auto flex min-h-screen w-full max-w-[1440px] flex-col justify-between pl-12 pt-16 pb-10 md:pl-1 lg:flex-row lg:items-end lg:pt-12 lg:pb-14">
         {/* Left side - Text content */}
         <div className="z-10 mt-auto max-w-[620px] pb-8 lg:translate-y-[-1.5rem] lg:pb-2 xl:translate-y-[-2rem] max-sm:mt-0 max-sm:pt-12">
           <h1 className="text-7xl leading-[0.88] font-medium tracking-[-0.03em] text-black sm:text-8xl md:text-9xl lg:text-[10.75rem] xl:text-[11.5rem] 2xl:text-[12.5rem]">
             Blog
           </h1>
 
-          <p className="mt-3 text-xl font-normal uppercase tracking-[-0.01em] text-orange sm:text-3xl lg:text-xl">
+          <p className="ml-3 mt-3 text-xl font-normal uppercase tracking-[-0.01em] text-orange sm:text-3xl lg:text-xl">
             Insight
           </p>
-          <p className="text-xl leading-none font-normal uppercase tracking-[-0.01em] text-black sm:text-3xl lg:text-xl">
+          <p className="ml-3 text-xl leading-none font-normal uppercase tracking-[-0.01em] text-black sm:text-3xl lg:text-xl">
             Driven By Impact
           </p>
         </div>
 
         {/* Right side - Card stack */}
         <div className="relative mt-8 shrink-0 sm:mt-0 lg:mt-0 sm:ml-auto lg:ml-0 max-sm:ml-auto max-sm:translate-x-1">
-          <div 
+          <div
             className="relative"
             style={{
               width: "clamp(300px, 35vw, 450px)",
@@ -52,10 +52,10 @@ export default function BlogHero({ posts }: BlogHeroProps) {
                   <Card key={post.id} customClass="overflow-hidden">
                     <Link href={`/blog/${post.slug}`} className="absolute inset-0 z-10 block" />
                     <div className="absolute inset-0">
-                      <Image 
-                        src={post.featuredImage || "/images/blog/Blog1.jpg"} 
-                        alt={post.title} 
-                        fill 
+                      <Image
+                        src={post.featuredImage || "/images/blog/Blog1.jpg"}
+                        alt={post.title}
+                        fill
                         className="object-cover"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
