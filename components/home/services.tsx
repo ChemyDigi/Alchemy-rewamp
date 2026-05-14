@@ -114,6 +114,7 @@ export default function Services() {
 
   return (
     <section
+      id="services"
       ref={sectionRef}
       className="w-full pt-4 pb-8 px-6 md:px-10 lg:px-16 bg-white relative"
       style={{ cursor: "none" }}

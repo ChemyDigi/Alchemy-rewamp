@@ -16,7 +16,7 @@ function ScrollFillText({ text }: { text: string }) {
   return (
     <p
       ref={ref}
-     className="
+      className="
   mt-20 sm:mt-16 md:mt-10
   w-full max-w-[95%] sm:max-w-[90%] md:max-w-[700px] lg:max-w-[900px]
   font-medium

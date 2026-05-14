@@ -6,10 +6,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { poppins } from "@/app/fonts";
 import { usePathname } from "next/navigation";
 
-const navItems = ["About", "Gallery", "Blog", "Contact"];
+const navItems = ["Services", "About", "Gallery", "Blog", "Contact"];
 
 const navLinks: Record<string, string> = {
   About: "/about",
+  Services: "/#services",
   Gallery: "/gallery",
   Blog: "/blog",
   Contact: "/contactus",
