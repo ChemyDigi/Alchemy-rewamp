@@ -20,12 +20,14 @@ export default function Home() {
         @media (max-width: 767px) {
           #clients-inner     { flex-direction: column !important; gap: 32px !important; }
           #clients-text      { flex: unset !important; width: 100% !important; }
-          #clients-logo      { flex: unset !important; width: 100% !important; max-height: 380px !important; }
+          #clients-logo      { flex: unset !important; width: 100% !important; max-height: 380px !important; margin-right: 0px !important; }
         }
       `}</style>
       <section id="clients-section" className="w-full py-16 md:py-24 px-6 md:px-10 lg:px-16 bg-white">
         <div id="clients-inner" style={{
-          maxWidth: "1400px",
+          maxWidth: "1840px",
+          width: "100%",
+          margin: "0 auto",
           display: "flex", gap: "80px", alignItems: "center", justifyContent: "space-between"
         }}>
           {/* Left: Text */}
@@ -57,10 +59,11 @@ export default function Home() {
           {/* Right: Circular animated logo cluster */}
           <div id="clients-logo" style={{
             width: "100%",
-            maxWidth: "760px",
+            maxWidth: "840px",
             aspectRatio: "1 / 1",
-            maxHeight: "540px",
+            maxHeight: "660px",
             position: "relative",
+            marginRight: "80px",
           }}>
             <LogoDisplay />
           </div>

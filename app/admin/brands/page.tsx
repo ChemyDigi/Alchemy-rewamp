@@ -21,8 +21,6 @@ interface Brand {
   brandName: string;
   slug: string;
   heroImage: string;
-  bornYear: string;
-  introduction: string;
 }
 
 export default function BrandsAdminPage() {
@@ -68,7 +66,7 @@ export default function BrandsAdminPage() {
     <>
       <PageHeader
         title="Brands"
-        description="Manage client brand pages shown in the DM carousel"
+        description="Manage client brands and logos shown in the DM carousel"
         action={
           <Link href="/admin/brands/new">
             <AdminButton>
@@ -120,11 +118,6 @@ export default function BrandsAdminPage() {
               <div className="flex-1">
                 <p className="text-gray-900 font-semibold text-base">{brand.brandName}</p>
                 <p className="text-gray-500 text-xs mt-0.5">/{brand.slug}</p>
-                {brand.introduction && (
-                  <p className="text-gray-500 text-xs mt-2 line-clamp-2">
-                    {brand.introduction}
-                  </p>
-                )}
               </div>
 
               {/* Actions */}

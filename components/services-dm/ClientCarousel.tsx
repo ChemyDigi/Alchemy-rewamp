@@ -1,8 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
-import { Plus } from "lucide-react";
 import { useRef, useEffect, useState } from "react";
 import { db } from "@/lib/firebase";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
@@ -97,10 +95,9 @@ export default function CreativeAgencySection() {
               `}</style>
 
               {brands.map((brand) => (
-                <Link
+                <div
                   key={brand.id}
-                  href={`/brand/${brand.slug}`}
-                  className="group relative h-[300px] w-[240px] min-w-[240px] overflow-hidden rounded-[24px] bg-[#f0f0f0] sm:h-[360px] sm:w-[300px] sm:min-w-[300px] lg:h-[410px] lg:w-[340px] lg:min-w-[340px] block cursor-pointer flex-shrink-0"
+                  className="group relative h-[300px] w-[240px] min-w-[240px] overflow-hidden rounded-[24px] bg-[#f0f0f0] sm:h-[360px] sm:w-[300px] sm:min-w-[300px] lg:h-[410px] lg:w-[340px] lg:min-w-[340px] block flex-shrink-0"
                 >
                   {brand.heroImage ? (
                     <Image
@@ -122,17 +119,9 @@ export default function CreativeAgencySection() {
                     <p className="text-white font-semibold text-sm">{brand.brandName}</p>
                   </div>
 
-                  {/* Plus icon */}
-                  <div className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/20 backdrop-blur-md transition-all duration-300 group-hover:bg-white/80 group-hover:scale-110">
-                    <Plus
-                      className="h-6 w-6 text-[#111111] transition-transform duration-300 group-hover:rotate-45"
-                      strokeWidth={2.3}
-                    />
-                  </div>
-
                   {/* Soft overlay */}
                   <div className="absolute inset-0 bg-black/0 transition-all duration-500 group-hover:bg-black/[0.03]" />
-                </Link>
+                </div>
               ))}
             </div>
           </div>
