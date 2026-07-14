@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView, animate } from "framer-motion";
+import { useInView, animate } from "framer-motion";
 import { useEffect, useRef } from "react";
 
 function Counter({ value }: { value: number }) {
@@ -10,11 +10,9 @@ function Counter({ value }: { value: number }) {
   useEffect(() => {
     if (!isInView || !ref.current) return;
 
-    const start = Math.floor(value * 0.66);
-
-    const controls = animate(start, value, {
-      duration: 1.2, // 👈 speed (lower = faster)
-      ease: "linear", // 👈 removes end lag completely
+    const controls = animate(0, value, {
+      duration: 1.5,
+      ease: "easeOut",
       onUpdate(latest) {
         if (ref.current) {
           ref.current.textContent = Math.floor(latest).toString();
@@ -25,7 +23,7 @@ function Counter({ value }: { value: number }) {
     return () => controls.stop();
   }, [isInView, value]);
 
-  return <span ref={ref}>{Math.floor(value * 0.66)}</span>;
+  return <span ref={ref}>0</span>;
 }
 
 /* ================= MAIN COMPONENT ================= */
@@ -52,31 +50,26 @@ export default function AboutStats() {
           <div key={i}>
             
             {/* NUMBER + PLUS */}
-            <div className="relative inline-block">
-              <h2
+            <h2
+              className="
+                text-orange 
+                text-[64px] sm:text-[90px] md:text-[110px] lg:text-[130px]
+                font-bold leading-none inline-flex items-start
+              "
+            >
+              <Counter value={item.num} />
+              <span
                 className="
-                  text-orange 
-                  text-[64px] sm:text-[90px] md:text-[110px] lg:text-[130px]
-                  font-bold leading-none
-                "
-              >
-                <Counter value={item.num} />
-              </h2>
-
-              <div
-                className="
-                  absolute 
-                  -top-2 -right-2 sm:-top-3 sm:-right-3
-                  w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12
-                  bg-black text-white
-                  rounded-full
-                  flex items-center justify-center
-                  text-sm sm:text-lg md:text-xl
+                  text-orange
+                  text-[48px] sm:text-[68px] md:text-[84px] lg:text-[100px]
+                  font-black
+                  leading-none
+                  -mt-2 sm:-mt-4 md:-mt-6
                 "
               >
                 +
-              </div>
-            </div>
+              </span>
+            </h2>
 
             {/* TITLE */}
             <p
