@@ -45,7 +45,7 @@ export default function Navbar() {
             transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]
             ${hovered
                 ? "w-[220px] opacity-0 pointer-events-none"
-                : "w-[120px] opacity-100 bg-black text-white"
+                : "w-[120px] opacity-100 menu-btn"
               }`}
           >
             Menu
@@ -183,7 +183,7 @@ export default function Navbar() {
             {/* BUTTON */}
             <button
               onClick={() => setOpen(!open)}
-              className="h-[50px] flex-1 bg-black text-white rounded-[14px] font-medium transition-all duration-500 active:scale-95"
+              className="menu-btn h-[50px] flex-1 rounded-[14px] font-medium transition-all duration-500"
             >
               {open ? "Close Menu" : "Menu"}
             </button>
