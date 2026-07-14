@@ -5,18 +5,21 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 function DesktopLanyard() {
-    const [isDesktop, setIsDesktop] = useState(false);
+    const [isTabletOrDesktop, setIsTabletOrDesktop] = useState(false);
 
     useEffect(() => {
-        const checkIsDesktop = () => {
-            setIsDesktop(window.innerWidth >= 1024);
+        const checkScreen = () => {
+            const width = window.innerWidth;
+            const isStandardTablet = width >= 768 && width < 1024;
+            const isDesktop = width >= 1280;
+            setIsTabletOrDesktop(isStandardTablet || isDesktop);
         };
-        checkIsDesktop();
-        window.addEventListener("resize", checkIsDesktop);
-        return () => window.removeEventListener("resize", checkIsDesktop);
+        checkScreen();
+        window.addEventListener("resize", checkScreen);
+        return () => window.removeEventListener("resize", checkScreen);
     }, []);
 
-    if (!isDesktop) return null;
+    if (!isTabletOrDesktop) return null;
 
     return (
         <Lanyard
@@ -31,19 +34,32 @@ export default function Hero() {
     return (
         <section className="relative min-h-[44vh] md:min-h-screen md:max-lg:portrait:min-h-fit bg-white overflow-x-hidden">
 
-            {/* Full-screen Lanyard layer — mounted only on desktop (lg breakpoint / >=1024px) */}
-            <div className="absolute inset-0 z-20 hidden lg:block">
+            {/* Full-screen Lanyard layer — mounted on standard tablet (md) and desktop (xl) */}
+            <div className="absolute inset-0 z-20 hidden md:block lg:hidden xl:block">
                 <DesktopLanyard />
             </div>
 
-            {/* Static Card Image — rendered only on mobile and tablet (below lg breakpoint / <1024px) */}
-            <div className="absolute -top-12 sm:-top-6 -right-28 sm:-right-20 md:-right-28 z-10 block lg:hidden w-[52%] sm:w-[58%] md:w-[48%] pointer-events-none select-none">
+            {/* iPad Pro / Large Tablet Card Image — rendered only on large tablets (lg breakpoint to xl breakpoint / 1024px to 1279px) */}
+            <div className="absolute -top-12 -right-6 z-10 hidden lg:block xl:hidden w-[48%] max-w-[460px] pointer-events-none select-none">
+                <Image
+                    src="/images/alchemy-card-ipad.png"
+                    alt="Alchemy lanyard card"
+                    width={450}
+                    height={630}
+                    className="w-full h-auto object-contain"
+                    draggable={false}
+                    priority
+                />
+            </div>
+
+            {/* Static Card Image — rendered only on mobile (below md breakpoint / <768px) */}
+            <div className="absolute -top-12 sm:-top-6 -right-28 sm:-right-20 z-10 block md:hidden w-[52%] sm:w-[58%] pointer-events-none select-none">
                 <Image
                     src="/images/alchemy-tag.png"
                     alt="Alchemy lanyard card"
                     width={400}
                     height={560}
-                    className="w-full h-auto object-contain rotate-[20deg] sm:rotate-[16deg]"
+                    className="w-full h-auto object-contain rotate-[20deg]"
                     draggable={false}
                     priority
                 />
