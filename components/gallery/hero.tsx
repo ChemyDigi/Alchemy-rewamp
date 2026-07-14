@@ -222,11 +222,11 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative min-h-[60vh] md:min-h-screen bg-white overflow-hidden">
+    <section className="relative min-h-[60vh] md:min-h-[70vh] lg:min-h-0 xl:min-h-screen bg-white overflow-hidden">
 
-      <div className="relative max-w-[1600px] mx-auto min-h-[60vh] md:min-h-screen px-6 sm:px-8 md:px-16 pt-24 md:pt-32 lg:pt-20 pb-10 md:pb-16">
+      <div className="relative max-w-[1600px] mx-auto min-h-[60vh] md:min-h-[70vh] lg:min-h-0 xl:min-h-screen px-6 sm:px-8 md:px-16 pt-24 md:pt-32 lg:pt-20 pb-10 md:pb-6 lg:pb-10 xl:pb-16">
 
-        <div className="flex flex-col lg:flex-row items-center lg:items-center justify-between gap-12 lg:gap-20 h-full">
+        <div className="flex flex-col lg:flex-row items-center lg:items-center justify-between gap-12 lg:gap-20">
 
           {/* LEFT CONTENT */}
           <div className="z-10 mt-auto max-w-[620px] pt-10 lg:pt-20 pb-8 lg:translate-y-[3rem] xl:translate-y-[4rem] max-sm:mt-0 max-sm:pt-20">
