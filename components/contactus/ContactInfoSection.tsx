@@ -76,7 +76,7 @@ export default function ContactInfoSection() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        
+
         // Validate all fields
         const newErrors: Record<string, string> = {};
         Object.keys(formData).forEach(key => {
@@ -219,29 +219,29 @@ export default function ContactInfoSection() {
 
                     <form onSubmit={handleSubmit} className="mt-10 space-y-8">
 
-                        <Field 
-                            label="Your Name" 
-                            name="name" 
-                            value={formData.name} 
-                            onChange={handleChange} 
-                            error={errors.name} 
+                        <Field
+                            label="Your Name"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            error={errors.name}
                             placeholder="Enter your full name"
                         />
-                        <Field 
-                            label="Your Mobile Number" 
-                            name="mobile" 
-                            value={formData.mobile} 
-                            onChange={handleChange} 
-                            error={errors.mobile} 
+                        <Field
+                            label="Your Mobile Number"
+                            name="mobile"
+                            value={formData.mobile}
+                            onChange={handleChange}
+                            error={errors.mobile}
                             placeholder="+94 XX XXX XXXX"
                         />
-                        <Field 
-                            label="Your Email" 
-                            name="email" 
+                        <Field
+                            label="Your Email"
+                            name="email"
                             type="email"
-                            value={formData.email} 
-                            onChange={handleChange} 
-                            error={errors.email} 
+                            value={formData.email}
+                            onChange={handleChange}
+                            error={errors.email}
                             placeholder="name@example.com"
                         />
 
@@ -314,8 +314,8 @@ export default function ContactInfoSection() {
                         )}
 
                         {/* Button */}
-                        <button 
-                            type="submit" 
+                        <button
+                            type="submit"
                             disabled={isSubmitting}
                             className="group mt-8 bg-orange text-white h-[56px] rounded-full relative overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-black min-w-[230px] hover:min-w-[260px] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                         >
