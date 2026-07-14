@@ -1,10 +1,16 @@
 "use client";
 
+import { useState } from "react";
 import { BorderBeam } from "@/components/ui/border-beam";
 import Link from "next/link";
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
+import { ChevronDown } from "lucide-react";
 
 export default function ContactInfoSection() {
+    const [projectType, setProjectType] = useState("Select Project Type");
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const options = ["Web Design", "Web Development", "Branding", "Marketing"];
+
     return (
         <section className="w-full bg-white py-1 md:py-24 px-6 md:px-12 lg:px-20 -mt-2 md:mt-0">
             <div className="max-w-[1500px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-start">
@@ -117,18 +123,45 @@ export default function ContactInfoSection() {
                         <Field label="Your Email" />
 
                         {/* Select */}
-                        <div>
+                        <div className="relative">
                             <label className="block text-[18px] text-[#555] mb-2">
                                 Project Type
                             </label>
 
-                            <select className="w-full bg-transparent border-b border-[#9e9e9e] pb-3 text-[14px] text-[#888] outline-none">
-                                <option>Select Project Type</option>
-                                <option>Web Design</option>
-                                <option>Web Development</option>
-                                <option>Branding</option>
-                                <option>Marketing</option>
-                            </select>
+                            <button
+                                type="button"
+                                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                                className="w-full bg-transparent border-b border-[#9e9e9e] pb-3 text-[14px] text-[#888] outline-none flex justify-between items-center cursor-pointer text-left"
+                            >
+                                <span className={projectType !== "Select Project Type" ? "text-black text-[20px]" : "text-[#888] text-[14px]"}>
+                                    {projectType}
+                                </span>
+                                <ChevronDown className={`w-4 h-4 text-[#888] transition-transform duration-300 ${isDropdownOpen ? "rotate-180" : ""}`} />
+                            </button>
+
+                            {isDropdownOpen && (
+                                <>
+                                    <div
+                                        className="fixed inset-0 z-10"
+                                        onClick={() => setIsDropdownOpen(false)}
+                                    />
+                                    <div className="absolute left-0 right-0 mt-1 bg-white border border-[#e0e0e0] rounded-xl shadow-lg z-20 py-2 overflow-hidden animate-in fade-in slide-in-from-top-1 duration-200">
+                                        {options.map((option) => (
+                                            <button
+                                                key={option}
+                                                type="button"
+                                                onClick={() => {
+                                                    setProjectType(option);
+                                                    setIsDropdownOpen(false);
+                                                }}
+                                                className="w-full text-left px-4 py-2.5 text-[14px] text-[#555] hover:bg-[#faf9f9] hover:text-orange transition-colors duration-150 cursor-pointer"
+                                            >
+                                                {option}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </>
+                            )}
                         </div>
 
                         {/* Message */}
