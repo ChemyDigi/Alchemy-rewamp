@@ -1,7 +1,19 @@
 "use client";
 
-import { ReactLenis } from "lenis/react";
-import { ReactNode } from "react";
+import { ReactLenis, useLenis } from "lenis/react";
+import { ReactNode, useEffect } from "react";
+import { usePathname } from "next/navigation";
+
+function ScrollToTopOnNavigate() {
+  const pathname = usePathname();
+  const lenis = useLenis();
+
+  useEffect(() => {
+    lenis?.scrollTo(0, { immediate: true });
+  }, [pathname, lenis]);
+
+  return null;
+}
 
 export default function LenisProvider({ children }: { children: ReactNode }) {
   return (
@@ -13,6 +25,7 @@ export default function LenisProvider({ children }: { children: ReactNode }) {
         smoothWheel: true,
       }}
     >
+      <ScrollToTopOnNavigate />
       {children}
     </ReactLenis>
   );

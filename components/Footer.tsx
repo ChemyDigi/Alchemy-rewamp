@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import { Poppins } from "next/font/google";
+import { useLenis } from "lenis/react";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -11,6 +12,8 @@ const poppins = Poppins({
 });
 
 export default function Footer() {
+  const lenis = useLenis();
+
   return (
     <footer className="bg-white text-black w-full overflow-hidden">
       {/* BIG TYPO */}
@@ -91,7 +94,7 @@ export default function Footer() {
 
           <div className="flex gap-8 text-orange text-2xl mt-6 md:mr-8">
             <a
-              href="https://facebook.com"
+              href="https://facebook.com/alchemys.lk"
               target="_blank"
               rel="noopener noreferrer"
               className="transition-all duration-300 hover:text-black hover:scale-110"
@@ -100,7 +103,7 @@ export default function Footer() {
             </a>
 
             <a
-              href="https://instagram.com"
+              href="https://instagram.com/alchemy.lk/"
               target="_blank"
               rel="noopener noreferrer"
               className="transition-all duration-300 hover:text-black hover:scale-110"
@@ -109,7 +112,7 @@ export default function Footer() {
             </a>
 
             <a
-              href="https://linkedin.com"
+              href="https://linkedin.com/company/alchemylk/"
               target="_blank"
               rel="noopener noreferrer"
               className="transition-all duration-300 hover:text-black hover:scale-110"
@@ -123,7 +126,11 @@ export default function Footer() {
       {/* BOTTOM */}
       <div className="border-t border-gray-200 px-6 md:px-16 py-4 flex flex-col md:flex-row justify-between gap-2 text-sm text-gray-500">
         <p>© 2026 alchemy. All rights reserved</p>
-        <Link href="/privacy-policy" className="hover:text-black">
+        <Link
+          href="/privacy-policy"
+          className="hover:text-black"
+          onClick={() => lenis?.scrollTo(0, { immediate: true })}
+        >
           Privacy Policy
         </Link>
       </div>
