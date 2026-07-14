@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { ChevronDown } from "lucide-react";
 
 const services = [
   {
@@ -98,12 +99,11 @@ export default function ServicesSection() {
                     {item.title}
                   </h3>
 
-                  <span
-                    className={`text-2xl sm:text-3xl font-light transition-colors duration-300 ${isActive ? "text-orange" : "text-black"
-                      }`}
-                  >
-                    {isActive ? "−" : "+"}
-                  </span>
+                  <ChevronDown
+                    className={`w-6 h-6 sm:w-7 sm:h-7 transition-transform duration-300 ${
+                      isActive ? "rotate-180 text-orange" : "text-black"
+                    }`}
+                  />
                 </div>
 
                 <div
