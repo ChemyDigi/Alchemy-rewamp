@@ -1,10 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { poppins } from "@/app/fonts";
 import { usePathname } from "next/navigation";
+import { useLenis } from "lenis/react";
+import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
+import StaggeredMenu, { StaggeredMenuItem, StaggeredMenuSocialItem } from "@/components/home/StaggeredMenu";
 
 const navItems = ["Services", "About", "Gallery", "Blog", "Contact"];
 
@@ -16,17 +19,43 @@ const navLinks: Record<string, string> = {
   Contact: "/contactus",
 };
 
+const mobileMenuItems: StaggeredMenuItem[] = navItems.map((item) => ({
+  label: item,
+  ariaLabel: `Go to ${item}`,
+  link: navLinks[item],
+}));
+
+const mobileSocialItems: StaggeredMenuSocialItem[] = [
+  { label: "Facebook", link: "https://facebook.com/alchemys.lk", icon: <FaFacebookF /> },
+  { label: "Instagram", link: "https://instagram.com/alchemy.lk/", icon: <FaInstagram /> },
+  { label: "LinkedIn", link: "https://linkedin.com/company/alchemylk/", icon: <FaLinkedinIn /> },
+];
+
 export default function Navbar() {
   const [hovered, setHovered] = useState(false);
   const [active, setActive] = useState("About");
-  const [open, setOpen] = useState(false);
 
   const pathname = usePathname();
+  const lenis = useLenis();
 
   useEffect(() => {
-    setOpen(false);
     setHovered(false);
   }, [pathname]);
+
+  // Hash links (e.g. "/#services") to a section of the page we're already
+  // on won't trigger a pathname change, so the router won't scroll there on
+  // its own — scroll to it ourselves via Lenis instead
+  const handleNavClick = useCallback(
+    (link: string) => (event: React.MouseEvent) => {
+      const [path, hash] = link.split("#");
+      if (hash && path === pathname) {
+        event.preventDefault();
+        const target = document.getElementById(hash);
+        if (target) lenis?.scrollTo(target);
+      }
+    },
+    [pathname, lenis]
+  );
 
   return (
     <>
@@ -104,6 +133,7 @@ export default function Navbar() {
                   <Link
                     href={navLinks[item]}
                     onMouseEnter={() => setActive(item)}
+                    onClick={handleNavClick(navLinks[item])}
                     className={`relative z-10 px-5 py-[8px] rounded-full font-medium transition-colors duration-300
                     ${active === item
                         ? "text-white"
@@ -120,75 +150,14 @@ export default function Navbar() {
       </div>
 
       {/* ================= MOBILE ================= */}
-      <div className="md:hidden fixed bottom-6 left-0 w-full flex justify-center z-50">
-        <div className="w-[92%] max-w-sm">
-
-          {/* BACKDROP */}
-          <AnimatePresence>
-            {open && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 0.5 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.4 }}
-                className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
-                onClick={() => setOpen(false)}
-              />
-            )}
-          </AnimatePresence>
-
-          {/* MENU CARD */}
-          <AnimatePresence>
-            {open && (
-              <div className="fixed bottom-[90px] left-0 w-full flex justify-center z-50">
-                <motion.div
-                  initial={{ scale: 0.9, opacity: 0, y: 20 }}
-                  animate={{ scale: 1, opacity: 1, y: 0 }}
-                  exit={{ scale: 0.95, opacity: 0, y: 10 }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 140,
-                    damping: 20,
-                  }}
-                  className="w-[92%] max-w-sm bg-black rounded-[16px] py-12"
-                >
-                  <div className="flex flex-col items-center gap-8">
-                    {navItems.map((item) => (
-                      <Link
-                        key={item}
-                        href={navLinks[item]}
-                        onClick={() => setOpen(false)}
-                        className="text-white text-[15px] tracking-wide"
-                      >
-                        {item.toUpperCase()}
-                      </Link>
-                    ))}
-                  </div>
-                </motion.div>
-              </div>
-            )}
-          </AnimatePresence>
-
-          {/* BOTTOM BAR */}
-          <div className="flex items-center gap-3 w-full">
-            {/* LOGO */}
-            <Link href="/">
-              <div className="h-[50px] w-[50px] bg-black rounded-[14px] flex items-center justify-center shrink-0">
-                <span className={`${poppins.className} text-orange text-[26px] font-[700]`}>
-                  a
-                </span>
-              </div>
-            </Link>
-
-            {/* BUTTON */}
-            <button
-              onClick={() => setOpen(!open)}
-              className="menu-btn h-[50px] flex-1 rounded-[14px] font-medium transition-all duration-500"
-            >
-              {open ? "Close Menu" : "Menu"}
-            </button>
-          </div>
-        </div>
+      <div className="md:hidden">
+        <StaggeredMenu
+          position="right"
+          items={mobileMenuItems}
+          socialItems={mobileSocialItems}
+          displaySocials
+          isFixed
+        />
       </div>
     </>
   );

@@ -9,7 +9,13 @@ function ScrollToTopOnNavigate() {
   const lenis = useLenis();
 
   useEffect(() => {
-    lenis?.scrollTo(0, { immediate: true });
+    const hash = window.location.hash;
+    const target = hash ? document.querySelector(hash) : null;
+    if (target) {
+      lenis?.scrollTo(target as HTMLElement, { immediate: true });
+    } else {
+      lenis?.scrollTo(0, { immediate: true });
+    }
   }, [pathname, lenis]);
 
   return null;
