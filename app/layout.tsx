@@ -8,6 +8,7 @@ import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { headers } from "next/headers";
 import SplashScreen from "@/components/SplashScreen";
+import PageTransition from "@/components/PageTransition";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
@@ -54,6 +55,7 @@ export default async function RootLayout({
         ) : (
           <LenisProvider>
             <SplashScreen />
+            <PageTransition />
             <Header />
             {children}
           </LenisProvider>
