@@ -2,7 +2,7 @@
 
 export default function BackgroundCircles() {
   return (
-    <div className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center -translate-y-[400px]">
+    <div className="absolute top-[1200px] left-1/2 -translate-x-1/2 z-0 pointer-events-none flex items-center justify-center">
 
       {/* BIG CIRCLE */}
       <svg

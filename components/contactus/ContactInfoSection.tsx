@@ -1,10 +1,117 @@
 "use client";
 
+import { useState } from "react";
 import { BorderBeam } from "@/components/ui/border-beam";
 import Link from "next/link";
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
+import { ChevronDown } from "lucide-react";
 
 export default function ContactInfoSection() {
+    const [formData, setFormData] = useState({
+        name: "",
+        mobile: "",
+        email: "",
+        projectType: "Select Project Type",
+        message: ""
+    });
+    const [errors, setErrors] = useState<Record<string, string>>({});
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitSuccess, setSubmitSuccess] = useState(false);
+
+    const options = ["Web Design", "Web Development", "Branding", "Marketing"];
+
+    const validateField = (name: string, value: string) => {
+        let errorMsg = "";
+        if (name === "name") {
+            if (!value.trim()) {
+                errorMsg = "Name is required.";
+            } else if (value.trim().length < 2) {
+                errorMsg = "Name must be at least 2 characters long.";
+            }
+        } else if (name === "mobile") {
+            if (!value.trim()) {
+                errorMsg = "Mobile number is required.";
+            } else {
+                const phoneRegex = /^\+?[0-9\s\-()]{7,16}$/;
+                if (!phoneRegex.test(value.trim())) {
+                    errorMsg = "Please provide a valid phone number.";
+                }
+            }
+        } else if (name === "email") {
+            if (!value.trim()) {
+                errorMsg = "Email address is required.";
+            } else {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(value.trim())) {
+                    errorMsg = "Please enter a valid email address.";
+                }
+            }
+        } else if (name === "projectType") {
+            if (value === "Select Project Type") {
+                errorMsg = "Please select a project type.";
+            }
+        } else if (name === "message") {
+            if (!value.trim()) {
+                errorMsg = "Message is required.";
+            } else if (value.trim().length < 10) {
+                errorMsg = "Message must be at least 10 characters long.";
+            }
+        }
+        return errorMsg;
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+        const errorMsg = validateField(name, value);
+        setErrors(prev => ({ ...prev, [name]: errorMsg }));
+    };
+
+    const handleSelectOption = (option: string) => {
+        setFormData(prev => ({ ...prev, projectType: option }));
+        setErrors(prev => ({ ...prev, projectType: "" }));
+        setIsDropdownOpen(false);
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        // Validate all fields
+        const newErrors: Record<string, string> = {};
+        Object.keys(formData).forEach(key => {
+            const errorVal = validateField(key, formData[key as keyof typeof formData]);
+            if (errorVal) {
+                newErrors[key] = errorVal;
+            }
+        });
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            return;
+        }
+
+        setIsSubmitting(true);
+        // Simulate API call
+        try {
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            setSubmitSuccess(true);
+            setFormData({
+                name: "",
+                mobile: "",
+                email: "",
+                projectType: "Select Project Type",
+                message: ""
+            });
+            setErrors({});
+            setTimeout(() => setSubmitSuccess(false), 5000);
+        } catch (err) {
+            console.error("Submission error", err);
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
     return (
         <section className="w-full bg-white py-1 md:py-24 px-6 md:px-12 lg:px-20 -mt-2 md:mt-0">
             <div className="max-w-[1500px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-start">
@@ -110,25 +217,74 @@ export default function ContactInfoSection() {
                         we’ll get back to you soon.
                     </p>
 
-                    <form className="mt-10 space-y-8">
+                    <form onSubmit={handleSubmit} className="mt-10 space-y-8">
 
-                        <Field label="Your Name" />
-                        <Field label="Your Mobile Number" />
-                        <Field label="Your Email" />
+                        <Field
+                            label="Your Name"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            error={errors.name}
+                            placeholder="Enter your full name"
+                        />
+                        <Field
+                            label="Your Mobile Number"
+                            name="mobile"
+                            value={formData.mobile}
+                            onChange={handleChange}
+                            error={errors.mobile}
+                            placeholder="Enter your mobile number"
+                        />
+                        <Field
+                            label="Your Email"
+                            name="email"
+                            type="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            error={errors.email}
+                            placeholder="name@example.com"
+                        />
 
                         {/* Select */}
-                        <div>
+                        <div className="relative">
                             <label className="block text-[18px] text-[#555] mb-2">
                                 Project Type
                             </label>
 
-                            <select className="w-full bg-transparent border-b border-[#9e9e9e] pb-3 text-[14px] text-[#888] outline-none">
-                                <option>Select Project Type</option>
-                                <option>Web Design</option>
-                                <option>Web Development</option>
-                                <option>Branding</option>
-                                <option>Marketing</option>
-                            </select>
+                            <button
+                                type="button"
+                                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                                className="w-full bg-transparent border-b border-[#9e9e9e] pb-3 text-[14px] text-[#888] outline-none flex justify-between items-center cursor-pointer text-left"
+                            >
+                                <span className={formData.projectType !== "Select Project Type" ? "text-black text-[20px]" : "text-[#888] text-[14px]"}>
+                                    {formData.projectType}
+                                </span>
+                                <ChevronDown className={`w-4 h-4 text-[#888] transition-transform duration-300 ${isDropdownOpen ? "rotate-180" : ""}`} />
+                            </button>
+                            {errors.projectType && (
+                                <p className="text-red-500 text-xs mt-1.5">{errors.projectType}</p>
+                            )}
+
+                            {isDropdownOpen && (
+                                <>
+                                    <div
+                                        className="fixed inset-0 z-10"
+                                        onClick={() => setIsDropdownOpen(false)}
+                                    />
+                                    <div className="absolute left-0 right-0 mt-1 bg-white border border-[#e0e0e0] rounded-xl shadow-lg z-20 py-2 overflow-hidden animate-in fade-in slide-in-from-top-1 duration-200">
+                                        {options.map((option) => (
+                                            <button
+                                                key={option}
+                                                type="button"
+                                                onClick={() => handleSelectOption(option)}
+                                                className="w-full text-left px-4 py-2.5 text-[14px] text-[#555] hover:bg-[#faf9f9] hover:text-orange transition-colors duration-150 cursor-pointer"
+                                            >
+                                                {option}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </>
+                            )}
                         </div>
 
                         {/* Message */}
@@ -139,23 +295,38 @@ export default function ContactInfoSection() {
 
                             <textarea
                                 rows={4}
-                                className="w-full bg-transparent border-b border-[#9e9e9e] pb-3 text-[20px] text-black outline-none resize-none"
+                                name="message"
+                                value={formData.message}
+                                onChange={handleChange}
+                                placeholder="Tell us more about your requirements..."
+                                className="w-full bg-transparent border-b border-[#9e9e9e] pb-3 text-[20px] text-black outline-none resize-none placeholder:text-[14px] placeholder:text-[#9e9e9e]"
                             />
+                            {errors.message && (
+                                <p className="text-red-500 text-xs mt-1.5">{errors.message}</p>
+                            )}
                         </div>
 
+                        {/* Success Message Banner */}
+                        {submitSuccess && (
+                            <div className="bg-green-50 border border-green-200 text-green-800 rounded-xl p-4 text-sm animate-in fade-in slide-in-from-bottom-1 duration-300">
+                                Message sent successfully! We will get back to you shortly.
+                            </div>
+                        )}
+
                         {/* Button */}
-                        <Link href="/contact">
-                            <button className="group mt-8 bg-orange text-white h-[56px] rounded-full relative overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-black min-w-[230px] hover:min-w-[260px]">
+                        <button
+                            type="submit"
+                            disabled={isSubmitting}
+                            className="group mt-8 bg-orange text-white h-[56px] rounded-full relative overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-black min-w-[230px] hover:min-w-[260px] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            <span className="flex 1 absolute left-8 top-1/2 -translate-y-1/2 text-base md:text-lg font-medium whitespace-nowrap">
+                                {isSubmitting ? "SENDING..." : "SEND A MESSAGE"}
+                            </span>
 
-                                <span className="flex 1 absolute left-8 top-1/2 -translate-y-1/2 text-base md:text-lg font-medium whitespace-nowrap">
-                                    SEND A MESSAGE
-                                </span>
-
-                                <span className="absolute right-6 top-1/2 -translate-y-1/2 text-2xl translate-x-4 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500">
-                                    →
-                                </span>
-                            </button>
-                        </Link>
+                            <span className="absolute right-6 top-1/2 -translate-y-1/2 text-2xl translate-x-4 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500">
+                                →
+                            </span>
+                        </button>
                     </form>
 
                     {/* BorderBeam effects */}
@@ -180,7 +351,17 @@ export default function ContactInfoSection() {
     );
 }
 
-function Field({ label }: { label: string }) {
+interface FieldProps {
+    label: string;
+    name: string;
+    value: string;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    error?: string;
+    type?: string;
+    placeholder?: string;
+}
+
+function Field({ label, name, value, onChange, error, type = "text", placeholder }: FieldProps) {
     return (
         <div>
             <label className="block text-[18px] text-[#555] mb-2">
@@ -188,9 +369,16 @@ function Field({ label }: { label: string }) {
             </label>
 
             <input
-                type="text"
-                className="w-full bg-transparent border-b border-[#9e9e9e] pb-3 text-[20px] text-black outline-none"
+                type={type}
+                name={name}
+                value={value}
+                onChange={onChange}
+                placeholder={placeholder}
+                className="w-full bg-transparent border-b border-[#9e9e9e] pb-3 text-[20px] text-black outline-none placeholder:text-[14px] placeholder:text-[#9e9e9e]"
             />
+            {error && (
+                <p className="text-red-500 text-xs mt-1.5">{error}</p>
+            )}
         </div>
     );
 }

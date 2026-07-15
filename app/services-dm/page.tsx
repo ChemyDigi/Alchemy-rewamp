@@ -9,15 +9,15 @@ import ClientCarousel from "@/components/services-dm/ClientCarousel";
 
 export default function Home() {
     return (
-        <main className="min-h-screen bg-white text-gray">
+        <main className="relative min-h-screen bg-white text-gray">
 
             <Navbar />
             <Hero />
             <ScrollFillText text="We craft stories, not just campaigns. We build connections, not just clicks." />
             <Video />
-            <Services/>
-            <Work/>
-            <ClientCarousel/>
+            <Services />
+            <Work />
+            <ClientCarousel />
             <Footer />
         </main>
     );

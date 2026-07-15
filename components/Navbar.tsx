@@ -34,6 +34,8 @@ const mobileSocialItems: StaggeredMenuSocialItem[] = [
 export default function Navbar() {
   const [hovered, setHovered] = useState(false);
   const [active, setActive] = useState("About");
+  const [open, setOpen] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
   const pathname = usePathname();
   const lenis = useLenis();
@@ -42,20 +44,21 @@ export default function Navbar() {
     setHovered(false);
   }, [pathname]);
 
-  // Hash links (e.g. "/#services") to a section of the page we're already
-  // on won't trigger a pathname change, so the router won't scroll there on
-  // its own — scroll to it ourselves via Lenis instead
-  const handleNavClick = useCallback(
-    (link: string) => (event: React.MouseEvent) => {
-      const [path, hash] = link.split("#");
-      if (hash && path === pathname) {
-        event.preventDefault();
-        const target = document.getElementById(hash);
-        if (target) lenis?.scrollTo(target);
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 400) {
+        setShowScrollTop(true);
+      } else {
+        setShowScrollTop(false);
       }
-    },
-    [pathname, lenis]
-  );
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const isBlogDetailPage = pathname.startsWith("/blog/");
+  const isServicesPage = pathname.startsWith("/services-");
 
   return (
     <>
@@ -159,6 +162,25 @@ export default function Navbar() {
           isFixed
         />
       </div>
+
+      {/* Scroll to Top on Blog Detail & Services Pages (Mobile only) */}
+      {(isBlogDetailPage || isServicesPage) && showScrollTop && (
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="fixed bottom-24 right-6 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-orange text-white shadow-lg transition-all duration-300 active:scale-95 md:hidden"
+          aria-label="Scroll to top"
+        >
+          <svg
+            className="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2.5}
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+          </svg>
+        </button>
+      )}
     </>
   );
 }

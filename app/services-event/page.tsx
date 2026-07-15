@@ -6,7 +6,7 @@ import ServicesOverview from "@/components/services-event/ServicesOverview";
 
 export default function ServicesEventPage() {
   return (
-    <main className="min-h-screen bg-white text-black">
+    <main className="relative min-h-screen bg-white text-black">
       <Navbar />
       <Hero />
       <RecentEvents />

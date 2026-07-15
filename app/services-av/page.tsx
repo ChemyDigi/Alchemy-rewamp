@@ -12,12 +12,12 @@ export const metadata = {
 
 export default function AVProductionPage() {
   return (
-    <div>
+    <div className="relative">
       <Navbar />
       <AVHero />
-      <AlchemyPics/>
-      <AlchemyRecords/>
-      <WhatWeDo/>
+      <AlchemyPics />
+      <AlchemyRecords />
+      <WhatWeDo />
       <Footer />
     </div>
   );

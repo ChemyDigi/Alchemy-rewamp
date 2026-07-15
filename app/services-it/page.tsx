@@ -7,16 +7,16 @@ import ServicesSection from "@/components/services-it/Services";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-bg text-gray">
+    <main className="relative min-h-screen bg-bg text-gray">
 
       <Navbar />
-      <Hero/>
-      <SpinCarousel/>
-      <ServicesSection/>
-      <WaitlistHero/>
-      
+      <Hero />
+      <SpinCarousel />
+      <ServicesSection />
+      <WaitlistHero />
+
       <Footer />
-       
+
     </main>
   );
 }

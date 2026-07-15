@@ -58,11 +58,11 @@ export default function Lanyard({
   offset = [0, 0, 0],
 }: LanyardProps) {
   const [isMobile, setIsMobile] = useState<boolean>(
-    () => typeof window !== "undefined" && window.innerWidth < 768
+    () => typeof window !== "undefined" && window.innerWidth < 1024
   );
 
   useEffect(() => {
-    const resize = () => setIsMobile(window.innerWidth < 768);
+    const resize = () => setIsMobile(window.innerWidth < 1024);
     window.addEventListener("resize", resize);
     return () => window.removeEventListener("resize", resize);
   }, []);
@@ -80,7 +80,7 @@ export default function Lanyard({
       >
         <ambientLight intensity={Math.PI} />
 
-        <Physics gravity={gravity} timeStep={isMobile ? 1 / 30 : 1 / 60}>
+        <Physics gravity={gravity} timeStep={1 / 60}>
           <Band isMobile={isMobile} offset={offset} />
         </Physics>
 
