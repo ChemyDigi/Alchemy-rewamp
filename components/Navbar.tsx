@@ -57,6 +57,21 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Hash links (e.g. "/#services") to a section of the page we're already
+  // on won't trigger a pathname change, so the browser/router won't scroll
+  // there on their own — scroll to it ourselves via Lenis instead
+  const handleNavClick = useCallback(
+    (link: string) => (event: React.MouseEvent) => {
+      const [path, hash] = link.split("#");
+      if (hash && path === pathname) {
+        event.preventDefault();
+        const target = document.getElementById(hash);
+        if (target) lenis?.scrollTo(target);
+      }
+    },
+    [pathname, lenis]
+  );
+
   const isBlogDetailPage = pathname.startsWith("/blog/");
   const isServicesPage = pathname.startsWith("/services-");
 
