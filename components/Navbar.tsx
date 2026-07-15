@@ -212,7 +212,7 @@ export default function Navbar() {
       {(isBlogDetailPage || isServicesPage) && showScrollTop && (
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="fixed bottom-24 right-6 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-orange text-white shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 md:hidden"
+          className="fixed bottom-24 right-6 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-orange text-white shadow-lg transition-all duration-300 active:scale-95 md:hidden"
           aria-label="Scroll to top"
         >
           <svg

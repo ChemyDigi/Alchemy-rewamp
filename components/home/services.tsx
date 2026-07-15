@@ -189,7 +189,7 @@ export default function Services() {
               <Link key={index} href={service.link}>
                 <div
                   onMouseEnter={() => handleEnter(index)}
-                  className="cursor-pointer mb-6"
+                  className="cursor-pointer mb-6 active:scale-[0.97] transition-all duration-150 ease-out"
                 >
                   {/* TEXT */}
                   <div

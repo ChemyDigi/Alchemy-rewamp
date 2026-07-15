@@ -48,7 +48,7 @@ export default function Footer() {
 
           {/* BUTTON → /contact */}
           <Link href="/contactus">
-            <button className="group mt-8 bg-orange text-white h-[56px] pl-8 pr-8 rounded-full relative flex items-center overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-black min-w-[280px] hover:min-w-[340px]">
+            <button className="group mt-8 bg-orange text-white h-[56px] pl-8 pr-8 rounded-full relative flex items-center overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-black min-w-[280px] hover:min-w-[340px] active:scale-[0.97] active:duration-75">
 
               <span className="text-base md:text-lg font-medium whitespace-nowrap">
                 LET’S CREATE TOGETHER
@@ -93,7 +93,7 @@ export default function Footer() {
       </div>
 
       {/* BOTTOM */}
-      <div className="border-t border-gray-200 px-12 md:px-16 py-4 flex flex-col md:flex-row justify-between text-sm text-gray-500">
+      <div className="border-t border-gray-200 px-12 md:px-16 py-4 pb-24 md:pb-4 flex flex-col md:flex-row justify-between text-sm text-gray-500">
         <p>© 2026 alchemy. All rights reserved</p>
         <Link href="/privacy-policy" className="hover:text-black">
           Privacy Policy
