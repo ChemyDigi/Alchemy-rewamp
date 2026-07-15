@@ -82,6 +82,21 @@ const CardSwap: React.FC<CardSwapProps> = ({
   easing = "elastic",
   children,
 }) => {
+  const [activeCardDistance, setActiveCardDistance] = React.useState(cardDistance);
+  const [activeVerticalDistance, setActiveVerticalDistance] = React.useState(verticalDistance);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const isMobile = window.innerWidth < 768;
+      setActiveCardDistance(isMobile ? Math.min(cardDistance, 15) : cardDistance);
+      setActiveVerticalDistance(isMobile ? Math.min(verticalDistance, 15) : verticalDistance);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [cardDistance, verticalDistance]);
+
   const config =
     easing === "elastic"
       ? {
@@ -121,7 +136,7 @@ const CardSwap: React.FC<CardSwapProps> = ({
 
     refs.forEach((r, i) => {
       if (r.current) {
-        placeNow(r.current, makeSlot(i, cardDistance, verticalDistance, total), skewAmount);
+        placeNow(r.current, makeSlot(i, activeCardDistance, activeVerticalDistance, total), skewAmount);
       }
     });
 
@@ -146,7 +161,7 @@ const CardSwap: React.FC<CardSwapProps> = ({
         const el = refs[idx]?.current;
         if (!el) return;
 
-        const slot = makeSlot(i, cardDistance, verticalDistance, refs.length);
+        const slot = makeSlot(i, activeCardDistance, activeVerticalDistance, refs.length);
         tl.set(el, { zIndex: slot.zIndex }, "promote");
         tl.to(
           el,
@@ -161,7 +176,7 @@ const CardSwap: React.FC<CardSwapProps> = ({
         );
       });
 
-      const backSlot = makeSlot(refs.length - 1, cardDistance, verticalDistance, refs.length);
+      const backSlot = makeSlot(refs.length - 1, activeCardDistance, activeVerticalDistance, refs.length);
       tl.addLabel("return", `promote+=${config.durMove * config.returnDelay}`);
       tl.call(
         () => {
@@ -215,7 +230,7 @@ const CardSwap: React.FC<CardSwapProps> = ({
       if (intervalRef.current) clearInterval(intervalRef.current);
       tlRef.current?.kill();
     };
-  }, [cardDistance, verticalDistance, delay, pauseOnHover, skewAmount, easing, refs, config]);
+  }, [activeCardDistance, activeVerticalDistance, delay, pauseOnHover, skewAmount, easing, refs, config]);
 
   const rendered = childArr.map((child, i) =>
     isValidElement<CardProps>(child)
