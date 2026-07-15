@@ -51,7 +51,7 @@ export default function ServicesSection() {
         </div>
 
         {/* RIGHT IMAGE */}
-        <div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[650px] -mt-6 sm:-mt-8 md:-mt-10 lg:-mt-12">
+        <div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[650px] -mt-6 sm:-mt-8 md:-mt-10 lg:-mt-12 hidden lg:block">
           <Image
             src="/images/services-event/walky_talky.png"
             alt="Event Management Device"

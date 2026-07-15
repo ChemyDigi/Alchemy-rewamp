@@ -227,7 +227,7 @@ export const WaitlistHero = () => {
             opacity: 1,
           }}
         >
-          {/* Layer 1 - Multiple logos spinning clockwise */}
+          {/* Layer 1 - Outer Edge (Background): Smaller, dimmer, and blurred logos */}
           <div className="absolute inset-0 animate-spin-slow">
             {techLogos.map((logo, index) => {
               const angle = (index / techLogos.length) * Math.PI * 2
@@ -237,25 +237,25 @@ export const WaitlistHero = () => {
               return (
                 <div
                   key={index}
-                  className="absolute top-1/2 left-1/2"
+                  className="absolute top-1/2 left-1/2 select-none pointer-events-none"
                   style={{
                     transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`,
-                    width: "80px",
-                    height: "80px",
+                    width: "35px",
+                    height: "35px",
                     zIndex: 0,
                   }}
                 >
                   <img
                     src={logo}
                     alt={`Tech logo ${index}`}
-                    className="w-full h-full object-contain opacity-60"
+                    className="w-full h-full object-contain opacity-25 filter blur-[1.5px]"
                   />
                 </div>
               )
             })}
           </div>
 
-          {/* Layer 2 - Multiple logos spinning counter-clockwise */}
+          {/* Layer 2 - Middle Distance: Medium scale and opacity, subtle blur */}
           <div className="absolute inset-0 animate-spin-slow-reverse">
             {techLogos.map((logo, index) => {
               const angle = (index / techLogos.length) * Math.PI * 2 + Math.PI / 6
@@ -265,25 +265,25 @@ export const WaitlistHero = () => {
               return (
                 <div
                   key={index}
-                  className="absolute top-1/2 left-1/2"
+                  className="absolute top-1/2 left-1/2 select-none pointer-events-none"
                   style={{
                     transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`,
-                    width: "60px",
-                    height: "60px",
+                    width: "55px",
+                    height: "55px",
                     zIndex: 1,
                   }}
                 >
                   <img
                     src={logo}
                     alt={`Tech logo ${index}`}
-                    className="w-full h-full object-contain opacity-70"
+                    className="w-full h-full object-contain opacity-55 filter blur-[0.5px]"
                   />
                 </div>
               )
             })}
           </div>
 
-          {/* Layer 3 - Multiple logos spinning clockwise */}
+          {/* Layer 3 - Foreground (Center): Larger, sharp, and highly visible logos */}
           <div className="absolute inset-0 animate-spin-slow">
             {techLogos.map((logo, index) => {
               const angle = (index / techLogos.length) * Math.PI * 2 + Math.PI / 3
@@ -293,18 +293,18 @@ export const WaitlistHero = () => {
               return (
                 <div
                   key={index}
-                  className="absolute top-1/2 left-1/2"
+                  className="absolute top-1/2 left-1/2 select-none pointer-events-none"
                   style={{
                     transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`,
-                    width: "50px",
-                    height: "50px",
+                    width: "75px",
+                    height: "75px",
                     zIndex: 2,
                   }}
                 >
                   <img
                     src={logo}
                     alt={`Tech logo ${index}`}
-                    className="w-full h-full object-contain opacity-80"
+                    className="w-full h-full object-contain opacity-90"
                   />
                 </div>
               )
@@ -322,13 +322,22 @@ export const WaitlistHero = () => {
 
         {/* Content Container */}
         <div className="relative z-20 w-full h-full flex flex-col items-center justify-center gap-2">
+          {/* Radial Gradient Behind Text to Make it Pop */}
+          <div
+            className="absolute inset-0 m-auto w-[90%] max-w-[650px] h-[300px] rounded-full pointer-events-none filter blur-[60px]"
+            style={{
+              background: "radial-gradient(circle, rgba(9,9,11,0.95) 0%, rgba(9,9,11,0.6) 60%, transparent 100%)",
+              zIndex: -1,
+            }}
+          />
+
           {/* TECH STACK Heading */}
           <h1 className="text-2xl md:text-4xl font-semibold text-center tracking-tight" style={{ color: "#ffffff" }}>
             TECH STACK
           </h1>
 
           {/* Subheading */}
-          <p className="text-sm md:text-lg font-light text-center max-w-2xl" style={{ color: "#ffffff" }}>
+          <p className="text-sm md:text-lg font-light text-center max-w-2xl px-6" style={{ color: "#ffffff" }}>
             We stay with the latest trends in design and technology
           </p>
         </div>

@@ -43,6 +43,7 @@ export default function Navbar() {
   }, []);
 
   const isBlogDetailPage = pathname.startsWith("/blog/");
+  const isServicesPage = pathname.startsWith("/services-");
 
   return (
     <>
@@ -207,8 +208,8 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Scroll to Top on Blog Detail Pages (Mobile only) */}
-      {isBlogDetailPage && showScrollTop && (
+      {/* Scroll to Top on Blog Detail & Services Pages (Mobile only) */}
+      {(isBlogDetailPage || isServicesPage) && showScrollTop && (
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           className="fixed bottom-24 right-6 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-orange text-white shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 md:hidden"
