@@ -208,9 +208,6 @@ export default function Services() {
                     <h3 className="text-2xl sm:text-3xl md:text-5xl lg:text-7xl font-semibold text-[#747474] text-center leading-[1.2] py-2">
                       {service.title}
                     </h3>
-                    <span className="bg-white text-[10px] md:text-xs px-2 py-1 rounded-full">
-                      {service.count}
-                    </span>
                   </div>
 
                   {/* EXPAND WRAPPER */}
