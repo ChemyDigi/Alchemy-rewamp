@@ -29,7 +29,7 @@ export default function BlogHero({ posts }: BlogHeroProps) {
         </div>
 
         {/* Right side - Card stack */}
-        <div className="relative mt-16 md:mt-24 lg:mt-0 shrink-0 lg:my-0 mx-auto lg:ml-auto lg:mr-0 -translate-x-4 sm:translate-x-0">
+        <div className="relative mt-16 md:mt-24 lg:mt-0 shrink-0 lg:my-0 mx-auto lg:ml-auto lg:mr-16 xl:mr-24 2xl:mr-0 -translate-x-4 sm:translate-x-0">
           <div
             className="relative w-[230px] h-[280px] sm:w-[320px] sm:h-[380px] md:w-[380px] md:h-[450px] lg:w-[320px] lg:h-[380px] xl:w-[380px] xl:h-[450px] 2xl:w-[420px] 2xl:h-[500px]"
           >

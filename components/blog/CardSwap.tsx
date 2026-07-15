@@ -87,9 +87,17 @@ const CardSwap: React.FC<CardSwapProps> = ({
 
   useEffect(() => {
     const handleResize = () => {
-      const isMobile = window.innerWidth < 768;
-      setActiveCardDistance(isMobile ? Math.min(cardDistance, 15) : cardDistance);
-      setActiveVerticalDistance(isMobile ? Math.min(verticalDistance, 15) : verticalDistance);
+      const width = window.innerWidth;
+      if (width < 768) {
+        setActiveCardDistance(Math.min(cardDistance, 15));
+        setActiveVerticalDistance(Math.min(verticalDistance, 15));
+      } else if (width < 1280) {
+        setActiveCardDistance(Math.min(cardDistance, 30));
+        setActiveVerticalDistance(Math.min(verticalDistance, 30));
+      } else {
+        setActiveCardDistance(cardDistance);
+        setActiveVerticalDistance(verticalDistance);
+      }
     };
 
     handleResize();
