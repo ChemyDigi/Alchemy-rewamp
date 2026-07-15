@@ -10,7 +10,7 @@ import { ArrowLeft } from "lucide-react";
 export default function Home() {
   return (
     <main className="relative min-h-screen bg-bg text-gray">
-      <div className="absolute top-14 left-6 md:top-15 md:left-10 z-50">
+      <div className="absolute top-18 left-6 md:top-25 md:left-10 z-50">
         <Link
           href="/#services"
           className="group relative inline-flex h-12 w-12 md:h-16 md:w-16 items-center justify-center rounded-full border-2 border-orange text-[#e3791d] transition duration-300 hover:-translate-y-1 hover:scale-105 hover:bg-[#e3791d] hover:text-white hover:shadow-lg"
