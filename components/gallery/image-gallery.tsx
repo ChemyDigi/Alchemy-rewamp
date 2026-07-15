@@ -26,7 +26,7 @@ export default function GallerySection() {
   };
 
   return (
-    <section className="w-full bg-white py-16 px-4 md:px-10">
+    <section className="w-full bg-white pt-6 pb-16 md:pt-4 md:pb-16 lg:pt-16 px-4 md:px-10">
       
       <div className="flex flex-col gap-4">
 

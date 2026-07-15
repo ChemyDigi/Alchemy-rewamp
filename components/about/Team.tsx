@@ -75,7 +75,7 @@ export default function TeamSection() {
               <p className="mt-4 text-orange font-semibold text-lg">
                 {m.name}
               </p>
-              <p className="text-gray-500 text-sm">{m.role}</p>
+              <p className="text-gray-500 text-sm">{m.role?.replace(/^\+\s*/, "")}</p>
             </div>
           ))}
         </div>
@@ -103,9 +103,8 @@ export default function TeamSection() {
             {teamMembers.map((m, i) => (
               <div
                 key={m.id || m.name}
-                className={`min-w-[300px] ${
-                  i % 2 === 0 ? "mt-0" : "mt-12"
-                }`}
+                className={`min-w-[300px] ${i % 2 === 0 ? "mt-0" : "mt-12"
+                  }`}
               >
                 <div className="rounded-2xl overflow-hidden">
                   <Image
@@ -120,7 +119,7 @@ export default function TeamSection() {
                 <p className="mt-4 text-orange font-semibold text-lg">
                   {m.name}
                 </p>
-                <p className="text-gray-500 text-sm">{m.role}</p>
+                <p className="text-gray-500 text-sm">{m.role?.replace(/^\+\s*/, "")}</p>
               </div>
             ))}
           </div>

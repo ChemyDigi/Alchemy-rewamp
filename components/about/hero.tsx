@@ -18,17 +18,17 @@ function ScrollFillText({ text }: { text: string }) {
       ref={ref}
       className="
   mt-20 sm:mt-16 md:mt-10
-  w-full max-w-[95%] sm:max-w-[90%] md:max-w-[700px] lg:max-w-[900px]
+  w-full max-w-[95%] sm:max-w-[90%] md:max-w-[600px] lg:max-w-[900px]
   font-medium
 
   text-center sm:text-left
   mx-auto sm:mx-0
 
-  text-[26px] sm:text-[26px] md:text-[36px] lg:text-[38px]
+  text-[26px] sm:text-[26px] md:text-[34px] lg:text-[38px]
   leading-[1.5]
   text-gray-400
 
-  translate-x-0 sm:translate-x-8 md:translate-x-16 lg:translate-x-72
+  translate-x-0 sm:translate-x-8 md:translate-x-0 lg:translate-x-72
 "
     >
       {letters.map((letter, i) => {
@@ -53,7 +53,7 @@ function ScrollFillText({ text }: { text: string }) {
 
 export default function AboutHero() {
   return (
-    <section className="w-full min-h-[70vh] md:min-h-screen flex items-start md:items-center bg-white pt-16 md:pt-0">
+    <section className="w-full min-h-[70vh] md:min-h-[70vh] lg:min-h-screen flex items-start bg-white pt-16">
       <div className="w-full px-12 md:px-16">
         <div className="max-w-[1200px]">
 
@@ -64,7 +64,7 @@ export default function AboutHero() {
     font-medium text-black
     leading-[0.88] tracking-[-0.03em]
 
-    mt-[2cm] md:mt-0
+    mt-[2cm] md:mt-8 lg:mt-0
     text-left
     w-full
   "
