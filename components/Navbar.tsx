@@ -20,6 +20,7 @@ export default function Navbar() {
   const [hovered, setHovered] = useState(false);
   const [active, setActive] = useState("About");
   const [open, setOpen] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
   const pathname = usePathname();
 
@@ -27,6 +28,21 @@ export default function Navbar() {
     setOpen(false);
     setHovered(false);
   }, [pathname]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 400) {
+        setShowScrollTop(true);
+      } else {
+        setShowScrollTop(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const isBlogDetailPage = pathname.startsWith("/blog/");
 
   return (
     <>
@@ -190,6 +206,25 @@ export default function Navbar() {
           </div>
         </div>
       </div>
+
+      {/* Scroll to Top on Blog Detail Pages (Mobile only) */}
+      {isBlogDetailPage && showScrollTop && (
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="fixed bottom-24 right-6 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-orange text-white shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 md:hidden"
+          aria-label="Scroll to top"
+        >
+          <svg
+            className="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2.5}
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+          </svg>
+        </button>
+      )}
     </>
   );
 }

@@ -117,55 +117,57 @@ export default function Services() {
       id="services"
       ref={sectionRef}
       className="w-full pt-4 pb-8 px-6 md:px-10 lg:px-16 bg-white relative"
-      style={{ cursor: "none" }}
+      style={{ cursor: isDesktop ? "none" : "auto" }}
       onMouseMove={handleMouseMove}
       onMouseEnter={handleSectionEnter}
       onMouseLeave={handleSectionLeave}
     >
       {/* Custom Cursor */}
-      <div
-        style={{
-          position: "absolute",
-          left: cursorPos.x,
-          top: cursorPos.y,
-          transform: "translate(-50%, -50%)",
-          pointerEvents: "none",
-          zIndex: 9999,
-          opacity: isCursorVisible ? 1 : 0,
-          transition: "opacity 200ms ease",
-        }}
-      >
-        {/* Outer circle */}
+      {isDesktop && (
         <div
           style={{
-            width: 52,
-            height: 52,
-            borderRadius: "50%",
-            backgroundColor: "#E3791D",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            boxShadow: "0 4px 16px rgba(227,121,29,0.45)",
+            position: "absolute",
+            left: cursorPos.x,
+            top: cursorPos.y,
+            transform: "translate(-50%, -50%)",
+            pointerEvents: "none",
+            zIndex: 9999,
+            opacity: isCursorVisible ? 1 : 0,
+            transition: "opacity 200ms ease",
           }}
         >
-          {/* Arrow SVG */}
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+          {/* Outer circle */}
+          <div
+            style={{
+              width: 52,
+              height: 52,
+              borderRadius: "50%",
+              backgroundColor: "#E3791D",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 4px 16px rgba(227,121,29,0.45)",
+            }}
           >
-            <path
-              d="M4 10H16M16 10L11 5M16 10L11 15"
-              stroke="#ffffff"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+            {/* Arrow SVG */}
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M4 10H16M16 10L11 5M16 10L11 15"
+                stroke="#ffffff"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Heading */}
       <div className="mb-10">

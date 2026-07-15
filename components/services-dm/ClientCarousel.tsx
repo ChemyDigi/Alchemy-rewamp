@@ -85,7 +85,7 @@ export default function CreativeAgencySection() {
             {/* Scroll Area */}
             <div
               ref={scrollRef}
-              className="scrollbar-hide flex gap-4 overflow-x-auto px-5 pb-2 md:gap-4 md:px-10"
+              className="scrollbar-hide flex overflow-x-auto px-5 pb-2 md:px-10"
               style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
             >
               <style jsx>{`
@@ -94,35 +94,37 @@ export default function CreativeAgencySection() {
                 }
               `}</style>
 
-              {brands.map((brand) => (
-                <div
-                  key={brand.id}
-                  className="group relative h-[300px] w-[240px] min-w-[240px] overflow-hidden rounded-[24px] bg-[#f0f0f0] sm:h-[360px] sm:w-[300px] sm:min-w-[300px] lg:h-[410px] lg:w-[340px] lg:min-w-[340px] block flex-shrink-0"
-                >
-                  {brand.heroImage ? (
-                    <Image
-                      src={brand.heroImage}
-                      alt={brand.brandName}
-                      fill
-                      priority
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
-                      sizes="(max-width: 768px) 240px, (max-width: 1024px) 300px, 340px"
-                    />
-                  ) : (
-                    <div className="flex h-full items-center justify-center text-gray-400 text-sm">
-                      {brand.brandName}
+              <div className="flex gap-4 md:gap-4 mx-auto">
+                {brands.map((brand) => (
+                  <div
+                    key={brand.id}
+                    className="group relative h-[300px] w-[240px] min-w-[240px] overflow-hidden rounded-[24px] bg-[#f0f0f0] sm:h-[360px] sm:w-[300px] sm:min-w-[300px] lg:h-[410px] lg:w-[340px] lg:min-w-[340px] block flex-shrink-0"
+                  >
+                    {brand.heroImage ? (
+                      <Image
+                        src={brand.heroImage}
+                        alt={brand.brandName}
+                        fill
+                        priority
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        sizes="(max-width: 768px) 240px, (max-width: 1024px) 300px, 340px"
+                      />
+                    ) : (
+                      <div className="flex h-full items-center justify-center text-gray-400 text-sm">
+                        {brand.brandName}
+                      </div>
+                    )}
+
+                    {/* Brand name overlay at bottom */}
+                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-5 py-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                      <p className="text-white font-semibold text-sm">{brand.brandName}</p>
                     </div>
-                  )}
 
-                  {/* Brand name overlay at bottom */}
-                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-5 py-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                    <p className="text-white font-semibold text-sm">{brand.brandName}</p>
+                    {/* Soft overlay */}
+                    <div className="absolute inset-0 bg-black/0 transition-all duration-500 group-hover:bg-black/[0.03]" />
                   </div>
-
-                  {/* Soft overlay */}
-                  <div className="absolute inset-0 bg-black/0 transition-all duration-500 group-hover:bg-black/[0.03]" />
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         )}

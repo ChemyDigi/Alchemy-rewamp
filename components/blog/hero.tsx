@@ -13,9 +13,9 @@ export default function BlogHero({ posts }: BlogHeroProps) {
 
   return (
     <section className="min-h-screen w-full bg-white overflow-hidden">
-      <div className="mx-auto flex min-h-screen w-full max-w-[1440px] flex-col justify-between pl-12 pt-16 pb-10 md:pl-1 lg:flex-row lg:items-end lg:pt-12 lg:pb-14">
+      <div className="mx-auto flex min-h-[85vh] lg:min-h-screen w-full max-w-[1440px] flex-col justify-start lg:justify-between px-6 sm:px-12 md:px-16 pt-28 pb-10 lg:flex-row lg:items-center lg:pt-12 lg:pb-14">
         {/* Left side - Text content */}
-        <div className="z-10 mt-auto max-w-[620px] pb-8 lg:translate-y-[-1.5rem] lg:pb-2 xl:translate-y-[-2rem] max-sm:mt-0 max-sm:pt-12">
+        <div className="z-10 lg:my-auto max-w-[620px] pb-4 lg:pb-2">
           <h1 className="text-7xl leading-[0.88] font-medium tracking-[-0.03em] text-black sm:text-8xl md:text-9xl lg:text-[10.75rem] xl:text-[11.5rem] 2xl:text-[12.5rem]">
             Blog
           </h1>
@@ -29,7 +29,7 @@ export default function BlogHero({ posts }: BlogHeroProps) {
         </div>
 
         {/* Right side - Card stack */}
-        <div className="relative mt-8 shrink-0 sm:mt-0 lg:mt-0 sm:ml-auto lg:ml-0 max-sm:ml-auto max-sm:translate-x-1">
+        <div className="relative mt-32 lg:mt-0 shrink-0 lg:my-0 mx-auto lg:ml-auto lg:mr-0">
           <div
             className="relative"
             style={{
