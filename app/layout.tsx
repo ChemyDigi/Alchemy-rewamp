@@ -4,6 +4,7 @@ import "./globals.css";
 import "lenis/dist/lenis.css";
 import Header from "@/components/Header";
 import LenisProvider from "@/components/LenisProvider";
+import { MobileMenuProvider } from "@/components/MobileMenuContext";
 import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { headers } from "next/headers";
@@ -53,12 +54,15 @@ export default async function RootLayout({
         {isAdmin ? (
           children
         ) : (
-          <LenisProvider>
-            <SplashScreen />
-            <PageTransition />
-            <Header />
-            {children}
-          </LenisProvider>
+<MobileMenuProvider>
+  <LenisProvider>
+    <SplashScreen />
+    <PageTransition />
+    <Header />
+    {children}
+  </LenisProvider>
+</MobileMenuProvider>
+
         )}
       </body>
     </html>
