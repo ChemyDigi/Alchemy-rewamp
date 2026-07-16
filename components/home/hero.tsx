@@ -40,7 +40,7 @@ export default function Hero() {
       <div className="md:hidden flex flex-col items-center text-center px-6 pt-16 pb-8 gap-6">
         <div>
           <Image
-            src="/images/home/logo.png"
+            src="/images/home/logoa.png"
             alt="logo"
             width={200}
             height={200}
@@ -83,7 +83,7 @@ export default function Hero() {
         >
           <div className="mb-6">
             <Image
-              src="/images/home/logo.png"
+              src="/images/home/logoa.png"
               alt="logo"
               width={280}
               height={280}
