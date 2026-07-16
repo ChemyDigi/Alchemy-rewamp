@@ -63,19 +63,24 @@ export default function PageTransition() {
       if (anchor.target === "_blank") return;
       if (anchor.hasAttribute("download")) return;
 
-      // Same-page hash links (e.g. "/#services") are handled by the
-      // component that rendered them (smooth-scroll via Lenis, closing the
-      // mobile menu, etc.) — stealing the click here would run a full page
-      // transition instead and leave that in-page handler never called
-      const [hrefPath, hrefHash] = href.split("#");
-      if (hrefHash && hrefPath === window.location.pathname) return;
+      // Links that point at the page we're already on (e.g. a hash-anchor
+      // like "/#services", or the logo's "/" while already home) are
+      // handled by the component that rendered them — smooth-scroll via
+      // Lenis, closing the mobile menu, syncing the URL hash, etc. Stealing
+      // the click here would run a full page transition + a delayed
+      // router.push that fights with (and re-clobbers) that in-page handler
+      const [hrefPath] = href.split("#");
+      if (hrefPath === window.location.pathname) return;
 
       // Respect prefers-reduced-motion
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-      // Take over this navigation
+      // Take over this navigation. Only preventDefault (not stopPropagation)
+      // — the click must still bubble so the clicked component's own
+      // onClick (e.g. closing the mobile menu) runs. Next's <Link> checks
+      // e.defaultPrevented before navigating on its own, so this alone is
+      // enough to stop it from double-navigating.
       e.preventDefault();
-      e.stopPropagation();
 
       runTransition(href);
     };
