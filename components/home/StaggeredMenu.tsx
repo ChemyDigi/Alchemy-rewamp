@@ -294,6 +294,33 @@ export default function StaggeredMenu({
         lenis?.start();
         const target = document.getElementById(hash);
         if (target) lenis?.scrollTo(target);
+        // Keep the URL in sync with the section in view — cross-page nav to
+        // "/#services" already does this via router.push, so an in-page
+        // jump should match instead of silently leaving the URL at "/"
+        window.history.replaceState(null, "", `${path}#${hash}`);
+      }
+    },
+    [closeMenu, pathname, lenis]
+  );
+
+  // Same-pathname navigation (clicking the logo while already on "/") won't
+  // trigger a route change either, so nothing scrolls the page back to the
+  // top on its own — do it ourselves via Lenis, same as the hash-link case.
+  // We also fully own the click (preventDefault) instead of letting Next's
+  // <Link> navigate — its router remembers the current "#services" hash
+  // internally and re-applies it after our own history.replaceState below
+  const handleLogoClick = useCallback(
+    (event: React.MouseEvent) => {
+      closeMenu();
+      if (pathname === "/") {
+        event.preventDefault();
+        lenis?.start();
+        lenis?.scrollTo(0);
+        // Clear a stale "#services" left over from a previous section jump —
+        // otherwise the URL and the visible (top-of-page) content disagree
+        if (window.location.hash) {
+          window.history.replaceState(null, "", pathname);
+        }
       }
     },
     [closeMenu, pathname, lenis]
@@ -318,21 +345,36 @@ export default function StaggeredMenu({
 
     if (!hashTargets.length) return;
 
-    const elements = hashTargets
-      .map((hash) => document.getElementById(hash))
-      .filter((el): el is HTMLElement => !!el);
+    // The anchor itself is just a zero-size scroll target, so watch the
+    // enclosing <section> (real height) instead — otherwise "in view"
+    // would only ever be true for the single instant it scrolls past
+    const targets = new Map<Element, string>();
+    hashTargets.forEach((hash) => {
+      const anchor = document.getElementById(hash);
+      const el = anchor?.closest("section") ?? anchor;
+      if (el) targets.set(el, hash);
+    });
 
-    if (!elements.length) return;
+    if (!targets.size) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
-        const visible = entries.find((entry) => entry.isIntersecting);
-        if (visible) setActiveHash(visible.target.id);
+        entries.forEach((entry) => {
+          const hash = targets.get(entry.target);
+          if (!hash) return;
+          if (entry.isIntersecting) {
+            setActiveHash(hash);
+          } else {
+            // Only clear if this section was the active one — an entry for
+            // a different, never-active section shouldn't wipe it out
+            setActiveHash((prev) => (prev === hash ? null : prev));
+          }
+        });
       },
       { rootMargin: "-45% 0px -45% 0px", threshold: 0 }
     );
 
-    elements.forEach((el) => observer.observe(el));
+    targets.forEach((_, el) => observer.observe(el));
     return () => observer.disconnect();
   }, [items, pathname]);
 
@@ -428,7 +470,7 @@ export default function StaggeredMenu({
             href="/"
             className="sm-logo absolute top-0 left-0 py-6 px-12 md:px-16"
             aria-label="Alchemy home"
-            onClick={closeMenu}
+            onClick={handleLogoClick}
           >
             <Image
               src="/alchemyLogo.png"

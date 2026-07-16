@@ -115,7 +115,6 @@ export default function Services() {
 
   return (
     <section
-      id="services"
       ref={sectionRef}
       className="w-full pt-4 pb-8 px-6 md:px-10 lg:px-16 bg-white relative"
       style={{ cursor: isDesktop ? "none" : "auto" }}
@@ -123,6 +122,11 @@ export default function Services() {
       onMouseEnter={handleSectionEnter}
       onMouseLeave={handleSectionLeave}
     >
+      {/* Dedicated scroll target, kept separate from the section element
+          itself so nav "Services" links land exactly at the section's top
+          regardless of the section's own padding/positioning */}
+      <div id="services" className="absolute top-0 left-0" aria-hidden="true" />
+
       {/* Custom Cursor */}
       {isDesktop && (
         <div

@@ -67,6 +67,31 @@ export default function Navbar() {
         event.preventDefault();
         const target = document.getElementById(hash);
         if (target) lenis?.scrollTo(target);
+        // Keep the URL in sync with the section in view — cross-page nav to
+        // "/#services" already does this via router.push, so an in-page
+        // jump should match instead of silently leaving the URL at "/"
+        window.history.replaceState(null, "", `${path}#${hash}`);
+      }
+    },
+    [pathname, lenis]
+  );
+
+  // Clicking the logo while already on "/" won't trigger a route change, so
+  // nothing scrolls the page back to the top on its own — do it ourselves.
+  // We also fully own the click (preventDefault) instead of letting Next's
+  // <Link> navigate — its router remembers the current "#services" hash
+  // internally and re-applies it after our own history.replaceState below
+  const handleLogoClick = useCallback(
+    (event: React.MouseEvent) => {
+      if (pathname === "/") {
+        event.preventDefault();
+        lenis?.start();
+        lenis?.scrollTo(0);
+        // Clear a stale "#services" left over from a previous section jump —
+        // otherwise the URL and the visible (top-of-page) content disagree
+        if (window.location.hash) {
+          window.history.replaceState(null, "", pathname);
+        }
       }
     },
     [pathname, lenis]
@@ -108,7 +133,7 @@ export default function Navbar() {
               }`}
           >
             {/* LOGO */}
-            <Link href="/">
+            <Link href="/" onClick={handleLogoClick}>
               <div className="group h-[50px] w-[50px] bg-black rounded-[14px] flex items-center justify-center overflow-hidden relative shrink-0 cursor-pointer">
 
                 {/* ORANGE (default) */}
