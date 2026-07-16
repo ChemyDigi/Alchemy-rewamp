@@ -57,20 +57,17 @@ export default function StaggeredMenu({
   onMenuClose,
 }: StaggeredMenuProps) {
   const [open, setOpen] = useState(false);
+  const [activeHash, setActiveHash] = useState<string | null>(null);
   const openRef = useRef(false);
   const panelRef = useRef<HTMLElement | null>(null);
   const preLayersRef = useRef<HTMLDivElement | null>(null);
   const preLayerElsRef = useRef<HTMLDivElement[]>([]);
-  const plusHRef = useRef<HTMLSpanElement | null>(null);
-  const plusVRef = useRef<HTMLSpanElement | null>(null);
-  const iconRef = useRef<HTMLSpanElement | null>(null);
   const textInnerRef = useRef<HTMLSpanElement | null>(null);
   const textWrapRef = useRef<HTMLSpanElement | null>(null);
   const [textLines, setTextLines] = useState(["Menu", "Close"]);
 
   const openTlRef = useRef<gsap.core.Timeline | null>(null);
   const closeTweenRef = useRef<gsap.core.Tween | null>(null);
-  const spinTweenRef = useRef<gsap.core.Tween | null>(null);
   const textCycleAnimRef = useRef<gsap.core.Tween | null>(null);
   const colorTweenRef = useRef<gsap.core.Tween | null>(null);
   const toggleBtnRef = useRef<HTMLButtonElement | null>(null);
@@ -83,11 +80,8 @@ export default function StaggeredMenu({
     const ctx = gsap.context(() => {
       const panel = panelRef.current;
       const preContainer = preLayersRef.current;
-      const plusH = plusHRef.current;
-      const plusV = plusVRef.current;
-      const icon = iconRef.current;
       const textInner = textInnerRef.current;
-      if (!panel || !plusH || !plusV || !icon || !textInner) return;
+      if (!panel || !textInner) return;
 
       let preLayers: HTMLDivElement[] = [];
       if (preContainer) {
@@ -100,9 +94,6 @@ export default function StaggeredMenu({
       if (preContainer) {
         gsap.set(preContainer, { xPercent: 0, opacity: 1 });
       }
-      gsap.set(plusH, { transformOrigin: "50% 50%", rotate: 0 });
-      gsap.set(plusV, { transformOrigin: "50% 50%", rotate: 90 });
-      gsap.set(icon, { rotate: 0, transformOrigin: "50% 50%" });
       gsap.set(textInner, { yPercent: 0 });
       if (toggleBtnRef.current) gsap.set(toggleBtnRef.current, { color: menuButtonColor });
     });
@@ -208,17 +199,6 @@ export default function StaggeredMenu({
     });
   }, [position]);
 
-  const animateIcon = useCallback((opening: boolean) => {
-    const icon = iconRef.current;
-    if (!icon) return;
-    spinTweenRef.current?.kill();
-    if (opening) {
-      spinTweenRef.current = gsap.to(icon, { rotate: 225, duration: 0.8, ease: "power4.out", overwrite: "auto" });
-    } else {
-      spinTweenRef.current = gsap.to(icon, { rotate: 0, duration: 0.35, ease: "power3.inOut", overwrite: "auto" });
-    }
-  }, []);
-
   const animateColor = useCallback(
     (opening: boolean) => {
       const btn = toggleBtnRef.current;
@@ -284,10 +264,9 @@ export default function StaggeredMenu({
       onMenuClose?.();
       playClose();
     }
-    animateIcon(target);
     animateColor(target);
     animateText(target);
-  }, [playOpen, playClose, animateIcon, animateColor, animateText, onMenuOpen, onMenuClose]);
+  }, [playOpen, playClose, animateColor, animateText, onMenuOpen, onMenuClose]);
 
   const closeMenu = useCallback(() => {
     if (openRef.current) {
@@ -295,11 +274,10 @@ export default function StaggeredMenu({
       setOpen(false);
       onMenuClose?.();
       playClose();
-      animateIcon(false);
       animateColor(false);
       animateText(false);
     }
-  }, [playClose, animateIcon, animateColor, animateText, onMenuClose]);
+  }, [playClose, animateColor, animateText, onMenuClose]);
 
   // Hash links (e.g. "/#services") to a section of the page we're already
   // on won't trigger a pathname change, so the browser/router won't scroll
@@ -328,6 +306,35 @@ export default function StaggeredMenu({
     closeMenu();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
+
+  // Hash-anchor items (e.g. "Services" → "/#services") don't have a route
+  // of their own, so pathname can't tell us they're "active" — watch their
+  // target section instead and highlight the item while it's in view
+  React.useEffect(() => {
+    const hashTargets = items
+      .map((it) => it.link.split("#"))
+      .filter(([path, hash]) => hash && path === pathname)
+      .map(([, hash]) => hash);
+
+    if (!hashTargets.length) return;
+
+    const elements = hashTargets
+      .map((hash) => document.getElementById(hash))
+      .filter((el): el is HTMLElement => !!el);
+
+    if (!elements.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.find((entry) => entry.isIntersecting);
+        if (visible) setActiveHash(visible.target.id);
+      },
+      { rootMargin: "-45% 0px -45% 0px", threshold: 0 }
+    );
+
+    elements.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [items, pathname]);
 
   // Let the global header know when this panel is open, so it can hide its
   // own logo instead of showing it stacked on top of the panel's logo
@@ -412,10 +419,6 @@ export default function StaggeredMenu({
               ))}
             </span>
           </span>
-          <span ref={iconRef} className="sm-icon" aria-hidden="true">
-            <span ref={plusHRef} className="sm-icon-line" />
-            <span ref={plusVRef} className="sm-icon-line sm-icon-line-v" />
-          </span>
         </button>
       </header>
 
@@ -439,9 +442,13 @@ export default function StaggeredMenu({
 
           <ul className="sm-panel-list" role="list" data-numbering={displayItemNumbering || undefined}>
             {items.map((it, idx) => {
+              const [itemPath, itemHash] = it.link.split("#");
               // Hash-anchor links (e.g. "/#services") point at a section of
-              // another page, not a page of their own — never highlight them
-              const isActive = !it.link.includes("#") && pathname === it.link;
+              // the current page rather than a route of their own, so they're
+              // active while that section is scrolled into view (activeHash)
+              const isActive = itemHash
+                ? itemPath === pathname && itemHash === activeHash
+                : pathname === it.link;
               return (
                 <li className="sm-panel-itemWrap" key={it.label + idx}>
                   <Link

@@ -174,6 +174,7 @@ export default function Navbar() {
           items={mobileMenuItems}
           socialItems={mobileSocialItems}
           displaySocials
+          displayItemNumbering={false}
           isFixed
         />
       </div>
