@@ -54,7 +54,8 @@ export default function Services() {
 
   useEffect(() => {
     const checkScreen = () => {
-      setIsDesktop(window.innerWidth >= 1024)
+      const hasHover = window.matchMedia("(hover: hover)").matches
+      setIsDesktop(window.innerWidth >= 1024 && hasHover)
     }
 
     checkScreen()
