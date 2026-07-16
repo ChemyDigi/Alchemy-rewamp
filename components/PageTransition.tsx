@@ -63,6 +63,13 @@ export default function PageTransition() {
       if (anchor.target === "_blank") return;
       if (anchor.hasAttribute("download")) return;
 
+      // Same-page hash links (e.g. "/#services") are handled by the
+      // component that rendered them (smooth-scroll via Lenis, closing the
+      // mobile menu, etc.) — stealing the click here would run a full page
+      // transition instead and leave that in-page handler never called
+      const [hrefPath, hrefHash] = href.split("#");
+      if (hrefHash && hrefPath === window.location.pathname) return;
+
       // Respect prefers-reduced-motion
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
