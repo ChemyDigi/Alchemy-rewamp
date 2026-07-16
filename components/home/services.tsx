@@ -102,15 +102,15 @@ export default function Services() {
   const handleSectionEnter = () => setIsCursorVisible(true)
   const handleSectionLeave = () => {
     setIsCursorVisible(false)
-    if (isDesktop) setActiveIndex(null)
+    if (isDesktop && !window.matchMedia("(pointer: coarse)").matches) setActiveIndex(null)
   }
 
   const handleEnter = (index: number) => {
-    if (isDesktop) setActiveIndex(index)
+    if (isDesktop && !window.matchMedia("(pointer: coarse)").matches) setActiveIndex(index)
   }
 
   const handleLeave = () => {
-    if (isDesktop) setActiveIndex(null)
+    if (isDesktop && !window.matchMedia("(pointer: coarse)").matches) setActiveIndex(null)
   }
 
   return (
@@ -118,9 +118,9 @@ export default function Services() {
       ref={sectionRef}
       className="w-full pt-4 pb-8 px-6 md:px-10 lg:px-16 bg-white relative"
       style={{ cursor: isDesktop ? "none" : "auto" }}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={handleSectionEnter}
-      onMouseLeave={handleSectionLeave}
+      onMouseMove={isDesktop ? handleMouseMove : undefined}
+      onMouseEnter={isDesktop ? handleSectionEnter : undefined}
+      onMouseLeave={isDesktop ? handleSectionLeave : undefined}
     >
       {/* Dedicated scroll target, kept separate from the section element
           itself so nav "Services" links land exactly at the section's top
@@ -193,7 +193,7 @@ export default function Services() {
             return (
               <Link key={index} href={service.link}>
                 <div
-                  onMouseEnter={() => handleEnter(index)}
+                  onMouseEnter={isDesktop ? () => handleEnter(index) : undefined}
                   className="cursor-pointer mb-6 active:scale-[0.97] transition-all duration-150 ease-out"
                 >
                   {/* TEXT */}
