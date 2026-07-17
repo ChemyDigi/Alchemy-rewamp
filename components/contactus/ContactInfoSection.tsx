@@ -233,7 +233,7 @@ export default function ContactInfoSection() {
                             value={formData.mobile}
                             onChange={handleChange}
                             error={errors.mobile}
-                            placeholder="+94 XX XXX XXXX"
+                            placeholder="Enter your mobile number"
                         />
                         <Field
                             label="Your Email"
@@ -299,7 +299,7 @@ export default function ContactInfoSection() {
                                 value={formData.message}
                                 onChange={handleChange}
                                 placeholder="Tell us more about your requirements..."
-                                className="w-full bg-transparent border-b border-[#9e9e9e] pb-3 text-[20px] text-black outline-none resize-none"
+                                className="w-full bg-transparent border-b border-[#9e9e9e] pb-3 text-[20px] text-black outline-none resize-none placeholder:text-[14px] placeholder:text-[#9e9e9e]"
                             />
                             {errors.message && (
                                 <p className="text-red-500 text-xs mt-1.5">{errors.message}</p>
@@ -374,7 +374,7 @@ function Field({ label, name, value, onChange, error, type = "text", placeholder
                 value={value}
                 onChange={onChange}
                 placeholder={placeholder}
-                className="w-full bg-transparent border-b border-[#9e9e9e] pb-3 text-[20px] text-black outline-none"
+                className="w-full bg-transparent border-b border-[#9e9e9e] pb-3 text-[20px] text-black outline-none placeholder:text-[14px] placeholder:text-[#9e9e9e]"
             />
             {error && (
                 <p className="text-red-500 text-xs mt-1.5">{error}</p>

@@ -41,6 +41,21 @@ export default function PanoramicCarousel() {
   // Track current rotation offset for continuous dragging
   const currentRotation = useRef(0);
 
+  // Text overlay lags behind activeIndex and fades in once it settles,
+  // so fast dragging doesn't flicker through every card's caption
+  const [displayIndex, setDisplayIndex] = useState(0);
+  const textFadeTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    if (textFadeTimeout.current) clearTimeout(textFadeTimeout.current);
+    textFadeTimeout.current = setTimeout(() => {
+      setDisplayIndex(activeIndex);
+    }, 150);
+    return () => {
+      if (textFadeTimeout.current) clearTimeout(textFadeTimeout.current);
+    };
+  }, [activeIndex]);
+
   // Responsive values based on screen size
   const [deviceType, setDeviceType] = useState<'mobile' | 'tablet' | 'desktop'>('desktop');
   const [cardSize, setCardSize] = useState({ width: 300, height: 380 });
@@ -199,11 +214,15 @@ export default function PanoramicCarousel() {
         </p>
       </div>
 
-      {/* ═══ MAIN CAROUSEL SECTION ═══ 
-          Container for 3D rotating cards with responsive height */}
-      <div className={`relative w-full flex items-center justify-center ${deviceType === 'mobile' ? 'h-[50vh]' :
-          deviceType === 'tablet' ? 'h-[65vh]' : 'h-[80vh]'
-        }`}>
+      {/* ═══ MAIN CAROUSEL SECTION ═══
+          Container height is sized to the actual card height (plus a small
+          buffer for the nav buttons), not a viewport-percentage — vh-based
+          heights left huge empty space above/below the cards on tall
+          viewports like an iPad portrait */}
+      <div
+        className="relative w-full flex items-center justify-center"
+        style={{ height: cardSize.height + 32 }}
+      >
 
         {/* LEFT NAVIGATION BUTTON (Prev) 
             - Positioned on left side, vertically centered
@@ -298,24 +317,28 @@ export default function PanoramicCarousel() {
             ))
           )}
         </div>
+      </div>
 
-        {/* TEXT OVERLAY - Displays active card's title & description
-            - Positioned at bottom of carousel and centered horizontally
-            - Responsive sizing and spacing for mobile/tablet/desktop */}
-        <div className={`absolute left-1/2 -translate-x-1/2 text-center ${deviceType === 'mobile' ? 'bottom-[-50] max-w-xs px-4 h-20 flex flex-col justify-center' :
-            deviceType === 'tablet' ? 'bottom-2 max-w-md px-6' : 'bottom-[-50] max-w-xl px-6'
+      {/* TEXT OVERLAY - Displays active card's title & description
+          - Sits in normal document flow below the carousel stage, so it
+            always clears the card and never opens up extra empty space
+          - Responsive sizing and spacing for mobile/tablet/desktop */}
+      <div
+        className={`mx-auto text-center transition-opacity duration-300 ease-out ${deviceType === 'mobile' ? 'mt-6 max-w-xs px-4' :
+            deviceType === 'tablet' ? 'mt-7 max-w-md px-6' : 'mt-8 max-w-xl px-6'
+          }`}
+        style={{ opacity: displayIndex === activeIndex ? 1 : 0 }}
+      >
+        <h2 className={`text-orange font-bold mb-2 ${deviceType === 'mobile' ? 'text-xl' :
+            deviceType === 'tablet' ? 'text-2xl' : 'text-3xl'
           }`}>
-          <h2 className={`text-orange font-bold mb-2 ${deviceType === 'mobile' ? 'text-xl' :
-              deviceType === 'tablet' ? 'text-2xl' : 'text-3xl'
-            }`}>
-            {activeCards[activeIndex]?.title}
-          </h2>
-          <p className={`text-black/70 ${deviceType === 'mobile' ? 'text-sm' :
-              deviceType === 'tablet' ? 'text-base' : 'text-lg'
-            }`}>
-            {activeCards[activeIndex]?.desc}
-          </p>
-        </div>
+          {activeCards[displayIndex]?.title}
+        </h2>
+        <p className={`text-black/70 ${deviceType === 'mobile' ? 'text-sm' :
+            deviceType === 'tablet' ? 'text-base' : 'text-lg'
+          }`}>
+          {activeCards[displayIndex]?.desc}
+        </p>
       </div>
     </div>
   );

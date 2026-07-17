@@ -15,7 +15,7 @@ export default function BlogPostCards({ posts }: BlogPostCardsProps) {
 						<Link
 							key={post.slug}
 							href={`/blog/${post.slug}`}
-							className="group block max-w-[420px] cursor-pointer"
+							className="group block max-w-[420px] mx-auto cursor-pointer"
 						>
 							<article className="origin-center transition-all duration-250 ease-out group-hover:scale-[1.03] group-hover:shadow-xl rounded-b-2xl ">
 							<div className="overflow-hidden rounded-2xl bg-black">

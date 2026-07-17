@@ -39,7 +39,7 @@ export default function ServicesSection() {
 
           {/* BUTTON → /contact */}
           <Link href="/contactus">
-            <button className="group mt-8 bg-orange text-white h-[56px] pl-8 pr-8 rounded-full relative flex items-center overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-black min-w-[200px] hover:min-w-[260px]">
+            <button className="group mt-8 bg-orange text-white h-[56px] pl-8 pr-8 rounded-full relative flex items-center overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-black min-w-[200px] hover:min-w-[260px] active:scale-[0.97] active:duration-75">
 
               <span className="text-base md:text-lg font-medium whitespace-nowrap">
                 GET IN TOUCH

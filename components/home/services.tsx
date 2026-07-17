@@ -54,7 +54,8 @@ export default function Services() {
 
   useEffect(() => {
     const checkScreen = () => {
-      setIsDesktop(window.innerWidth >= 1024)
+      const hasHover = window.matchMedia("(hover: hover)").matches
+      setIsDesktop(window.innerWidth >= 1024 && hasHover)
     }
 
     checkScreen()
@@ -101,27 +102,31 @@ export default function Services() {
   const handleSectionEnter = () => setIsCursorVisible(true)
   const handleSectionLeave = () => {
     setIsCursorVisible(false)
-    if (isDesktop) setActiveIndex(null)
+    if (isDesktop && !window.matchMedia("(pointer: coarse)").matches) setActiveIndex(null)
   }
 
   const handleEnter = (index: number) => {
-    if (isDesktop) setActiveIndex(index)
+    if (isDesktop && !window.matchMedia("(pointer: coarse)").matches) setActiveIndex(index)
   }
 
   const handleLeave = () => {
-    if (isDesktop) setActiveIndex(null)
+    if (isDesktop && !window.matchMedia("(pointer: coarse)").matches) setActiveIndex(null)
   }
 
   return (
     <section
-      id="services"
       ref={sectionRef}
       className="w-full pt-4 pb-8 px-6 md:px-10 lg:px-16 bg-white relative"
       style={{ cursor: isDesktop ? "none" : "auto" }}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={handleSectionEnter}
-      onMouseLeave={handleSectionLeave}
+      onMouseMove={isDesktop ? handleMouseMove : undefined}
+      onMouseEnter={isDesktop ? handleSectionEnter : undefined}
+      onMouseLeave={isDesktop ? handleSectionLeave : undefined}
     >
+      {/* Dedicated scroll target, kept separate from the section element
+          itself so nav "Services" links land exactly at the section's top
+          regardless of the section's own padding/positioning */}
+      <div id="services" className="absolute top-0 left-0" aria-hidden="true" />
+
       {/* Custom Cursor */}
       {isDesktop && (
         <div
@@ -188,8 +193,8 @@ export default function Services() {
             return (
               <Link key={index} href={service.link}>
                 <div
-                  onMouseEnter={() => handleEnter(index)}
-                  className="cursor-pointer mb-6"
+                  onMouseEnter={isDesktop ? () => handleEnter(index) : undefined}
+                  className="cursor-pointer mb-6 active:scale-[0.97] transition-all duration-150 ease-out"
                 >
                   {/* TEXT */}
                   <div
@@ -208,9 +213,6 @@ export default function Services() {
                     <h3 className="text-2xl sm:text-3xl md:text-5xl lg:text-7xl font-semibold text-[#747474] text-center leading-[1.2] py-2">
                       {service.title}
                     </h3>
-                    <span className="bg-white text-[10px] md:text-xs px-2 py-1 rounded-full">
-                      {service.count}
-                    </span>
                   </div>
 
                   {/* EXPAND WRAPPER */}

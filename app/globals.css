@@ -36,14 +36,17 @@ body {
 html,
 body,
 * {
-  -ms-overflow-style: none !important; /* IE, Edge */
-  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important;
+  /* IE, Edge */
+  scrollbar-width: none !important;
+  /* Firefox */
 }
 
 html::-webkit-scrollbar,
 body::-webkit-scrollbar,
 *::-webkit-scrollbar {
-  display: none !important; /* Chrome, Safari, Opera */
+  display: none !important;
+  /* Chrome, Safari, Opera */
   width: 0 !important;
   height: 0 !important;
 }
@@ -74,4 +77,22 @@ body::-webkit-scrollbar,
     height: auto;
     max-height: 62dvh;
   }
+}
+/* ── Uiverse-style Menu button ── */
+.menu-btn {
+  position: relative;
+  background: #000000;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow:
+    inset 0px 0px 5px #ffffffa9,
+    0px 5px 10px #000000cc;
+  text-shadow: 1px 1px 1px #000;
+}
+
+.menu-btn:active {
+  box-shadow: inset 0px 0px 5px #ffffffa9;
+  margin-top: 3px;
 }
