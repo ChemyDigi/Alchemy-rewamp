@@ -385,11 +385,18 @@ export default function StaggeredMenu({
     return () => setMobileMenuOpen(false);
   }, [open, setMobileMenuOpen]);
 
+  const isInitialMount = useRef(true);
+
   // Freeze the page behind the panel while it's open — pause Lenis's virtual
   // scroll and lock native touch/wheel scrolling as a backup, since the
   // panel is just an overlay and the page underneath is otherwise still
   // scrollable
   React.useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      if (!open) return;
+    }
+
     if (open) {
       lenis?.stop();
       document.body.style.overflow = "hidden";
