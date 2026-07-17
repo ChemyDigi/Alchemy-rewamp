@@ -43,7 +43,13 @@ export default function GallerySection() {
                 }`}
                 onClick={() => open(i)}
               >
-                <Image src={img.imageUrl} alt={img.title || ""} fill className="object-cover" />
+                <Image
+                  src={img.imageUrl}
+                  alt={img.title || ""}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="object-cover"
+                />
               </div>
             );
           })}
@@ -77,6 +83,7 @@ export default function GallerySection() {
               src={images[activeIndex].imageUrl}
               alt={images[activeIndex].title || ""}
               fill
+              sizes="(max-width: 1024px) 90vw, 1024px"
               className="object-contain rounded-xl"
             />
           </div>

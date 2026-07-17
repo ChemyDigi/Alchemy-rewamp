@@ -27,7 +27,7 @@ function ScrollFillText({
 	return (
 		<p
 			ref={ref}
-			className={`mt-1 max-w-[760px] text-[22px] sm:text-[22px] md:text-[28px] font-medium leading-[1.65] tracking-[-0.03em] text-[#7e7e7e] text-center ${
+			className={`relative mt-1 max-w-[760px] text-[22px] sm:text-[22px] md:text-[28px] font-medium leading-[1.65] tracking-[-0.03em] text-[#7e7e7e] text-center ${
 				isRightAligned ? "md:ml-auto md:text-right" : "md:text-left"
 			} ${className ?? ""}`}
 		>

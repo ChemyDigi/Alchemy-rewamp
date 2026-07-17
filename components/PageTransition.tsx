@@ -1,21 +1,45 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import TransitionOverlay from "@/components/TransitionOverlay";
 
 export default function PageTransition() {
   const router = useRouter();
+  const pathname = usePathname();
   const [visible, setVisible] = useState(false);
   const [opacity, setOpacity] = useState(0);
   const [logoScale, setLogoScale] = useState(0.75);
   // Guard against concurrent transitions
   const isNavigating = useRef(false);
 
+  // Keep track of navigation states to coordinate route swapping
+  const [targetPath, setTargetPath] = useState<string | null>(null);
+  const [startingPath, setStartingPath] = useState<string | null>(null);
+  const resolveRef = useRef<(() => void) | null>(null);
+
+  // Listen for changes in the pathname to resolve the transition wait promise
+  useEffect(() => {
+    if (
+      (targetPath && pathname === targetPath) ||
+      (startingPath && pathname !== startingPath)
+    ) {
+      if (resolveRef.current) {
+        resolveRef.current();
+      }
+    }
+  }, [pathname, targetPath, startingPath]);
+
   const runTransition = useCallback(
     async (href: string) => {
       if (isNavigating.current) return;
       isNavigating.current = true;
+
+      const pathOnly = href.split("?")[0].split("#")[0];
+      const currentPath = window.location.pathname;
+
+      setTargetPath(pathOnly);
+      setStartingPath(currentPath);
 
       // ── Step 1: Mount the overlay and make it visible before navigation
       setLogoScale(0.75);
@@ -32,6 +56,25 @@ export default function PageTransition() {
       // ── Step 4: Navigate — new page renders underneath the overlay
       router.push(href);
 
+      // Wait until the route has actually swapped, with a defensive timeout
+      await new Promise<void>((resolve) => {
+        let resolved = false;
+        const done = () => {
+          if (!resolved) {
+            resolved = true;
+            resolve();
+          }
+        };
+
+        // Defensive timeout of 3.5 seconds
+        const timeoutId = setTimeout(done, 3500);
+
+        resolveRef.current = () => {
+          clearTimeout(timeoutId);
+          done();
+        };
+      });
+
       // ── Step 5: Fade out overlay once the route has swapped in
       setLogoScale(0.85);
       await new Promise((r) => setTimeout(r, 300));
@@ -40,6 +83,11 @@ export default function PageTransition() {
       // ── Step 6: Fully unmount
       setVisible(false);
       isNavigating.current = false;
+
+      // Reset transition states
+      setTargetPath(null);
+      setStartingPath(null);
+      resolveRef.current = null;
     },
     [router]
   );

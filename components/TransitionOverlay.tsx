@@ -58,6 +58,7 @@ export default function TransitionOverlay({
           alt="Alchemy"
           fill
           priority
+          sizes="280px"
           style={{ objectFit: "contain" }}
         />
       </div>

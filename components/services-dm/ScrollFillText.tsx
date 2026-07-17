@@ -17,6 +17,7 @@ export default function ScrollFillText({ text }: { text: string }) {
     <p
       ref={ref}
       className="
+        relative
         w-full max-w-[900px]
         mx-auto
         text-center

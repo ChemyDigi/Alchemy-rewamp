@@ -44,6 +44,7 @@ export default function Hero() {
             alt="logo"
             width={200}
             height={200}
+            style={{ height: "auto" }}
             priority
           />
         </div>
@@ -87,6 +88,7 @@ export default function Hero() {
               alt="logo"
               width={280}
               height={280}
+              style={{ height: "auto" }}
               priority
             />
           </div>

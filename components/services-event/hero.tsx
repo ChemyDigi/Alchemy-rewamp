@@ -56,6 +56,7 @@ export default function ServicesSection() {
             src="/images/services-event/walky_talky.png"
             alt="Event Management Device"
             fill
+            sizes="(max-width: 1024px) 100vw, 50vw"
             className="object-contain"
             priority
           />

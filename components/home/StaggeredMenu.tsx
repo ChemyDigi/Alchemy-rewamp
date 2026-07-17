@@ -485,6 +485,7 @@ export default function StaggeredMenu({
               width={150}
               height={40}
               className="w-auto h-8 sm:h-10 object-contain -translate-x-4 md:translate-x-0"
+              style={{ width: "auto" }}
               priority
             />
           </Link>
