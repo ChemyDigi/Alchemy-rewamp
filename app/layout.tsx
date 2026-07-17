@@ -1,14 +1,11 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import "lenis/dist/lenis.css";
-import Header from "@/components/Header";
-import LenisProvider from "@/components/LenisProvider";
 import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { headers } from "next/headers";
-import SplashScreen from "@/components/SplashScreen";
-import PageTransition from "@/components/PageTransition";
+import SiteShell from "@/components/SiteShell";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
@@ -38,6 +35,12 @@ export const metadata: Metadata = {
   manifest: "/site.webmanifest",
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
 export default async function RootLayout({
   children,
 }: {
@@ -53,12 +56,7 @@ export default async function RootLayout({
         {isAdmin ? (
           children
         ) : (
-          <LenisProvider>
-            <SplashScreen />
-            <PageTransition />
-            <Header />
-            {children}
-          </LenisProvider>
+          <SiteShell>{children}</SiteShell>
         )}
       </body>
     </html>
