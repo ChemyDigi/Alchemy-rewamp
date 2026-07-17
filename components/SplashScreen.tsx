@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useLenis } from "lenis/react";
 
 // State machine:
 // "pending"  → Black overlay visible immediately (blocks homepage from showing). No video yet.
@@ -15,6 +16,8 @@ export default function SplashScreen() {
   const [state, setState] = useState<SplashState>("pending");
   const videoRef = useRef<HTMLVideoElement>(null);
 
+  const lenis = useLenis();
+
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
@@ -24,7 +27,11 @@ export default function SplashScreen() {
     if (prefersReducedMotion || hasShown) {
       // Already seen or motion-sensitive: quickly dismiss the pending black overlay
       setState("fading");
-      const t = setTimeout(() => setState("hidden"), 300);
+      const t = setTimeout(() => {
+        window.scrollTo(0, 0);
+        lenis?.scrollTo(0, { immediate: true });
+        setState("hidden");
+      }, 300);
       return () => clearTimeout(t);
     }
 
@@ -38,13 +45,17 @@ export default function SplashScreen() {
       document.body.style.overflow = "";
       document.body.style.height = "";
     };
-  }, []);
+  }, [lenis]);
 
   const handleVideoEnd = () => {
-    document.body.style.overflow = "";
-    document.body.style.height = "";
     setState("fading");
-    setTimeout(() => setState("hidden"), 500);
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+      lenis?.scrollTo(0, { immediate: true });
+      document.body.style.overflow = "";
+      document.body.style.height = "";
+      setState("hidden");
+    }, 500);
   };
 
   // Safety fallback: force-dismiss after 10s in case video never fires onEnded
