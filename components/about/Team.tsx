@@ -12,6 +12,11 @@ export default function TeamSection() {
   const [showLeft, setShowLeft] = useState(false);
   const [showRight, setShowRight] = useState(true);
 
+  // Mouse drag-to-scroll state
+  const isDragging = useRef(false);
+  const startX = useRef(0);
+  const scrollLeftStart = useRef(0);
+
   useEffect(() => {
     getTeam().then(setTeamMembers);
   }, []);
@@ -38,9 +43,34 @@ export default function TeamSection() {
 
   useEffect(() => {
     checkScroll();
+    // Run once after a brief timeout to let DOM render
+    const timer = setTimeout(checkScroll, 100);
     window.addEventListener("resize", checkScroll);
-    return () => window.removeEventListener("resize", checkScroll);
-  }, [checkScroll]);
+    return () => {
+      window.removeEventListener("resize", checkScroll);
+      clearTimeout(timer);
+    };
+  }, [checkScroll, teamMembers]);
+
+  // Mouse drag-to-scroll handlers
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!scrollRef.current) return;
+    isDragging.current = true;
+    startX.current = e.pageX - scrollRef.current.offsetLeft;
+    scrollLeftStart.current = scrollRef.current.scrollLeft;
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging.current || !scrollRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - scrollRef.current.offsetLeft;
+    const walk = (x - startX.current) * 1.5; // Scroll speed multiplier
+    scrollRef.current.scrollLeft = scrollLeftStart.current - walk;
+  };
+
+  const handleMouseUpOrLeave = () => {
+    isDragging.current = false;
+  };
 
   return (
     <section className="px-12 md:px-16 py-24">
@@ -95,7 +125,11 @@ export default function TeamSection() {
           <div
             ref={scrollRef}
             onScroll={checkScroll}
-            className="flex gap-10 overflow-x-auto px-2 py-4
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUpOrLeave}
+            onMouseLeave={handleMouseUpOrLeave}
+            className="flex gap-10 overflow-x-auto px-2 py-4 cursor-grab active:cursor-grabbing select-none
               [scrollbar-width:none]
               [-ms-overflow-style:none]
               [&::-webkit-scrollbar]:hidden"
@@ -112,7 +146,7 @@ export default function TeamSection() {
                     alt={m.name}
                     width={400}
                     height={500}
-                    className="w-full h-[420px] object-cover"
+                    className="w-full h-[420px] object-cover pointer-events-none"
                   />
                 </div>
 
