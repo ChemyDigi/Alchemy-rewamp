@@ -25,7 +25,6 @@ export default function SplashScreen({ onHidden }: SplashScreenProps) {
 
     if (prefersReducedMotion || hasShown) {
       setState("fading");
-      const t = setTimeout(() => setState("hidden"), 150);
       const t = setTimeout(() => {
         window.scrollTo(0, 0);
         lenis?.scrollTo(0, { immediate: true });

@@ -2,14 +2,11 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import "lenis/dist/lenis.css";
-import Header from "@/components/Header";
-import LenisProvider from "@/components/LenisProvider";
 import { MobileMenuProvider } from "@/components/MobileMenuContext";
 import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { headers } from "next/headers";
 import SiteShell from "@/components/SiteShell";
-import PageTransition from "@/components/PageTransition";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
@@ -60,16 +57,9 @@ export default async function RootLayout({
         {isAdmin ? (
           children
         ) : (
-          <SiteShell>{children}</SiteShell>
-<MobileMenuProvider>
-  <LenisProvider>
-    <SplashScreen />
-    <PageTransition />
-    <Header />
-    {children}
-  </LenisProvider>
-</MobileMenuProvider>
-
+          <MobileMenuProvider>
+            <SiteShell>{children}</SiteShell>
+          </MobileMenuProvider>
         )}
       </body>
     </html>
