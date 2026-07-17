@@ -57,6 +57,27 @@ body::-webkit-scrollbar,
   color: #ffffff;
 }
 
+.splash-overlay {
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.splash-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 767px) {
+  .splash-video {
+    object-fit: contain;
+    width: clamp(120px, 42vw, 320px);
+    height: auto;
+    max-height: 62dvh;
+  }
+}
 /* ── Uiverse-style Menu button ── */
 .menu-btn {
   position: relative;

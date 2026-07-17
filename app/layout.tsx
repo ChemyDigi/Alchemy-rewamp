@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import "lenis/dist/lenis.css";
@@ -8,7 +8,7 @@ import { MobileMenuProvider } from "@/components/MobileMenuContext";
 import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { headers } from "next/headers";
-import SplashScreen from "@/components/SplashScreen";
+import SiteShell from "@/components/SiteShell";
 import PageTransition from "@/components/PageTransition";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
@@ -39,6 +39,12 @@ export const metadata: Metadata = {
   manifest: "/site.webmanifest",
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
 export default async function RootLayout({
   children,
 }: {
@@ -54,6 +60,7 @@ export default async function RootLayout({
         {isAdmin ? (
           children
         ) : (
+          <SiteShell>{children}</SiteShell>
 <MobileMenuProvider>
   <LenisProvider>
     <SplashScreen />
