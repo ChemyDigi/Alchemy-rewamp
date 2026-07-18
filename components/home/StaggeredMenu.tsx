@@ -2,6 +2,7 @@
 
 import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
+import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -81,7 +82,7 @@ export default function StaggeredMenu({
       const panel = panelRef.current;
       const preContainer = preLayersRef.current;
       const textInner = textInnerRef.current;
-      if (!panel || !textInner) return;
+      if (!panel) return;
 
       let preLayers: HTMLDivElement[] = [];
       if (preContainer) {
@@ -94,8 +95,9 @@ export default function StaggeredMenu({
       if (preContainer) {
         gsap.set(preContainer, { xPercent: 0, opacity: 1 });
       }
-      gsap.set(textInner, { yPercent: 0 });
-      if (toggleBtnRef.current) gsap.set(toggleBtnRef.current, { color: menuButtonColor });
+      if (textInner) {
+        gsap.set(textInner, { yPercent: 0 });
+      }
     });
     return () => ctx.revert();
   }, [menuButtonColor, position]);
@@ -201,29 +203,14 @@ export default function StaggeredMenu({
 
   const animateColor = useCallback(
     (opening: boolean) => {
-      const btn = toggleBtnRef.current;
-      if (!btn) return;
-      colorTweenRef.current?.kill();
-      if (changeMenuColorOnOpen) {
-        const targetColor = opening ? openMenuButtonColor : menuButtonColor;
-        colorTweenRef.current = gsap.to(btn, { color: targetColor, delay: 0.18, duration: 0.3, ease: "power2.out" });
-      } else {
-        gsap.set(btn, { color: menuButtonColor });
-      }
+      // Color animation disabled to preserve custom icon button colors
     },
-    [openMenuButtonColor, menuButtonColor, changeMenuColorOnOpen]
+    []
   );
 
   React.useEffect(() => {
-    if (toggleBtnRef.current) {
-      if (changeMenuColorOnOpen) {
-        const targetColor = openRef.current ? openMenuButtonColor : menuButtonColor;
-        gsap.set(toggleBtnRef.current, { color: targetColor });
-      } else {
-        gsap.set(toggleBtnRef.current, { color: menuButtonColor });
-      }
-    }
-  }, [changeMenuColorOnOpen, menuButtonColor, openMenuButtonColor]);
+    // Color synchronization disabled to preserve custom icon button colors
+  }, []);
 
   const animateText = useCallback((opening: boolean) => {
     const inner = textInnerRef.current;
@@ -459,15 +446,11 @@ export default function StaggeredMenu({
           onClick={toggleMenu}
           type="button"
         >
-          <span ref={textWrapRef} className="sm-toggle-textWrap" aria-hidden="true">
-            <span ref={textInnerRef} className="sm-toggle-textInner">
-              {textLines.map((l, i) => (
-                <span className="sm-toggle-line" key={i}>
-                  {l}
-                </span>
-              ))}
-            </span>
-          </span>
+          {open ? (
+            <X size={22} className="text-white transform transition-transform duration-300 rotate-90" />
+          ) : (
+            <Menu size={22} className="text-white transform transition-transform duration-300" />
+          )}
         </button>
       </header>
 

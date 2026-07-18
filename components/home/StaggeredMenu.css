@@ -2,7 +2,7 @@
   position: relative;
   width: 100%;
   height: 100%;
-  z-index: 40;
+  z-index: 9999;
   pointer-events: none;
 }
 
@@ -13,7 +13,7 @@
   width: 100vw;
   height: 100vh;
   height: 100dvh;
-  z-index: 40;
+  z-index: 9999;
   overflow: hidden;
 }
 
@@ -46,20 +46,30 @@
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  background: transparent;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #E3791D;
   border: none;
   cursor: pointer;
-  color: #000000;
-  font-weight: 500;
-  line-height: 1;
-  overflow: visible;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: background 0.3s ease, transform 0.2s ease;
+  outline: none;
+}
+
+.sm-toggle:hover {
+  background: #c96815;
+}
+
+.sm-toggle:active {
+  transform: scale(0.95);
 }
 
 .sm-toggle:focus-visible {
   outline: 2px solid var(--sm-accent, #e3791d);
   outline-offset: 4px;
-  border-radius: 4px;
 }
 
 .sm-toggle-textWrap {
