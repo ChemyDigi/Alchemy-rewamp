@@ -36,7 +36,7 @@ export default function Hero() {
     <section ref={containerRef} className="relative bg-white">
 
       {/* ── MOBILE LAYOUT (static, no animation) ── */}
-      <div className="md:hidden relative flex flex-col items-center justify-between text-center px-6 pt-24 pb-12 gap-8 overflow-hidden min-h-screen">
+      <div className="md:hidden relative flex flex-col items-center justify-between text-center px-6 pt-24 pb-4 gap-8 overflow-hidden min-h-screen">
         {/* Background Video (Mobile) */}
         <div className="absolute inset-0 w-full h-full z-0 overflow-hidden pointer-events-none">
           <video
@@ -56,7 +56,7 @@ export default function Hero() {
         </div>
 
         {/* Showreel — plain video, no animation */}
-        <div className="relative z-10 w-full rounded-2xl overflow-hidden aspect-video -translate-y-24">
+        <div className="relative z-10 w-full rounded-2xl overflow-hidden aspect-video mb-0">
           <video
             src={watchReelUrl}
             autoPlay
