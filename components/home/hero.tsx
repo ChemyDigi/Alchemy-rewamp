@@ -1,6 +1,5 @@
 "use client";
 import { motion, useScroll, useTransform } from "framer-motion";
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { getHomeContent } from "@/lib/firestore";
 
@@ -37,33 +36,27 @@ export default function Hero() {
     <section ref={containerRef} className="relative bg-white">
 
       {/* ── MOBILE LAYOUT (static, no animation) ── */}
-      <div className="md:hidden flex flex-col items-center text-center px-6 pt-16 pb-8 gap-6">
-        <div>
-          <Image
-            src="/images/home/logoa.png"
-            alt="logo"
-            width={200}
-            height={200}
-            style={{ height: "auto" }}
-            priority
+      <div className="md:hidden relative flex flex-col items-center justify-between text-center px-6 pt-24 pb-12 gap-8 overflow-hidden min-h-screen">
+        {/* Background Video (Mobile) */}
+        <div className="absolute inset-0 w-full h-full z-0 overflow-hidden pointer-events-none">
+          <video
+            src="/heroVideos/hero-mobile.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover"
           />
         </div>
-        <div>
-          <h1
-            className="font-semibold tracking-tight text-black"
-            style={{ fontSize: "clamp(26px, 7vw, 36px)" }}
-          >
-            FROM <span className="text-orange">VISION</span> TO IMPACT
-          </h1>
-          <p className="mt-2 text-black text-base max-w-xs mx-auto">
-            Creative production. Marketing strategy. IT innovation.
-            <br />
-            All under one roof.
-          </p>
+
+        {/* Content wrapper */}
+        <div className="relative z-10 flex flex-col items-center gap-6 my-auto">
+          <div>
+          </div>
         </div>
 
         {/* Showreel — plain video, no animation */}
-        <div className="w-full rounded-2xl overflow-hidden aspect-video">
+        <div className="relative z-10 w-full rounded-2xl overflow-hidden aspect-video -translate-y-24">
           <video
             src={watchReelUrl}
             autoPlay
@@ -76,23 +69,25 @@ export default function Hero() {
       </div>
 
       {/* ── DESKTOP LAYOUT (original scroll-animated, unchanged) ── */}
-      <div className="hidden md:block h-[200vh]">
+      <div className="hidden md:block h-[200vh] relative">
+        {/* Background Video */}
+        <div className="absolute inset-0 w-full h-full z-0 overflow-hidden pointer-events-none">
+          <video
+            src="/heroVideos/hero-desktop.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="sticky top-0 h-screen w-full object-cover"
+          />
+        </div>
+
         {/* HERO TEXT */}
         <motion.div
           style={{ y: heroY, scale: heroScale, opacity: heroOpacity }}
           className="sticky top-0 h-screen flex flex-col items-center justify-center text-center z-10 px-12 md:px-16"
         >
-          <div className="mb-6">
-            <Image
-              src="/images/home/logoa.png"
-              alt="logo"
-              width={280}
-              height={280}
-              style={{ height: "auto" }}
-              priority
-            />
-          </div>
-          <h1
+          {/* <h1
             className="font-semibold tracking-tight text-black"
             style={{ fontSize: "clamp(30px, 5vw, 40px)" }}
           >
@@ -102,7 +97,7 @@ export default function Hero() {
             Creative production. Marketing strategy. IT innovation.
             <br />
             All under one roof.
-          </p>
+          </p> */}
         </motion.div>
 
         {/* SHOWREEL */}

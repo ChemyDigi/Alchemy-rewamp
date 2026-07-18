@@ -1,6 +1,5 @@
 "use client";
 
-import TransitionOverlay from "@/components/TransitionOverlay";
 import { useEffect, useRef, useState } from "react";
 import { useLenis } from "lenis/react";
 
@@ -12,55 +11,78 @@ type SplashScreenProps = {
 
 export default function SplashScreen({ onHidden }: SplashScreenProps) {
   const [state, setState] = useState<SplashState>("visible");
-  const [opacity, setOpacity] = useState(0);
-  const [logoScale, setLogoScale] = useState(0.75);
-
+  const [videoSrc, setVideoSrc] = useState<string | null>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const lenis = useLenis();
+  const dismissed = useRef(false);
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
-    const hasShown = sessionStorage.getItem("splash-shown");
+    const hasShown = sessionStorage.getItem("splash-shown"); ``
 
     if (prefersReducedMotion || hasShown) {
-      setState("fading");
-      const t = setTimeout(() => {
-        window.scrollTo(0, 0);
-        lenis?.scrollTo(0, { immediate: true });
-        setState("hidden");
-      }, 300);
-      return () => clearTimeout(t);
+      setState("hidden");
+      return;
     }
 
     sessionStorage.setItem("splash-shown", "true");
     document.body.style.overflow = "hidden";
-    setOpacity(0);
-    setLogoScale(0.75);
 
-    const frame = requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        setOpacity(1);
-        setLogoScale(1);
-      });
-    });
+    // Detect screen width to load appropriate video
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
+    setVideoSrc(
+      isMobile
+        ? "/splashScreen/splash-mobile.mp4"
+        : "/splashScreen/splash-desktop.mp4"
+    );
 
-    const dismiss = window.setTimeout(() => {
-      document.body.style.overflow = "";
-      setState("fading");
-      setOpacity(0);
-      setLogoScale(0.85);
-      window.setTimeout(() => setState("hidden"), 300);
-    }, 1000);
+    // Safety fallback: force-dismiss after 8 seconds in case video never fires onEnded
+    const fallbackTimeout = setTimeout(() => {
+      handleVideoEnd();
+    }, 8000);
 
     return () => {
-      window.clearTimeout(dismiss);
-      cancelAnimationFrame(frame);
+      clearTimeout(fallbackTimeout);
       document.body.style.overflow = "";
     };
   }, [lenis]);
 
+  // Ensure video is muted and plays programmatically to guarantee autoplay works on all devices
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video && videoSrc) {
+      video.muted = true;
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch((err) => {
+          // Ignore standard AbortError when component is unmounted or paused
+          if (err.name !== "AbortError") {
+            console.error("Autoplay failed:", err);
+          }
+        });
+      }
+    }
+
+    return () => {
+      if (video) {
+        video.pause();
+      }
+    };
+  }, [videoSrc]);
+
+  const handleTimeUpdate = (e: React.SyntheticEvent<HTMLVideoElement>) => {
+    const video = e.currentTarget;
+    // Trigger fade-out 0.3 seconds before the video ends to bypass any black ending frame
+    if (video.duration && video.duration - video.currentTime <= 0.3) {
+      handleVideoEnd();
+    }
+  };
+
   const handleVideoEnd = () => {
+    if (dismissed.current) return;
+    dismissed.current = true;
     setState("fading");
     setTimeout(() => {
       window.scrollTo(0, 0);
@@ -71,7 +93,6 @@ export default function SplashScreen({ onHidden }: SplashScreenProps) {
     }, 500);
   };
 
-  // Safety fallback: force-dismiss after 10s in case video never fires onEnded
   useEffect(() => {
     if (state === "hidden") {
       onHidden?.();
@@ -81,14 +102,29 @@ export default function SplashScreen({ onHidden }: SplashScreenProps) {
   if (state === "hidden") return null;
 
   return (
-    <TransitionOverlay
+    <div
       role="dialog"
-      ariaModal
-      ariaLabel="Loading website"
-      opacity={state === "fading" ? 0 : opacity}
-      logoScale={logoScale}
-      zIndex={99999}
-      pointerEvents={state === "fading" ? "none" : "all"}
-    />
+      aria-modal="true"
+      aria-label="Loading website"
+      className="splash-overlay fixed inset-0 flex items-center justify-center bg-white z-[99999]"
+      style={{
+        opacity: state === "fading" ? 0 : 1,
+        transition: "opacity 500ms ease-in-out",
+        pointerEvents: state === "fading" ? "none" : "all",
+      }}
+    >
+      {videoSrc && (
+        <video
+          ref={videoRef}
+          src={videoSrc}
+          autoPlay
+          muted
+          playsInline
+          onTimeUpdate={handleTimeUpdate}
+          onEnded={handleVideoEnd}
+          className="splash-video"
+        />
+      )}
+    </div>
   );
 }
