@@ -14,28 +14,32 @@ export default function SplashScreen({ onHidden }: SplashScreenProps) {
   const [videoSrc, setVideoSrc] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const lenis = useLenis();
+  const lenisRef = useRef(lenis);
   const dismissed = useRef(false);
+
+  useEffect(() => {
+    lenisRef.current = lenis;
+  }, [lenis]);
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
-    const hasShown = sessionStorage.getItem("splash-shown"); ``
+    const hasShown = sessionStorage.getItem("splash-shown");
 
     if (prefersReducedMotion || hasShown) {
       setState("hidden");
       return;
     }
 
-    sessionStorage.setItem("splash-shown", "true");
     document.body.style.overflow = "hidden";
 
     // Detect screen width to load appropriate video
     const isMobile = window.matchMedia("(max-width: 767px)").matches;
     setVideoSrc(
       isMobile
-        ? "/splashScreen/splash-mobile.mp4"
-        : "/splashScreen/splash-desktop.mp4"
+        ? "/splashscreen/splash-mobile.mp4"
+        : "/splashscreen/splash-desktop.mp4"
     );
 
     // Safety fallback: force-dismiss after 8 seconds in case video never fires onEnded
@@ -47,7 +51,7 @@ export default function SplashScreen({ onHidden }: SplashScreenProps) {
       clearTimeout(fallbackTimeout);
       document.body.style.overflow = "";
     };
-  }, [lenis]);
+  }, []);
 
   // Ensure video is muted and plays programmatically to guarantee autoplay works on all devices
   useEffect(() => {
@@ -84,9 +88,16 @@ export default function SplashScreen({ onHidden }: SplashScreenProps) {
     if (dismissed.current) return;
     dismissed.current = true;
     setState("fading");
+    
+    try {
+      sessionStorage.setItem("splash-shown", "true");
+    } catch (err) {
+      console.warn("sessionStorage failed:", err);
+    }
+
     setTimeout(() => {
       window.scrollTo(0, 0);
-      lenis?.scrollTo(0, { immediate: true });
+      lenisRef.current?.scrollTo(0, { immediate: true });
       document.body.style.overflow = "";
       document.body.style.height = "";
       setState("hidden");
