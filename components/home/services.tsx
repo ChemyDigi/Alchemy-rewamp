@@ -122,9 +122,8 @@ export default function Services() {
       onMouseEnter={isDesktop ? handleSectionEnter : undefined}
       onMouseLeave={isDesktop ? handleSectionLeave : undefined}
     >
-      {/* Dedicated scroll target, kept separate from the section element
-          itself so nav "Services" links land exactly at the section's top
-          regardless of the section's own padding/positioning */}
+      {/* Dedicated scroll target, positioned further down so clicking "Services"
+          in navigation scrolls cleanly past the preceding AboutIntro section */}
       <div id="services" className="absolute top-0 left-0" aria-hidden="true" />
 
       {/* Custom Cursor */}
