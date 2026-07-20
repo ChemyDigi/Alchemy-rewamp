@@ -36,7 +36,7 @@ export default function AboutStats() {
   ];
 
   return (
-    <section className="w-full flex items-center justify-center px-12 md:px-16 py-20">
+    <section className="w-full flex items-center justify-center px-12 md:px-16 pt-36 md:pt-44 lg:pt-56 pb-24">
       <div
         className="
           grid 

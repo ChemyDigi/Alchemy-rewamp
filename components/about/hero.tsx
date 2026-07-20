@@ -54,7 +54,7 @@ function ScrollFillText({ text }: { text: string }) {
 
 export default function AboutHero() {
   return (
-    <section className="w-full min-h-[70vh] md:min-h-[70vh] lg:min-h-screen flex items-start bg-white pt-16">
+    <section className="w-full min-h-[70vh] md:min-h-[70vh] lg:min-h-fit lg:pb-12 flex items-start bg-white pt-16 md:pt-24 lg:pt-32">
       <div className="w-full px-12 md:px-16">
         <div className="max-w-[1200px]">
 
@@ -65,7 +65,7 @@ export default function AboutHero() {
     font-medium text-black
     leading-[0.88] tracking-[-0.03em]
 
-    mt-[2cm] md:mt-8 lg:mt-0
+    mt-[2cm] md:mt-8 lg:mt-12 xl:mt-16
     text-left
     w-full
   "
