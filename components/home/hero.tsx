@@ -35,16 +35,16 @@ export default function Hero() {
         video.pause();
         try {
           video.currentTime = 0;
-        } catch {}
+        } catch { }
       });
     } else {
       videos.forEach((video) => {
         try {
           video.currentTime = 0;
-        } catch {}
+        } catch { }
         const playPromise = video.play();
         if (playPromise !== undefined) {
-          playPromise.catch(() => {});
+          playPromise.catch(() => { });
         }
       });
     }
@@ -113,7 +113,7 @@ export default function Hero() {
             muted
             loop
             playsInline
-            className="sticky top-0 h-screen w-full object-cover"
+            className="sticky top-0 h-screen w-full object-contain xl:object-cover"
           />
         </div>
 
