@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useLenis } from "lenis/react";
+import { useSplash } from "@/components/SplashContext";
 
 type SplashState = "visible" | "fading" | "hidden";
 
@@ -16,6 +17,7 @@ export default function SplashScreen({ onHidden }: SplashScreenProps) {
   const lenis = useLenis();
   const lenisRef = useRef(lenis);
   const dismissed = useRef(false);
+  const { finishSplash } = useSplash();
 
   useEffect(() => {
     lenisRef.current = lenis;
@@ -88,6 +90,7 @@ export default function SplashScreen({ onHidden }: SplashScreenProps) {
     if (dismissed.current) return;
     dismissed.current = true;
     setState("fading");
+    finishSplash();
     
     try {
       sessionStorage.setItem("splash-shown-v2", "true");

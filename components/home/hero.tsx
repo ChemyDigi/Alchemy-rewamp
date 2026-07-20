@@ -2,10 +2,17 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { getHomeContent } from "@/lib/firestore";
+import { useSplash } from "@/components/SplashContext";
 
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [watchReelUrl, setWatchReelUrl] = useState("/showreel.mp4");
+  const { isSplashFinished } = useSplash();
+
+  const mobileBgVideoRef = useRef<HTMLVideoElement>(null);
+  const mobileReelVideoRef = useRef<HTMLVideoElement>(null);
+  const desktopBgVideoRef = useRef<HTMLVideoElement>(null);
+  const desktopReelVideoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     getHomeContent().then((data) => {
@@ -14,6 +21,34 @@ export default function Hero() {
       }
     });
   }, []);
+
+  useEffect(() => {
+    const videos = [
+      mobileBgVideoRef.current,
+      mobileReelVideoRef.current,
+      desktopBgVideoRef.current,
+      desktopReelVideoRef.current,
+    ].filter(Boolean) as HTMLVideoElement[];
+
+    if (!isSplashFinished) {
+      videos.forEach((video) => {
+        video.pause();
+        try {
+          video.currentTime = 0;
+        } catch {}
+      });
+    } else {
+      videos.forEach((video) => {
+        try {
+          video.currentTime = 0;
+        } catch {}
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {});
+        }
+      });
+    }
+  }, [isSplashFinished]);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -40,8 +75,8 @@ export default function Hero() {
         {/* Background Video (Mobile) */}
         <div className="absolute inset-0 w-full h-full z-0 overflow-hidden pointer-events-none">
           <video
+            ref={mobileBgVideoRef}
             src="/heroVideos/hero-mobile.mp4"
-            autoPlay
             muted
             loop
             playsInline
@@ -58,8 +93,8 @@ export default function Hero() {
         {/* Showreel — plain video, no animation */}
         <div className="relative z-10 w-full rounded-2xl overflow-hidden aspect-video mb-0">
           <video
+            ref={mobileReelVideoRef}
             src={watchReelUrl}
-            autoPlay
             muted
             loop
             playsInline
@@ -73,8 +108,8 @@ export default function Hero() {
         {/* Background Video */}
         <div className="absolute inset-0 w-full h-full z-0 overflow-hidden pointer-events-none">
           <video
+            ref={desktopBgVideoRef}
             src="/heroVideos/hero-desktop.mp4"
-            autoPlay
             muted
             loop
             playsInline
@@ -87,17 +122,6 @@ export default function Hero() {
           style={{ y: heroY, scale: heroScale, opacity: heroOpacity }}
           className="sticky top-0 h-screen flex flex-col items-center justify-center text-center z-10 px-12 md:px-16"
         >
-          {/* <h1
-            className="font-semibold tracking-tight text-black"
-            style={{ fontSize: "clamp(30px, 5vw, 40px)" }}
-          >
-            FROM <span className="text-orange">VISION</span> TO IMPACT
-          </h1>
-          <p className="mt-1 text-black text-lg md:text-2xl max-w-xl">
-            Creative production. Marketing strategy. IT innovation.
-            <br />
-            All under one roof.
-          </p> */}
         </motion.div>
 
         {/* SHOWREEL */}
@@ -118,8 +142,8 @@ export default function Hero() {
               className="w-full h-full"
             >
               <video
+                ref={desktopReelVideoRef}
                 src={watchReelUrl}
-                autoPlay
                 muted
                 loop
                 playsInline
