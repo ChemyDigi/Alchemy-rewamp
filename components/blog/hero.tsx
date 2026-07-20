@@ -12,10 +12,10 @@ export default function BlogHero({ posts }: BlogHeroProps) {
   const displayPosts = posts && posts.length > 0 ? posts.slice(0, 3) : null;
 
   return (
-    <section className="min-h-screen w-full bg-white overflow-hidden">
-      <div className="mx-auto flex min-h-[85vh] lg:min-h-screen w-full max-w-[1440px] flex-col justify-start lg:justify-between px-6 sm:px-12 md:px-16 pt-28 pb-10 lg:flex-row lg:items-center lg:pt-12 lg:pb-14">
+    <section className="relative min-h-[60vh] md:min-h-[70vh] lg:min-h-screen xl:min-h-screen w-full bg-white overflow-hidden">
+      <div className="relative max-w-[1600px] mx-auto flex min-h-[60vh] md:min-h-[70vh] lg:min-h-screen xl:min-h-screen w-full flex-col justify-start lg:justify-between px-6 sm:px-12 md:px-16 pt-28 md:pt-32 lg:pt-36 xl:pt-44 pb-16 md:pb-20 lg:pb-32 xl:pb-40 lg:flex-row lg:items-center gap-12 lg:gap-20">
         {/* Left side - Text content */}
-        <div className="z-10 lg:my-auto max-w-[620px] pb-4 lg:pb-2">
+        <div className="z-10 mt-auto max-w-[620px] pt-10 lg:pt-12 pb-8 lg:-translate-x-12 xl:-translate-x-16 lg:translate-y-[4rem] xl:translate-y-[5rem] max-sm:mt-0 max-sm:pt-20">
           <h1 className="text-7xl leading-[0.88] font-medium tracking-[-0.03em] text-black sm:text-8xl md:text-9xl lg:text-[10.75rem] xl:text-[11.5rem] 2xl:text-[12.5rem]">
             Blog
           </h1>
@@ -29,7 +29,7 @@ export default function BlogHero({ posts }: BlogHeroProps) {
         </div>
 
         {/* Right side - Card stack */}
-        <div className="relative mt-16 md:mt-24 lg:mt-0 shrink-0 lg:my-0 mx-auto lg:ml-auto lg:mr-16 xl:mr-24 2xl:mr-0 -translate-x-4 sm:translate-x-0">
+        <div className="relative mt-16 md:mt-24 lg:mt-0 shrink-0 lg:my-0 mx-auto lg:ml-auto -translate-x-4 sm:translate-x-0 lg:translate-x-20 xl:translate-x-32 2xl:translate-x-40 lg:translate-y-0 xl:translate-y-2">
           <div
             className="relative w-[230px] h-[280px] sm:w-[320px] sm:h-[380px] md:w-[380px] md:h-[450px] lg:w-[320px] lg:h-[380px] xl:w-[380px] xl:h-[450px] 2xl:w-[420px] 2xl:h-[500px]"
           >

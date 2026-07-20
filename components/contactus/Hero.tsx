@@ -65,22 +65,20 @@ export default function Hero() {
                 />
             </div>
             {/* Main Hero Wrapper */}
-            <div className="relative max-w-[1600px] mx-auto min-h-[44vh] md:min-h-screen md:max-lg:portrait:min-h-fit px-12 md:px-16 pt-8 md:pt-116 md:max-lg:portrait:pt-20 md:max-lg:portrait:pb-12 z-10 pointer-events-none">
+            <div className="relative max-w-[1600px] mx-auto min-h-[44vh] md:min-h-screen md:max-lg:portrait:min-h-fit px-6 sm:px-8 md:px-16 pt-8 md:pt-32 lg:pt-36 xl:pt-44 pb-16 md:pb-20 lg:pb-32 xl:pb-40 z-10 pointer-events-none">
 
                 {/* LEFT CONTENT */}
-                <div className="z-10 mt-6 md:mt-auto md:max-lg:portrait:mt-0 max-w-[620px] text-left mx-0 md:max-lg:portrait:text-left md:max-lg:portrait:mx-0 pb-3 md:pb-8 md:max-lg:portrait:pb-0 lg:translate-y-[-4rem] lg:pb-2 xl:translate-y-[-5.5rem] -ml-2 md:-ml-4">
-                    <h1 className="text-7xl leading-[0.88] font-medium tracking-[-0.03em] text-black md:text-9xl lg:text-[10.75rem] xl:text-[11.5rem] 2xl:text-[12.5rem] mt-[1cm] md:mt-0 mb-2 md:mb-4 md:max-lg:portrait:mb-4">
+                <div className="z-10 mt-6 md:mt-auto md:max-lg:portrait:mt-0 max-w-[620px] text-left mx-0 md:max-lg:portrait:text-left md:max-lg:portrait:mx-0 pt-10 lg:pt-12 pb-8 lg:-translate-x-12 xl:-translate-x-16 lg:translate-y-[18rem] xl:translate-y-[24rem] 2xl:translate-y-[28rem] max-sm:mt-0 max-sm:pt-20">
+                    <h1 className="text-7xl leading-[0.88] font-medium tracking-[-0.03em] text-black sm:text-8xl md:text-9xl lg:text-[10.75rem] xl:text-[11.5rem] 2xl:text-[12.5rem]">
                         Contact
                     </h1>
 
-                    <div className="max-w-[55%] md:max-w-[65%] lg:max-w-none">
-                        <p className=" ml-5 mt-0 md:mt-1 md:max-lg:portrait:mt-3 text-xl font-normal uppercase tracking-[-0.01em] text-[var(--color-orange)] sm:text-3xl lg:text-xl">
-                            Say Hello
-                        </p>
-                        <p className=" ml-5 text-xl leading-none font-normal uppercase tracking-[-0.01em] text-black sm:text-3xl lg:text-xl">
-                            We&apos;re Ready When You Are
-                        </p>
-                    </div>
+                    <p className="ml-3 mt-3 text-xl font-normal uppercase tracking-[-0.01em] text-orange sm:text-3xl lg:text-xl">
+                        Say Hello
+                    </p>
+                    <p className="ml-3 text-xl leading-none font-normal uppercase tracking-[-0.01em] text-black sm:text-3xl lg:text-xl">
+                        We&apos;re Ready When You Are
+                    </p>
                 </div>
             </div>
 

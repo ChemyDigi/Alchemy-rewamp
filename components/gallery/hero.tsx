@@ -222,9 +222,9 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative min-h-[60vh] md:min-h-[70vh] lg:min-h-0 xl:min-h-screen bg-white overflow-hidden">
+    <section className="relative min-h-[60vh] md:min-h-[70vh] lg:min-h-screen xl:min-h-screen bg-white overflow-hidden">
 
-      <div className="relative max-w-[1600px] mx-auto min-h-[60vh] md:min-h-[70vh] lg:min-h-0 xl:min-h-screen px-6 sm:px-8 md:px-16 pt-24 md:pt-32 lg:pt-36 xl:pt-44 pb-10 md:pb-6 lg:pb-10 xl:pb-16">
+      <div className="relative max-w-[1600px] mx-auto min-h-[60vh] md:min-h-[70vh] lg:min-h-screen xl:min-h-screen px-6 sm:px-8 md:px-16 pt-24 md:pt-32 lg:pt-36 xl:pt-44 pb-16 md:pb-20 lg:pb-32 xl:pb-40">
 
         <div className="flex flex-col lg:flex-row items-center lg:items-center justify-between gap-12 lg:gap-20">
 
