@@ -25,7 +25,7 @@ export default function SplashScreen({ onHidden }: SplashScreenProps) {
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
-    const hasShown = sessionStorage.getItem("splash-shown");
+    const hasShown = sessionStorage.getItem("splash-shown-v2");
 
     if (prefersReducedMotion || hasShown) {
       setState("hidden");
@@ -90,7 +90,7 @@ export default function SplashScreen({ onHidden }: SplashScreenProps) {
     setState("fading");
     
     try {
-      sessionStorage.setItem("splash-shown", "true");
+      sessionStorage.setItem("splash-shown-v2", "true");
     } catch (err) {
       console.warn("sessionStorage failed:", err);
     }
