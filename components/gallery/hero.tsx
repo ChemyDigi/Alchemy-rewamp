@@ -224,12 +224,12 @@ export default function Hero() {
   return (
     <section className="relative min-h-[60vh] md:min-h-[70vh] lg:min-h-0 xl:min-h-screen bg-white overflow-hidden">
 
-      <div className="relative max-w-[1600px] mx-auto min-h-[60vh] md:min-h-[70vh] lg:min-h-0 xl:min-h-screen px-6 sm:px-8 md:px-16 pt-24 md:pt-32 lg:pt-20 pb-10 md:pb-6 lg:pb-10 xl:pb-16">
+      <div className="relative max-w-[1600px] mx-auto min-h-[60vh] md:min-h-[70vh] lg:min-h-0 xl:min-h-screen px-6 sm:px-8 md:px-16 pt-24 md:pt-32 lg:pt-36 xl:pt-44 pb-10 md:pb-6 lg:pb-10 xl:pb-16">
 
         <div className="flex flex-col lg:flex-row items-center lg:items-center justify-between gap-12 lg:gap-20">
 
           {/* LEFT CONTENT */}
-          <div className="z-10 mt-auto max-w-[620px] pt-10 lg:pt-20 pb-8 lg:translate-y-[3rem] xl:translate-y-[4rem] max-sm:mt-0 max-sm:pt-20">
+          <div className="z-10 mt-auto max-w-[620px] pt-10 lg:pt-12 pb-8 lg:-translate-x-12 xl:-translate-x-16 lg:translate-y-[4rem] xl:translate-y-[5rem] max-sm:mt-0 max-sm:pt-20">
             <h1 className="text-7xl leading-[0.88] font-medium tracking-[-0.03em] text-black sm:text-8xl md:text-9xl lg:text-[10.75rem] xl:text-[11.5rem] 2xl:text-[12.5rem]">
               Gallery
             </h1>
@@ -244,7 +244,7 @@ export default function Hero() {
             </p>
           </div>
           {/* RIGHT CONTENT */}
-          <div className="relative w-full lg:w-auto flex justify-center lg:justify-end lg:-translate-x-16 xl:-translate-x-24">
+          <div className="relative w-full lg:w-auto flex justify-center lg:justify-end lg:-translate-x-6 xl:-translate-x-10 lg:translate-y-0 xl:translate-y-2">
 
             <div
               className="
@@ -260,11 +260,16 @@ export default function Hero() {
     md:w-[370px]
     md:h-[500px]
 
-    lg:w-[360px]
-    lg:h-[500px]
+    lg:w-[410px]
+    lg:h-[560px]
+    lg:max-w-none
+    lg:max-h-none
 
-    xl:w-[400px]
-    xl:h-[560px]
+    xl:w-[460px]
+    xl:h-[630px]
+
+    2xl:w-[510px]
+    2xl:h-[700px]
   "
             >
               <Stack
