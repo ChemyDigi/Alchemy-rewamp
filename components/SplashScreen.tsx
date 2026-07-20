@@ -131,8 +131,10 @@ export default function SplashScreen({ onHidden }: SplashScreenProps) {
           autoPlay
           muted
           playsInline
+          preload="auto"
           onTimeUpdate={handleTimeUpdate}
           onEnded={handleVideoEnd}
+          onError={handleVideoEnd}
           className="splash-video"
         />
       )}
