@@ -51,13 +51,13 @@ export default function ServicesSection() {
         </div>
 
         {/* RIGHT IMAGE */}
-        <div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[650px] -mt-6 sm:-mt-8 md:-mt-10 lg:-mt-12 hidden lg:block">
+        <div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[650px] -mt-10 sm:-mt-14 md:-mt-18 lg:-mt-24 hidden lg:block">
           <Image
             src="/images/services-event/walky_talky.png"
             alt="Event Management Device"
             fill
             sizes="(max-width: 1024px) 100vw, 50vw"
-            className="object-contain"
+            className="object-contain -translate-y-3 sm:-translate-y-4"
             priority
           />
         </div>
@@ -66,7 +66,7 @@ export default function ServicesSection() {
 
       {/* Bottom Tagline with Scroll Effect */}
       <div className="mt-20 pb-32 text-center">
-        <ScrollFillText text="We craft exceptional events that leave lasting impressions with creativity and care." />
+        <ScrollFillText text="From conceptual design to seamless execution, we craft extraordinary event experiences that captivate audiences and leave lasting impressions." />
       </div>
     </section>
   );
