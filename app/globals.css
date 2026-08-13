@@ -102,3 +102,68 @@ body::-webkit-scrollbar,
   box-shadow: inset 0px 0px 5px #ffffffa9;
   margin-top: 3px;
 }
+
+/* Contact page: Mobile responsive overrides container */
+.contact-page-container {
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+}
+
+/* Contact page: Reorganize contact information layout */
+.contact-page-container .contact-info-grid {
+  display: grid;
+}
+
+@media (max-width: 768px) {
+  /* Contact page: Mobile responsive header and logo alignment */
+  .contact-page-container header.absolute.top-0.left-0 {
+    padding-left: 2.5rem !important; /* Adjust for logo shift to align at 24px */
+    padding-right: 1.5rem !important;
+    padding-top: 1.25rem !important;
+    padding-bottom: 1.25rem !important;
+  }
+
+  /* Contact page: Mobile responsive main hero heading size */
+  .contact-page-container h1 {
+    font-size: clamp(3.2rem, 15vw, 5.5rem) !important;
+    line-height: 0.9 !important;
+  }
+
+  /* Contact page: Mobile responsive contact details */
+  .contact-page-container h2 {
+    font-size: clamp(1.8rem, 8vw, 2.5rem) !important;
+    line-height: 1.0 !important;
+  }
+
+  /* Contact page: Mobile responsive form input placeholder sizes */
+  .contact-page-container input::placeholder,
+  .contact-page-container textarea::placeholder {
+    font-size: 13px !important;
+  }
+
+  /* Contact page: Two-column mobile contact details */
+  .contact-page-container .contact-info-grid {
+    grid-template-columns: 45fr 55fr !important;
+  }
+
+  /* Contact page: Mobile contact information spacing */
+  .contact-page-container .contact-info-grid {
+    gap-x: clamp(0.75rem, 3.5vw, 2rem) !important;
+    gap-y: 1.5rem !important;
+  }
+
+  .contact-page-container .contact-info-grid h3 {
+    font-size: clamp(1.15rem, 5vw, 1.45rem) !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .contact-page-container .contact-info-grid p {
+    font-size: clamp(0.78rem, 3.3vw, 0.98rem) !important;
+    line-height: 1.6 !important;
+  }
+
+  .contact-page-container .contact-info-grid .flex.items-center.gap-7 {
+    gap: 1.25rem !important;
+  }
+}
