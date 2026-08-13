@@ -53,7 +53,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className={cn("h-full", "antialiased", seasonSans.variable, "font-sans", geist.variable)}>
-      <body className="min-h-full flex flex-col selection:bg-[#E3791D] selection:text-white">
+      <body className="min-h-full flex flex-col bg-white selection:bg-[#E3791D] selection:text-white">
         {isAdmin ? (
           children
         ) : (
