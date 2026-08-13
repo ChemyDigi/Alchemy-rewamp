@@ -82,14 +82,19 @@ export default function Footer() {
               </p>
             </a>
             {/* Australia Address */}
-            <div className="flex flex-col">
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=203+George+Street+Queens+Park+WA+6107+Australia"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex flex-col group transition-transform duration-300 hover:-translate-y-1"
+            >
               <p className="text-orange font-semibold mb-2 text-2xl">Australia</p>
               <p className="text-gray-600 text-lg md:text-xl leading-loose">
                 203, George Street,<br />
                 Queens Park, WA 6107,<br />
                 Australia
               </p>
-            </div>
+            </a>
           </div>
 
           <div className="flex gap-8 text-orange text-2xl mt-6 md:mr-8">

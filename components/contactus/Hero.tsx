@@ -68,7 +68,7 @@ export default function Hero() {
             <div className="relative max-w-[1600px] mx-auto min-h-[44vh] md:min-h-screen md:max-lg:portrait:min-h-fit px-6 sm:px-8 md:px-16 pt-8 md:pt-32 lg:pt-36 xl:pt-44 pb-16 md:pb-20 lg:pb-32 xl:pb-40 z-10 pointer-events-none">
 
                 {/* LEFT CONTENT */}
-                <div className="z-10 mt-6 md:mt-auto md:max-lg:portrait:mt-0 max-w-[620px] text-left mx-0 md:max-lg:portrait:text-left md:max-lg:portrait:mx-0 pt-10 lg:pt-12 pb-8 lg:-translate-x-12 xl:-translate-x-16 lg:translate-y-[18rem] xl:translate-y-[24rem] 2xl:translate-y-[28rem] max-sm:mt-0 max-sm:pt-20">
+                <div className="z-10 mt-6 md:mt-auto md:max-lg:portrait:mt-0 max-w-[620px] text-left mx-0 md:max-lg:portrait:text-left md:max-lg:portrait:mx-0 pt-10 lg:pt-12 pb-8 lg:-translate-x-12 xl:-translate-x-16 max-sm:mt-0 max-sm:pt-20">
                     <h1 className="text-7xl leading-[0.88] font-medium tracking-[-0.03em] text-black sm:text-8xl md:text-9xl lg:text-[10.75rem] xl:text-[11.5rem] 2xl:text-[12.5rem]">
                         Contact
                     </h1>

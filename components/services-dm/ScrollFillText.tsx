@@ -20,10 +20,11 @@ export default function ScrollFillText({ text }: { text: string }) {
         relative
         w-full max-w-[900px]
         mx-auto
+        px-4 sm:px-6
         text-center
 
-        text-[26px] sm:text-[30px] md:text-[36px] lg:text-[40px]
-        leading-[1.5]
+        text-[22px] sm:text-[30px] md:text-[36px] lg:text-[40px]
+        leading-[1.4] sm:leading-[1.5]
         font-medium
         text-gray-400
       "

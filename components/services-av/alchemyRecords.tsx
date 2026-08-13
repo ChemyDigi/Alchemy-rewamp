@@ -56,7 +56,7 @@ export default function AlchemyRecords() {
 			<div className="flex w-full flex-col items-start px-10 py-1 sm:px-10 md:px-20 lg:py-2">
 				<div className="flex w-full justify-end">
 					<Image
-						src="/images/services/AV/AlchemyPics1.png"
+						src="/images/services/AV/AlchemyPics2.png"
 						alt="Alchemy Records logo"
 						width={760}
 						height={360}

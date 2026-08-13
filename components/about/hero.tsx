@@ -18,18 +18,17 @@ function ScrollFillText({ text }: { text: string }) {
       ref={ref}
       className="
   relative
-  mt-20 sm:mt-16 md:mt-10
-  w-full max-w-[95%] sm:max-w-[90%] md:max-w-[85%] lg:max-w-[1150px] xl:max-w-[1350px]
+  mt-12 sm:mt-14 md:mt-16
+  w-full
   font-medium
 
-  text-center sm:text-left
-  mx-auto sm:mx-0
+  text-left
 
-  text-[26px] sm:text-[26px] md:text-[34px] lg:text-[38px]
+  text-[24px] sm:text-[28px] md:text-[34px] lg:text-[38px]
   leading-[1.4]
   text-gray-400
 
-  translate-x-0 sm:translate-x-8 md:translate-x-0 lg:translate-x-32 xl:translate-x-44
+  pl-0 sm:pl-8 md:pl-0 lg:pl-32 xl:pl-44
 "
     >
       {letters.map((letter, i) => {

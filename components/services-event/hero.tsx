@@ -38,8 +38,8 @@ export default function ServicesSection() {
           </p>
 
           {/* BUTTON → /contact */}
-          <Link href="/contactus">
-            <button className="group mt-8 mx-auto sm:mx-0 bg-orange text-white h-[48px] pl-10 pr-10 rounded-full relative flex items-center overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-black min-w-[200px] hover:min-w-[260px] active:scale-[0.97] active:duration-75">
+          <Link href="/contactus" className="flex justify-center lg:justify-start">
+            <button className="group mt-8 mx-auto lg:mx-0 bg-orange text-white h-[48px] pl-10 pr-10 rounded-full relative flex items-center overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-black min-w-[200px] hover:min-w-[260px] active:scale-[0.97] active:duration-75">
               <span className="text-base md:text-lg font-medium whitespace-nowrap uppercase">
                 GET IN TOUCH
               </span>
@@ -51,13 +51,13 @@ export default function ServicesSection() {
         </div>
 
         {/* RIGHT IMAGE */}
-        <div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[650px] -mt-6 sm:-mt-8 md:-mt-10 lg:-mt-12 hidden lg:block">
+        <div className="relative w-full h-[380px] sm:h-[450px] md:h-[500px] lg:h-[650px] -mt-2 sm:-mt-4 md:-mt-10 lg:-mt-24">
           <Image
             src="/images/services-event/walky_talky.png"
             alt="Event Management Device"
             fill
             sizes="(max-width: 1024px) 100vw, 50vw"
-            className="object-contain"
+            className="object-contain -translate-y-3 sm:-translate-y-4"
             priority
           />
         </div>
@@ -66,7 +66,7 @@ export default function ServicesSection() {
 
       {/* Bottom Tagline with Scroll Effect */}
       <div className="mt-20 pb-32 text-center">
-        <ScrollFillText text="We craft exceptional events that leave lasting impressions with creativity and care." />
+        <ScrollFillText text="From conceptual design to seamless execution, we craft extraordinary event experiences that captivate audiences and leave lasting impressions." />
       </div>
     </section>
   );
