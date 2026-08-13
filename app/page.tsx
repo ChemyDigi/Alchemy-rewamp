@@ -8,7 +8,7 @@ import LogoDisplay from "@/components/home/LogoDisplay";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-bg text-gray">
+    <main className="min-h-screen bg-white text-gray">
 
       <Navbar />
       <Hero />

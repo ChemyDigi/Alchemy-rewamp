@@ -7,7 +7,7 @@ import ServicesSection from "@/components/services-it/Services";
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen bg-bg text-gray">
+    <main className="relative min-h-screen bg-white text-gray">
 
       <Navbar />
       <Hero />
