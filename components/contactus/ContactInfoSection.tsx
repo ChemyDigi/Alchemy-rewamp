@@ -122,7 +122,8 @@ export default function ContactInfoSection() {
                         We’re here to help you grow
                     </p>
 
-                    <h2 className="text-[36px] md:text-[50px] font-black leading-[0.95] uppercase tracking-tight text-black max-w-[620px]">
+                    {/* Contact page: Mobile responsive title heading */}
+                    <h2 className="text-[28px] xs:text-[34px] sm:text-[38px] md:text-[50px] font-black leading-[0.95] uppercase tracking-tight text-black max-w-[620px]">
                         WE'RE HERE TO <span className="text-orange">HELP</span> YOU
                         <br />
                         GROW
@@ -132,83 +133,89 @@ export default function ContactInfoSection() {
                         At Alchemy, we turn your ideas into impactful digital
                         solutions and are always ready to help.
                     </p>
+                    {/* Contact page: Reorganize contact information layout */}
+                    <div className="contact-info-grid grid grid-cols-1 md:grid-cols-2 gap-y-10 gap-x-4 sm:gap-x-10 mt-16">
+                        
+                        {/* Left Column: Phone, Email, Social Network */}
+                        <div className="flex flex-col gap-10">
+                            {/* Phone */}
+                            <div>
+                                <h3 className="text-[25px] font-bold text-black mb-5">
+                                    Phone
+                                </h3>
 
-                    {/* INFO GRID */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-14 gap-x-10 mt-16">
+                                <p className="text-[16px] xs:text-[18px] sm:text-[20px] leading-[1.8] text-[#555]">
+                                    +94 719 563 675
+                                    <br />
+                                    +61 404 713 766
+                                </p>
+                            </div>
 
-                        {/* Phone */}
-                        <div>
-                            <h3 className="text-[25px] font-bold text-black mb-5">
-                                Phone
-                            </h3>
+                            {/* Email */}
+                            <div>
+                                <h3 className="text-[25px] font-bold text-black mb-5">
+                                    Email
+                                </h3>
 
-                            <p className="text-[20px] leading-[1.8] text-[#555]">
-                                +94 719 563 675
-                                <br />
-                                +61 404 713 766
-                            </p>
+                                <p className="text-[16px] xs:text-[18px] sm:text-[20px] text-[#555] break-all">
+                                    hello@alchemy.lk
+                                </p>
+                            </div>
+
+                            {/* Social */}
+                            <div>
+                                <h3 className="text-[25px] font-bold text-black mb-5">
+                                    Social Network
+                                </h3>
+
+                                <div className="flex items-center gap-7 text-[16px] xs:text-[18px] sm:text-[20px] text-[#555]">
+                                    <a href="#" className="hover:text-[#f28c28] transition">
+                                        <FaFacebookF />
+                                    </a>
+
+                                    <a href="#" className="hover:text-[#f28c28] transition">
+                                        <FaInstagram />
+                                    </a>
+
+                                    <a href="#" className="hover:text-[#f28c28] transition">
+                                        <FaLinkedinIn />
+                                    </a>
+                                </div>
+                            </div>
                         </div>
 
-                        {/* Address */}
-                        <div>
-                            <h3 className="text-[25px] font-bold text-black mb-5">
-                                Address
-                            </h3>
+                        {/* Right Column: Address */}
+                        <div className="flex flex-col gap-10">
+                            {/* Address */}
+                            <div>
+                                <h3 className="text-[25px] font-bold text-black mb-5">
+                                    Address
+                                </h3>
 
-                            <p className="text-[20px] leading-[1.8] text-[#555]">
-                                43/5, Senanayake Mawatha,
-                                <br />
-                                Sri Jayawardenepura Kotte,
-                                <br />
-                                Sri Lanka
-                                <br />
-                                <br />
-                                203, George Street
-                                <br />
-                                Queens Park, WA 6107
-                                <br />
-                                Australia
-                            </p>
-                        </div>
-
-                        {/* Email */}
-                        <div>
-                            <h3 className="text-[25px] font-bold text-black mb-5">
-                                Email
-                            </h3>
-
-                            <p className="text-[20px] text-[#555]">
-                                hello@alchemy.lk
-                            </p>
-                        </div>
-
-                        {/* Social */}
-                        <div>
-                            <h3 className="text-[25px] font-bold text-black mb-5">
-                                Social Network
-                            </h3>
-
-                            <div className="flex items-center gap-7 text-[20px] text-[#555]">
-                                <a href="#" className="hover:text-[#f28c28] transition">
-                                    <FaFacebookF />
-                                </a>
-
-                                <a href="#" className="hover:text-[#f28c28] transition">
-                                    <FaInstagram />
-                                </a>
-
-                                <a href="#" className="hover:text-[#f28c28] transition">
-                                    <FaLinkedinIn />
-                                </a>
+                                <p className="text-[16px] xs:text-[18px] sm:text-[20px] leading-[1.8] text-[#555]">
+                                    43/5, Senanayake Mawatha,
+                                    <br />
+                                    Sri Jayawardenepura Kotte,
+                                    <br />
+                                    Sri Lanka
+                                    <br />
+                                    <br />
+                                    203, George Street
+                                    <br />
+                                    Queens Park, WA 6107
+                                    <br />
+                                    Australia
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 {/* RIGHT SIDE FORM */}
-                <div className="relative bg-[#faf9f9] rounded-[26px] p-8 md:p-12 shadow-sm overflow-hidden">
+                {/* Contact page: Mobile responsive form section container */}
+                <div className="relative bg-[#faf9f9] rounded-[26px] p-5 xs:p-8 md:p-12 shadow-sm overflow-hidden">
 
-                    <h2 className="text-[48px] md:text-[50px] font-black text-black leading-none">
+                    <h2 className="text-[30px] xs:text-[38px] sm:text-[44px] md:text-[50px] font-black text-black leading-none">
                         Get in Touch
                     </h2>
 
@@ -256,7 +263,7 @@ export default function ContactInfoSection() {
                                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                                 className="w-full bg-transparent border-b border-[#9e9e9e] pb-3 text-[14px] text-[#888] outline-none flex justify-between items-center cursor-pointer text-left"
                             >
-                                <span className={formData.projectType !== "Select Project Type" ? "text-black text-[20px]" : "text-[#888] text-[14px]"}>
+                                <span className={formData.projectType !== "Select Project Type" ? "text-black text-[16px] xs:text-[18px] sm:text-[20px]" : "text-[#888] text-[14px]"}>
                                     {formData.projectType}
                                 </span>
                                 <ChevronDown className={`w-4 h-4 text-[#888] transition-transform duration-300 ${isDropdownOpen ? "rotate-180" : ""}`} />
@@ -299,7 +306,7 @@ export default function ContactInfoSection() {
                                 value={formData.message}
                                 onChange={handleChange}
                                 placeholder="Tell us more about your requirements..."
-                                className="w-full bg-transparent border-b border-[#9e9e9e] pb-3 text-[20px] text-black outline-none resize-none placeholder:text-[14px] placeholder:text-[#9e9e9e]"
+                                className="w-full bg-transparent border-b border-[#9e9e9e] pb-3 text-[16px] xs:text-[18px] sm:text-[20px] text-black outline-none resize-none placeholder:text-[14px] placeholder:text-[#9e9e9e]"
                             />
                             {errors.message && (
                                 <p className="text-red-500 text-xs mt-1.5">{errors.message}</p>
@@ -317,9 +324,9 @@ export default function ContactInfoSection() {
                         <button
                             type="submit"
                             disabled={isSubmitting}
-                            className="group mt-8 bg-orange text-white h-[56px] rounded-full relative overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-black min-w-[230px] hover:min-w-[260px] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="group mt-8 bg-orange text-white h-[56px] rounded-full relative overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-black w-full xs:w-auto xs:min-w-[230px] xs:hover:min-w-[260px] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                            <span className="flex 1 absolute left-8 top-1/2 -translate-y-1/2 text-base md:text-lg font-medium whitespace-nowrap">
+                            <span className="flex 1 absolute left-6 xs:left-8 top-1/2 -translate-y-1/2 text-sm xs:text-base md:text-lg font-medium whitespace-nowrap">
                                 {isSubmitting ? "SENDING..." : "SEND A MESSAGE"}
                             </span>
 
@@ -374,7 +381,7 @@ function Field({ label, name, value, onChange, error, type = "text", placeholder
                 value={value}
                 onChange={onChange}
                 placeholder={placeholder}
-                className="w-full bg-transparent border-b border-[#9e9e9e] pb-3 text-[20px] text-black outline-none placeholder:text-[14px] placeholder:text-[#9e9e9e]"
+                className="w-full bg-transparent border-b border-[#9e9e9e] pb-3 text-[16px] xs:text-[18px] sm:text-[20px] text-black outline-none placeholder:text-[14px] placeholder:text-[#9e9e9e]"
             />
             {error && (
                 <p className="text-red-500 text-xs mt-1.5">{error}</p>
