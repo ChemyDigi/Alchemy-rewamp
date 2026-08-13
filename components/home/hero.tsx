@@ -70,28 +70,22 @@ export default function Hero() {
   return (
     <section ref={containerRef} className="relative bg-white">
 
-      {/* ── MOBILE LAYOUT (static, no animation) ── */}
-      <div className="md:hidden relative flex flex-col items-center justify-between text-center px-6 pt-24 pb-4 gap-8 overflow-hidden min-h-screen">
-        {/* Background Video (Mobile) */}
-        <div className="absolute inset-0 w-full h-full z-0 overflow-hidden pointer-events-none">
+      {/* ── MOBILE LAYOUT (fills initial screen viewport, centered) ── */}
+      <div className="md:hidden relative flex flex-col items-center justify-center text-center px-6 pt-14 pb-8 gap-8 overflow-hidden bg-white min-h-[100dvh]">
+        {/* Mobile Animated Logo Video */}
+        <div className="w-full max-w-[440px] h-[190px] sm:h-[220px] relative overflow-hidden flex items-center justify-center">
           <video
             ref={mobileBgVideoRef}
             src="/heroVideos/hero-mobile.mp4"
             muted
             loop
             playsInline
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover scale-[1.28] pointer-events-none"
           />
         </div>
 
-        {/* Content wrapper */}
-        <div className="relative z-10 flex flex-col items-center gap-6 my-auto">
-          <div>
-          </div>
-        </div>
-
-        {/* Showreel — plain video, no animation */}
-        <div className="relative z-10 w-full rounded-2xl overflow-hidden aspect-video mb-0">
+        {/* Showreel — plain video */}
+        <div className="relative z-10 w-full max-w-[500px] mt-20 sm:mt-24 rounded-2xl overflow-hidden aspect-video shadow-sm">
           <video
             ref={mobileReelVideoRef}
             src={watchReelUrl}

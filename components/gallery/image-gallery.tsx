@@ -59,41 +59,55 @@ export default function GallerySection() {
 
       {/* LIGHTBOX */}
       {activeIndex !== null && (
-        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur flex items-center justify-center">
-
+        <div
+          className="fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4 select-none"
+          onClick={close}
+        >
           {/* CLOSE */}
           <button
             onClick={close}
-            className="absolute top-6 right-6 text-white text-3xl"
+            aria-label="Close lightbox"
+            className="absolute top-4 left-4 sm:top-6 sm:left-6 z-20 w-11 h-11 rounded-full bg-white/20 hover:bg-white/40 text-white flex items-center justify-center text-xl transition backdrop-blur-sm shadow-md active:scale-95"
           >
             ✕
           </button>
 
           {/* PREV */}
           <button
-            onClick={prev}
-            className="absolute left-6 text-white text-4xl"
+            onClick={(e) => {
+              e.stopPropagation();
+              prev();
+            }}
+            aria-label="Previous image"
+            className="absolute left-3 sm:left-6 z-20 w-11 h-11 rounded-full bg-white/20 hover:bg-white/40 text-white flex items-center justify-center text-2xl transition backdrop-blur-sm shadow-md active:scale-95"
           >
-            ←
+            ‹
           </button>
 
           {/* IMAGE */}
-          <div className="relative w-[90vw] max-w-5xl h-[70vh]">
+          <div
+            className="relative w-[90vw] max-w-5xl h-[75vh] z-10"
+            onClick={(e) => e.stopPropagation()}
+          >
             <Image
               src={images[activeIndex].imageUrl}
               alt={images[activeIndex].title || ""}
               fill
               sizes="(max-width: 1024px) 90vw, 1024px"
-              className="object-contain rounded-xl"
+              className="object-contain rounded-xl select-none"
             />
           </div>
 
           {/* NEXT */}
           <button
-            onClick={next}
-            className="absolute right-6 text-white text-4xl"
+            onClick={(e) => {
+              e.stopPropagation();
+              next();
+            }}
+            aria-label="Next image"
+            className="absolute right-3 sm:right-6 z-20 w-11 h-11 rounded-full bg-white/20 hover:bg-white/40 text-white flex items-center justify-center text-2xl transition backdrop-blur-sm shadow-md active:scale-95"
           >
-            →
+            ›
           </button>
         </div>
       )}

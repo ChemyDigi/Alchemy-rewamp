@@ -4,8 +4,8 @@ import { ArrowRight } from "lucide-react";
 
 export default function AboutIntro() {
 	return (
-		<section className="bg-white px-6 pt-20 pb-16 md:px-10 md:pt-0 md:pb-20 lg:px-16 lg:pt-40 lg:pb-24">
-			
+		<section className="bg-white px-6 pt-8 pb-16 md:px-10 md:pt-0 md:pb-20 lg:px-16 lg:pt-40 lg:pb-24">
+
 			<div className="mx-auto flex w-full max-w-[1840px] flex-col gap-10 
 				landscape:md:flex-row landscape:md:items-start landscape:md:justify-between">
 
@@ -30,7 +30,7 @@ export default function AboutIntro() {
 
 					{/* ✅ MOBILE (stacked) */}
 					<div className="mt-6 flex flex-col items-center gap-4 md:hidden">
-						
+
 						<Image
 							src="/images/home/Robot.gif"
 							alt="Robot"
