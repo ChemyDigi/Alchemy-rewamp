@@ -102,15 +102,15 @@ export default function Services() {
   const handleSectionEnter = () => setIsCursorVisible(true)
   const handleSectionLeave = () => {
     setIsCursorVisible(false)
-    if (isDesktop && !window.matchMedia("(pointer: coarse)").matches) setActiveIndex(null)
+    if (isDesktop) setActiveIndex(null)
   }
 
   const handleEnter = (index: number) => {
-    if (isDesktop && !window.matchMedia("(pointer: coarse)").matches) setActiveIndex(index)
+    if (isDesktop) setActiveIndex(index)
   }
 
   const handleLeave = () => {
-    if (isDesktop && !window.matchMedia("(pointer: coarse)").matches) setActiveIndex(null)
+    if (isDesktop) setActiveIndex(null)
   }
 
   return (
@@ -137,7 +137,7 @@ export default function Services() {
             pointerEvents: "none",
             zIndex: 9999,
             opacity: isCursorVisible ? 1 : 0,
-            transition: "opacity 200ms ease",
+            transition: "opacity 150ms ease",
           }}
         >
           {/* Outer circle */}
@@ -205,7 +205,7 @@ export default function Services() {
                         : "translateY(0px)",
                       overflow: "hidden",
                       transition:
-                        "max-height 300ms ease, opacity 300ms ease, transform 300ms ease",
+                        "max-height 250ms ease-out, opacity 200ms ease-out, transform 250ms ease-out",
                     }}
                     className="flex justify-center items-center gap-3 flex-wrap"
                   >
@@ -220,7 +220,7 @@ export default function Services() {
                       height: isActive ? "250px" : "0px",
                       marginTop: isActive ? "16px" : "0px",
                       transition:
-                        "height 700ms cubic-bezier(0.22,1,0.36,1), margin-top 700ms cubic-bezier(0.22,1,0.36,1)",
+                        "height 300ms cubic-bezier(0.16,1,0.3,1), margin-top 300ms cubic-bezier(0.16,1,0.3,1)",
                       overflow: "hidden",
                     }}
                   >
@@ -235,7 +235,7 @@ export default function Services() {
                         overflow: "hidden",
                         position: "relative",
                         transition:
-                          "transform 700ms cubic-bezier(0.22,1,0.36,1), border-radius 700ms cubic-bezier(0.22,1,0.36,1)",
+                          "transform 300ms cubic-bezier(0.16,1,0.3,1), border-radius 300ms cubic-bezier(0.16,1,0.3,1)",
                       }}
                     >
                       {/* IMAGE */}
@@ -247,12 +247,13 @@ export default function Services() {
                           transformOrigin: "center center",
                           transform: isActive ? "scale(1)" : "scale(1.1)",
                           transition:
-                            "transform 900ms cubic-bezier(0.22,1,0.36,1)",
+                            "transform 350ms cubic-bezier(0.16,1,0.3,1)",
                         }}
                       >
                         <img
                           src={service.image}
                           alt={service.title}
+                          loading="eager"
                           className="w-full h-full object-cover object-center"
                         />
                       </div>
@@ -272,7 +273,7 @@ export default function Services() {
                             fontWeight: "500",
                             whiteSpace: "nowrap",
                             transition:
-                              "all 700ms cubic-bezier(0.22, 1, 0.36, 1)",
+                              "all 300ms cubic-bezier(0.16, 1, 0.3, 1)",
                             opacity: isActive ? 1 : 0,
                             pointerEvents: "none",
                             textShadow: "0 2px 4px rgba(0,0,0,0.3)",
