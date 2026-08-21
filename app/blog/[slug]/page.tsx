@@ -6,10 +6,11 @@ import { getBlogBySlug, getPublishedBlogs } from "@/lib/firestore";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-export const dynamic = 'force-dynamic';
-
 export async function generateStaticParams() {
 	const blogs = await getPublishedBlogs();
+	if (!blogs || blogs.length === 0) {
+		return [{ slug: "sample-blog" }];
+	}
 	return blogs.map((post) => ({ slug: post.slug }));
 }
 

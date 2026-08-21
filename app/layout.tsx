@@ -5,10 +5,9 @@ import "lenis/dist/lenis.css";
 import { MobileMenuProvider } from "@/components/MobileMenuContext";
 import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
-import { headers } from "next/headers";
 import SiteShell from "@/components/SiteShell";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
 const seasonSans = localFont({
   src: [
@@ -42,25 +41,17 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const headersList = await headers();
-  const pathname = headersList.get("x-pathname") ?? "";
-  const isAdmin = pathname.startsWith("/admin");
-
   return (
     <html lang="en" className={cn("h-full", "antialiased", seasonSans.variable, "font-sans", geist.variable)}>
       <body className="min-h-full flex flex-col bg-white selection:bg-[#E3791D] selection:text-white">
-        {isAdmin ? (
-          children
-        ) : (
-          <MobileMenuProvider>
-            <SiteShell>{children}</SiteShell>
-          </MobileMenuProvider>
-        )}
+        <MobileMenuProvider>
+          <SiteShell>{children}</SiteShell>
+        </MobileMenuProvider>
       </body>
     </html>
   );
